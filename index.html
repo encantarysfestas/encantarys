@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encantarys Festas — Decoração & Eventos em Nova Friburgo</title>
+<meta name="description" content="Transformamos cada evento em uma memória inesquecível. Decoração e planejamento de festas em Nova Friburgo, RJ.">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --midnight: #0d0a1a;
+  --midnight-soft: #1a1628;
+  --violet: #2a1f5c;
+  --gold: #c9a84c;
+  --gold-light: #e8cc7a;
+  --gold-pale: #f5edd6;
+  --cream: #faf7f2;
+  --cream-mid: #f0ebe1;
+  --ink: #1a1714;
+  --ink-soft: #3d3830;
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  background: var(--midnight);
+  color: var(--cream);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── CURSOR ── */
+*, *:hover { cursor: default; }
+a, button { cursor: pointer !important; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--midnight); }
+::-webkit-scrollbar-thumb { background: var(--gold); }
+
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  padding: 24px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  background: rgba(13,10,26,0.96);
+  backdrop-filter: blur(12px);
+  padding: 16px 60px;
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-logo span {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: rgba(201,168,76,0.5);
+  -webkit-text-fill-color: rgba(201,168,76,0.5);
+  text-transform: uppercase;
+  margin-top: -2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold-light); }
+
+.nav-cta {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold-light) !important;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--midnight) !important;
+  border-color: var(--gold);
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+
+/* ════════════════════════════════════
+   HERO
+════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(42,31,92,0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    var(--midnight);
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+  10% { opacity: 0.8; transform: translateY(-20px) scale(1); }
+  90% { opacity: 0.3; transform: translateY(-200px) scale(0.5); }
+  100% { opacity: 0; transform: translateY(-240px) scale(0); }
+}
+
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 120px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fade-up 0.8s 0.3s ease forwards;
+}
+
+.hero-badge::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-badge::after {
+  content: '✦';
+  font-size: 8px;
+}
+
+.hero-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--white);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fade-up 0.8s 0.5s ease forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 17px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  max-width: 520px;
+  line-height: 1.85;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: fade-up 0.8s 0.7s ease forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  opacity: 0;
+  animation: fade-up 0.8s 0.9s ease forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 40px;
+  background: var(--gold);
+  color: var(--midnight);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-light);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 32px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fade-in 1s 1.4s ease forwards;
+}
+
+.hero-scroll span {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scroll-anim 2s ease-in-out infinite;
+}
+
+@keyframes scroll-anim {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+.hero-logo-mark {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
+  height: 320px;
+  opacity: 0;
+  animation: fade-in 1.2s 1s ease forwards;
+}
+
+.logo-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 60%, transparent 100%);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: rotate-slow 30s linear infinite;
+  position: relative;
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.logo-circle-inner {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: rotate-slow 30s linear infinite reverse;
+}
+
+.logo-e {
+  font-family: 'Cinzel', serif;
+  font-size: 120px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rotate-slow 30s linear infinite;
+  line-height: 1;
+}
+
+/* ════════════════════════════════════
+   SECTION SHARED
+════════════════════════════════════ */
+.section {
+  padding: 120px 60px;
+  position: relative;
+}
+
+.section-tag {
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.section-title.dark { color: var(--ink); }
+.section-title.dark em { color: var(--gold); }
+
+.section-intro {
+  font-size: 17px;
+  color: rgba(255,255,255,0.45);
+  max-width: 580px;
+  line-height: 1.85;
+  margin-bottom: 64px;
+}
+
+.section-intro.dark { color: var(--ink-soft); }
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 64px 0;
+}
+
+.ornament-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+.ornament-mark { color: var(--gold); font-family: 'Fraunces', serif; font-size: 20px; }
+
+/* ════════════════════════════════════
+   MANIFESTO / ABOUT
+════════════════════════════════════ */
+#sobre {
+  background: var(--midnight-soft);
+  overflow: hidden;
+}
+
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.sobre-visual {
+  position: relative;
+}
+
+.sobre-frame {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, var(--violet), var(--midnight));
+  border: 1px solid rgba(201,168,76,0.15);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sobre-frame::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(201,168,76,0.08);
+  pointer-events: none;
+}
+
+.sobre-frame-content {
+  text-align: center;
+  padding: 40px;
+}
+
+.sobre-frame-quote {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-style: italic;
+  color: rgba(201,168,76,0.6);
+  line-height: 1.3;
+  margin-bottom: 24px;
+}
+
+.sobre-frame-author {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+.sobre-tag-float {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--gold);
+  padding: 20px 28px;
+  color: var(--midnight);
+}
+
+.sobre-tag-float strong {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 600;
+  display: block;
+  line-height: 1;
+}
+
+.sobre-tag-float span {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.sobre-text h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.sobre-text h2 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.sobre-text p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+
+.sobre-valores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 40px;
+}
+
+.valor {
+  background: rgba(201,168,76,0.05);
+  padding: 24px 20px;
+  border-top: 2px solid rgba(201,168,76,0.2);
+}
+
+.valor-icon {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.valor-titulo {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.valor-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════
+   SERVIÇOS
+════════════════════════════════════ */
+#servicos {
+  background: var(--midnight);
+}
+
+.servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.servico-card {
+  background: rgba(255,255,255,0.02);
+  padding: 48px 36px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.servico-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.servico-card:hover::before { transform: scaleX(1); }
+
+.servico-card:hover {
+  background: rgba(201,168,76,0.04);
+  transform: translateY(-4px);
+}
+
+.servico-num {
+  font-family: 'Fraunces', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(201,168,76,0.08);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.servico-icon {
+  font-size: 28px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.servico-titulo {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.servico-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.servico-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.servico-lista li {
+  font-size: 13px;
+  color: rgba(201,168,76,0.6);
+  padding-left: 16px;
+  position: relative;
+}
+
+.servico-lista li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(201,168,76,0.3);
+}
+
+/* ════════════════════════════════════
+   GALERIA / PORTFOLIO
+════════════════════════════════════ */
+#portfolio {
+  background: var(--midnight-soft);
+}
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(2, 260px);
+  gap: 3px;
+}
+
+.porto-item {
+  background: var(--violet);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.porto-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+.porto-item:nth-child(2) { grid-column: span 4; }
+.porto-item:nth-child(3) { grid-column: span 3; }
+.porto-item:nth-child(4) { grid-column: span 3; }
+.porto-item:nth-child(5) { grid-column: span 4; }
+
+.porto-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  opacity: 0.15;
+  transition: all 0.6s ease;
+}
+
+.porto-item:hover .porto-bg { transform: scale(1.1); opacity: 0.25; }
+
+.porto-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,10,26,0.9) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+
+.porto-item:hover .porto-overlay { opacity: 1; }
+
+.porto-label {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.porto-tipo {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.porto-item-1 { background: linear-gradient(135deg, #2a1f5c, #1a1628); }
+.porto-item-2 { background: linear-gradient(135deg, #3d2a5c, #2a1f5c); }
+.porto-item-3 { background: linear-gradient(135deg, #1a1628, #2a1f5c); }
+.porto-item-4 { background: linear-gradient(135deg, #2a1f5c, #0d0a1a); }
+.porto-item-5 { background: linear-gradient(135deg, #1a1628, #3d2a5c); }
+
+/* ════════════════════════════════════
+   PACOTES / PRICING
+════════════════════════════════════ */
+#pacotes {
+  background: var(--midnight);
+}
+
+.pacotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 64px;
+}
+
+.pacote-card {
+  background: rgba(255,255,255,0.02);
+  padding: 48px 36px;
+  border: 1px solid rgba(201,168,76,0.08);
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.pacote-card.destaque {
+  background: linear-gradient(135deg, rgba(42,31,92,0.5), rgba(201,168,76,0.05));
+  border-color: rgba(201,168,76,0.3);
+}
+
+.pacote-badge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--midnight);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  white-space: nowrap;
+}
+
+.pacote-nome {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+
+.pacote-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.pacote-preco {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pacote-preco sup {
+  font-size: 22px;
+  vertical-align: super;
+  color: var(--gold);
+}
+
+.pacote-preco-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em;
+  margin-bottom: 36px;
+}
+
+.pacote-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.pacote-features li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.pacote-features li::before {
+  content: '✦';
+  color: var(--gold);
+  font-size: 8px;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.btn-pacote {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold-light);
+  transition: all 0.3s;
+}
+
+.btn-pacote:hover, .pacote-card.destaque .btn-pacote {
+  background: var(--gold);
+  color: var(--midnight);
+  border-color: var(--gold);
+}
+
+/* ════════════════════════════════════
+   DEPOIMENTOS
+════════════════════════════════════ */
+#depoimentos {
+  background: var(--midnight-soft);
+}
+
+.depo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 64px;
+}
+
+.depo-card {
+  background: rgba(255,255,255,0.02);
+  padding: 40px 32px;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  position: relative;
+}
+
+.depo-stars {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.depo-texto {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.depo-autor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.depo-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--midnight));
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--gold);
+}
+
+.depo-nome {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+}
+
+.depo-evento {
+  font-size: 12px;
+  color: rgba(201,168,76,0.5);
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════════════════════
+   PROCESSO
+════════════════════════════════════ */
+#processo {
+  background: var(--midnight);
+}
+
+.processo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 64px;
+  position: relative;
+}
+
+.processo-grid::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+}
+
+.passo {
+  padding: 0 24px;
+  text-align: center;
+  position: relative;
+}
+
+.passo-num {
+  width: 72px;
+  height: 72px;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  color: var(--gold);
+  position: relative;
+  z-index: 1;
+  background: var(--midnight);
+  transition: all 0.3s;
+}
+
+.passo:hover .passo-num {
+  background: var(--gold);
+  color: var(--midnight);
+  border-color: var(--gold);
+}
+
+.passo-titulo {
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+.passo-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.75;
+}
+
+/* ════════════════════════════════════
+   CTA / CONTATO
+════════════════════════════════════ */
+#contato {
+  background: var(--midnight-soft);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#contato::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(42,31,92,0.5) 0%, transparent 70%);
+}
+
+.contato-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.contato-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.0;
+  margin-bottom: 24px;
+}
+
+.contato-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contato-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.8;
+  margin-bottom: 56px;
+}
+
+.contato-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 44px;
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transition: all 0.3s;
+}
+
+.btn-whatsapp:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+}
+
+.contato-info {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding-top: 56px;
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+
+.info-item { text-align: center; }
+
+.info-label {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.info-val {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  color: rgba(255,255,255,0.7);
+}
+
+.info-val a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.info-val a:hover { color: var(--gold-light); }
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer {
+  background: var(--midnight);
+  padding: 48px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+
+.footer-logo {
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-logo span {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(201,168,76,0.35);
+  -webkit-text-fill-color: rgba(201,168,76,0.35);
+  text-transform: uppercase;
+  margin-top: -2px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--gold); }
+
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════════════
+   FLOATING WHATSAPP
+════════════════════════════════════ */
+.float-wa {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: all 0.3s;
+  animation: pulse-wa 3s ease-in-out infinite;
+}
+
+@keyframes pulse-wa {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7); }
+}
+
+.float-wa:hover {
+  background: #128C7E;
+  transform: scale(1.1);
+}
+
+.float-wa svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+/* ════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   MOBILE
+════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+
+  .section { padding: 80px 24px; }
+
+  .hero-content { padding: 0 24px; padding-top: 100px; }
+  .hero-logo-mark { display: none; }
+  .hero-title { font-size: clamp(40px, 10vw, 64px); }
+
+  .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+  .sobre-frame { aspect-ratio: 4/3; }
+
+  .servicos-grid, .pacotes-grid, .depo-grid { grid-template-columns: 1fr; }
+  .processo-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .processo-grid::before { display: none; }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .porto-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+  .porto-item:nth-child(2) { grid-column: span 1; }
+  .porto-item:nth-child(3) { grid-column: span 1; }
+  .porto-item:nth-child(4) { grid-column: span 1; }
+  .porto-item:nth-child(5) { grid-column: span 1; }
+
+  .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+  .contato-info { flex-direction: column; gap: 28px; }
+
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .sobre-valores { grid-template-columns: 1fr; }
+  .processo-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">
+    Encantarys
+    <span>Festas</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#pacotes">Pacotes</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5522988138206" target="_blank" class="nav-cta">Solicitar Orçamento</a>
+  <div class="nav-hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Nova Friburgo · RJ · Decoração & Eventos</div>
+    <h1 class="hero-title">
+      Transformamos<br>
+      momentos em<br>
+      <em>memórias eternas</em>
+    </h1>
+    <p class="hero-subtitle">
+      Cada festa é uma obra única. Da concepção ao último detalhe, criamos ambientes que encantam e histórias que ficam para sempre.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5522988138206?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20minha%20festa." target="_blank" class="btn-primary">
+        <span>✦ Quero minha festa dos sonhos</span>
+      </a>
+      <a href="#portfolio" class="btn-secondary">Ver portfólio →</a>
+    </div>
+  </div>
+
+  <div class="hero-logo-mark">
+    <div class="logo-circle">
+      <div class="logo-circle-inner">
+        <span class="logo-e">E</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section">
+  <div class="sobre-grid">
+    <div class="sobre-visual reveal">
+      <div class="sobre-frame">
+        <div class="sobre-frame-content">
+          <div class="sobre-frame-quote">"Cada detalhe<br>conta uma<br>história"</div>
+          <div class="sobre-frame-author">— Filosofia Encantarys</div>
+        </div>
+      </div>
+      <div class="sobre-tag-float">
+        <strong>100%</strong>
+        <span>Personalizado</span>
+      </div>
+    </div>
+
+    <div class="sobre-text reveal">
+      <span class="section-tag">Sobre a Encantarys</span>
+      <h2>
+        Nascemos para<br>
+        <em>encantar</em>
+      </h2>
+      <p>
+        A Encantarys Festas é uma empresa de decoração e organização de eventos sediada em Nova Friburgo, RJ. Trabalhamos com amor e precisão para que cada celebração reflita a essência única de quem a vive.
+      </p>
+      <p>
+        Do primeiro contato ao último balão, somos parceiros na construção de memórias que duram para sempre. Festas infantis, casamentos, aniversários, formaturas — nós transformamos qualquer espaço em um cenário de sonho.
+      </p>
+
+      <div class="sobre-valores">
+        <div class="valor">
+          <span class="valor-icon">✨</span>
+          <div class="valor-titulo">Exclusividade</div>
+          <div class="valor-desc">Cada projeto é único, criado sob medida para você.</div>
+        </div>
+        <div class="valor">
+          <span class="valor-icon">🌿</span>
+          <div class="valor-titulo">Cuidado</div>
+          <div class="valor-desc">Atenção obsessiva em cada detalhe do seu evento.</div>
+        </div>
+        <div class="valor">
+          <span class="valor-icon">💛</span>
+          <div class="valor-titulo">Paixão</div>
+          <div class="valor-desc">Amamos o que fazemos e isso aparece no resultado.</div>
+        </div>
+        <div class="valor">
+          <span class="valor-icon">🤝</span>
+          <div class="valor-titulo">Confiança</div>
+          <div class="valor-desc">Entregamos o que prometemos, sempre.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="section">
+  <span class="section-tag reveal">O que fazemos</span>
+  <h2 class="section-title reveal">Nossos <em>serviços</em></h2>
+  <p class="section-intro reveal">Especialistas em criar atmosferas únicas para cada tipo de celebração. Do planejamento ao dia perfeito.</p>
+
+  <div class="servicos-grid">
+    <div class="servico-card reveal">
+      <div class="servico-num">01</div>
+      <span class="servico-icon">🎈</span>
+      <h3 class="servico-titulo">Festas Infantis</h3>
+      <p class="servico-desc">Transformamos o imaginário das crianças em cenários mágicos e inesquecíveis.</p>
+      <ul class="servico-lista">
+        <li>Temáticas personalizadas</li>
+        <li>Decoração completa do espaço</li>
+        <li>Mesa do bolo e candy bar</li>
+        <li>Backdrop e painel fotográfico</li>
+      </ul>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">02</div>
+      <span class="servico-icon">🥂</span>
+      <h3 class="servico-titulo">Aniversários & Celebrações</h3>
+      <p class="servico-desc">De 15 anos a bodas douradas, cada aniversário merece ser grandioso.</p>
+      <ul class="servico-lista">
+        <li>Debutantes e 15 anos</li>
+        <li>Aniversários adultos</li>
+        <li>Bodas e celebrações especiais</li>
+        <li>Ambientação temática completa</li>
+      </ul>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">03</div>
+      <span class="servico-icon">💍</span>
+      <h3 class="servico-titulo">Casamentos & Formaturas</h3>
+      <p class="servico-desc">O dia mais especial da sua vida merece a produção mais especial do mundo.</p>
+      <ul class="servico-lista">
+        <li>Decoração de cerimônia e recepção</li>
+        <li>Arranjos florais personalizados</li>
+        <li>Mesas dos convidados</li>
+        <li>Iluminação cênica</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO -->
+<section id="portfolio" class="section">
+  <div class="portfolio-header">
+    <div>
+      <span class="section-tag reveal">Nossos trabalhos</span>
+      <h2 class="section-title reveal">Galeria de <em>encantos</em></h2>
+    </div>
+    <a href="https://wa.me/5522988138206?text=Olá!%20Quero%20ver%20mais%20fotos%20do%20portfólio." target="_blank" class="btn-secondary reveal">Ver portfólio completo →</a>
+  </div>
+
+  <div class="portfolio-grid reveal">
+    <div class="porto-item porto-item-1">
+      <div class="porto-bg">🌸</div>
+      <div class="porto-overlay">
+        <div class="porto-label">Princesa Encantada</div>
+        <div class="porto-tipo">Festa Infantil</div>
+      </div>
+    </div>
+    <div class="porto-item porto-item-2">
+      <div class="porto-bg">🌙</div>
+      <div class="porto-overlay">
+        <div class="porto-label">Noite Estrelada</div>
+        <div class="porto-tipo">15 Anos</div>
+      </div>
+    </div>
+    <div class="porto-item porto-item-3">
+      <div class="porto-bg">🦋</div>
+      <div class="porto-overlay">
+        <div class="porto-label">Jardim de Borboletas</div>
+        <div class="porto-tipo">Aniversário</div>
+      </div>
+    </div>
+    <div class="porto-item porto-item-4">
+      <div class="porto-bg">💐</div>
+      <div class="porto-overlay">
+        <div class="porto-label">Floral Romântico</div>
+        <div class="porto-tipo">Casamento</div>
+      </div>
+    </div>
+    <div class="porto-item porto-item-5">
+      <div class="porto-bg">🎓</div>
+      <div class="porto-overlay">
+        <div class="porto-label">Formatura 2024</div>
+        <div class="porto-tipo">Formatura</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACOTES -->
+<section id="pacotes" class="section">
+  <span class="section-tag reveal">Investimento</span>
+  <h2 class="section-title reveal">Nossos <em>pacotes</em></h2>
+  <p class="section-intro reveal">Opções para cada tipo de celebração. Todos os pacotes incluem atendimento personalizado do início ao fim.</p>
+
+  <div class="pacotes-grid">
+    <div class="pacote-card reveal">
+      <div class="pacote-nome">Essencial</div>
+      <div class="pacote-desc">Para celebrações intimistas com toque especial e todo carinho.</div>
+      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
+      <div class="pacote-preco-label">Orçamento personalizado</div>
+      <ul class="pacote-features">
+        <li>Decoração de mesa principal</li>
+        <li>Painel de fundo personalizado</li>
+        <li>Balões e enfeites temáticos</li>
+        <li>Consultoria de tema</li>
+        <li>Montagem e desmontagem</li>
+      </ul>
+      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Essencial.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
+    </div>
+
+    <div class="pacote-card destaque reveal">
+      <div class="pacote-badge">✦ Mais escolhido</div>
+      <div class="pacote-nome">Encantado</div>
+      <div class="pacote-desc">A experiência completa para uma festa que vai impressionar a todos.</div>
+      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
+      <div class="pacote-preco-label">Orçamento personalizado</div>
+      <ul class="pacote-features">
+        <li>Decoração completa do espaço</li>
+        <li>Mesa do bolo + candy bar</li>
+        <li>Painel e backdrop fotográfico</li>
+        <li>Arranjos florais</li>
+        <li>Iluminação cênica</li>
+        <li>Assessoria no dia do evento</li>
+        <li>Montagem e desmontagem</li>
+      </ul>
+      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Encantado.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
+    </div>
+
+    <div class="pacote-card reveal">
+      <div class="pacote-nome">Grandioso</div>
+      <div class="pacote-desc">Para os momentos mais extraordinários da vida. Sem limites para encantar.</div>
+      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
+      <div class="pacote-preco-label">Orçamento personalizado</div>
+      <ul class="pacote-features">
+        <li>Projeto personalizado completo</li>
+        <li>Decoração de todos os ambientes</li>
+        <li>Floração exuberante</li>
+        <li>Iluminação profissional</li>
+        <li>Coordenação completa do evento</li>
+        <li>Fornecedores parceiros indicados</li>
+        <li>Tudo incluso — do planejamento ao fim</li>
+      </ul>
+      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Grandioso.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" class="section">
+  <span class="section-tag reveal">O que dizem</span>
+  <h2 class="section-title reveal">Clientes que <em>encantamos</em></h2>
+
+  <div class="depo-grid">
+    <div class="depo-card reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-texto">"Minha filha ficou sem palavras ao ver a decoração. Cada cantinho era um conto de fadas. A Encantarys superou todas as expectativas!"</p>
+      <div class="depo-autor">
+        <div class="depo-avatar">A</div>
+        <div>
+          <div class="depo-nome">Ana Paula S.</div>
+          <div class="depo-evento">Festa da Valentina · 5 anos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="depo-card reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-texto">"Profissionalismo impecável do primeiro contato até o fim da festa. Resultado incrível, muito além do que eu imaginava. Recomendo demais!"</p>
+      <div class="depo-autor">
+        <div class="depo-avatar">M</div>
+        <div>
+          <div class="depo-nome">Marina R.</div>
+          <div class="depo-evento">Debutante · 15 anos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="depo-card reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-texto">"Confiei totalmente e fui surpreendida. O casamento foi um sonho realizado. Os detalhes eram perfeitos e os convidados não paravam de elogiar."</p>
+      <div class="depo-autor">
+        <div class="depo-avatar">C</div>
+        <div>
+          <div class="depo-nome">Camila e Rodrigo</div>
+          <div class="depo-evento">Casamento · Nov. 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo" class="section">
+  <span class="section-tag reveal">Como trabalhamos</span>
+  <h2 class="section-title reveal">Do sonho à <em>realidade</em></h2>
+  <p class="section-intro reveal">Um processo simples, pensado para que você relaxe e curta cada etapa da jornada até sua festa perfeita.</p>
+
+  <div class="processo-grid">
+    <div class="passo reveal">
+      <div class="passo-num">01</div>
+      <div class="passo-titulo">Contato</div>
+      <p class="passo-desc">Você nos conta seu sonho. Escutamos, entendemos e já começamos a criar.</p>
+    </div>
+    <div class="passo reveal">
+      <div class="passo-num">02</div>
+      <div class="passo-titulo">Proposta</div>
+      <p class="passo-desc">Montamos um projeto personalizado com referências, paleta e orçamento detalhado.</p>
+    </div>
+    <div class="passo reveal">
+      <div class="passo-num">03</div>
+      <div class="passo-titulo">Produção</div>
+      <p class="passo-desc">Com tudo aprovado, cuidamos de cada peça, flor e detalhe com carinho e precisão.</p>
+    </div>
+    <div class="passo reveal">
+      <div class="passo-num">04</div>
+      <div class="passo-titulo">Encantamento</div>
+      <p class="passo-desc">No grande dia, você só precisa chegar e se encantar. A mágica já estará feita.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section">
+  <div class="contato-content">
+    <span class="section-tag reveal">Vamos conversar</span>
+    <h2 class="contato-title reveal">
+      Sua festa<br>
+      <em>começa aqui</em>
+    </h2>
+    <p class="contato-sub reveal">Entre em contato agora mesmo e dê o primeiro passo para a celebração mais especial da sua vida.</p>
+
+    <div class="contato-actions reveal">
+      <a href="https://wa.me/5522988138206?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20minha%20festa." target="_blank" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chamar no WhatsApp
+      </a>
+      <a href="https://instagram.com/encantarysfestas" target="_blank" class="btn-secondary">
+        Ver no Instagram →
+      </a>
+    </div>
+
+    <div class="contato-info reveal">
+      <div class="info-item">
+        <span class="info-label">Telefone / WhatsApp</span>
+        <div class="info-val"><a href="https://wa.me/5522988138206">(22) 98813-8206</a></div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Localização</span>
+        <div class="info-val">Nova Friburgo, RJ</div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Site</span>
+        <div class="info-val"><a href="https://encantarys.com.br">encantarys.com.br</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    Encantarys
+    <span>Festas</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#pacotes">Pacotes</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Encantarys Festas · Nova Friburgo, RJ</div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/5522988138206?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="float-wa" title="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+// NAV scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('main-nav');
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Mobile menu
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  const cta = document.querySelector('.nav-cta');
+  if (links) {
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'fixed';
+    links.style.top = '70px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'rgba(13,10,26,0.98)';
+    links.style.padding = '24px';
+    links.style.gap = '20px';
+    links.style.zIndex = '998';
+  }
+}
+
+// Particle system
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + 60 + '%';
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
