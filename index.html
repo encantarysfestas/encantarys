@@ -4,1773 +4,555 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Encantarys Festas — Decoração & Eventos em Nova Friburgo</title>
-<meta name="description" content="Transformamos cada evento em uma memória inesquecível. Decoração e planejamento de festas em Nova Friburgo, RJ.">
+<meta name="description" content="Alugue e monte sua decoração de festa em Nova Friburgo. Combos a partir de R$50. Personalize do seu jeito!">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --midnight: #0d0a1a;
-  --midnight-soft: #1a1628;
-  --violet: #2a1f5c;
-  --gold: #c9a84c;
-  --gold-light: #e8cc7a;
-  --gold-pale: #f5edd6;
-  --cream: #faf7f2;
-  --cream-mid: #f0ebe1;
-  --ink: #1a1714;
-  --ink-soft: #3d3830;
-  --white: #ffffff;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 300;
-  background: var(--midnight);
-  color: var(--cream);
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-
-/* ── CURSOR ── */
-*, *:hover { cursor: default; }
-a, button { cursor: pointer !important; }
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--midnight); }
-::-webkit-scrollbar-thumb { background: var(--gold); }
-
-/* ════════════════════════════════════
-   NAVIGATION
-════════════════════════════════════ */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 999;
-  padding: 24px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.4s ease;
-}
-
-nav.scrolled {
-  background: rgba(13,10,26,0.96);
-  backdrop-filter: blur(12px);
-  padding: 16px 60px;
-  border-bottom: 1px solid rgba(201,168,76,0.12);
-}
-
-.nav-logo {
-  font-family: 'Cinzel', serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 3px;
-  text-decoration: none;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.nav-logo span {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 300;
-  font-size: 9px;
-  letter-spacing: 5px;
-  color: rgba(201,168,76,0.5);
-  -webkit-text-fill-color: rgba(201,168,76,0.5);
-  text-transform: uppercase;
-  margin-top: -2px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 40px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover { color: var(--gold-light); }
-
-.nav-cta {
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  padding: 12px 28px;
-  border: 1px solid rgba(201,168,76,0.4);
-  color: var(--gold-light) !important;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.nav-cta:hover {
-  background: var(--gold);
-  color: var(--midnight) !important;
-  border-color: var(--gold);
-}
-
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.nav-hamburger span {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--gold);
-  transition: all 0.3s;
-}
-
-/* ════════════════════════════════════
-   HERO
-════════════════════════════════════ */
-#hero {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(42,31,92,0.6) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 60%),
-    var(--midnight);
-}
-
-.hero-particles {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: var(--gold);
-  border-radius: 50%;
-  opacity: 0;
-  animation: float-particle linear infinite;
-}
-
-@keyframes float-particle {
-  0% { opacity: 0; transform: translateY(0) scale(0); }
-  10% { opacity: 0.8; transform: translateY(-20px) scale(1); }
-  90% { opacity: 0.3; transform: translateY(-200px) scale(0.5); }
-  100% { opacity: 0; transform: translateY(-240px) scale(0); }
-}
-
-.hero-lines {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 0 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  padding-top: 120px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 11px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 32px;
-  opacity: 0;
-  animation: fade-up 0.8s 0.3s ease forwards;
-}
-
-.hero-badge::before {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: var(--gold);
-}
-
-.hero-badge::after {
-  content: '✦';
-  font-size: 8px;
-}
-
-.hero-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(52px, 8vw, 100px);
-  font-weight: 300;
-  line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 32px;
-  opacity: 0;
-  animation: fade-up 0.8s 0.5s ease forwards;
-}
-
-.hero-title em {
-  font-style: italic;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-subtitle {
-  font-size: 17px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.45);
-  max-width: 520px;
-  line-height: 1.85;
-  margin-bottom: 56px;
-  opacity: 0;
-  animation: fade-up 0.8s 0.7s ease forwards;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  opacity: 0;
-  animation: fade-up 0.8s 0.9s ease forwards;
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 40px;
-  background: var(--gold);
-  color: var(--midnight);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold-light);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
-.btn-primary:hover::before { transform: translateX(0); }
-.btn-primary span { position: relative; z-index: 1; }
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 18px 32px;
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.6);
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  transition: all 0.3s;
-}
-
-.btn-secondary:hover {
-  border-color: var(--gold);
-  color: var(--gold-light);
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 0;
-  animation: fade-in 1s 1.4s ease forwards;
-}
-
-.hero-scroll span {
-  font-size: 9px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-}
-
-.scroll-line {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  animation: scroll-anim 2s ease-in-out infinite;
-}
-
-@keyframes scroll-anim {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.2); }
-}
-
-.hero-logo-mark {
-  position: absolute;
-  right: 60px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 320px;
-  height: 320px;
-  opacity: 0;
-  animation: fade-in 1.2s 1s ease forwards;
-}
-
-.logo-circle {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 60%, transparent 100%);
-  border: 1px solid rgba(201,168,76,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: rotate-slow 30s linear infinite;
-  position: relative;
-}
-
-@keyframes rotate-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.logo-circle-inner {
-  width: 80%;
-  height: 80%;
-  border-radius: 50%;
-  background: rgba(201,168,76,0.08);
-  border: 1px solid rgba(201,168,76,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: rotate-slow 30s linear infinite reverse;
-}
-
-.logo-e {
-  font-family: 'Cinzel', serif;
-  font-size: 120px;
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: rotate-slow 30s linear infinite;
-  line-height: 1;
-}
-
-/* ════════════════════════════════════
-   SECTION SHARED
-════════════════════════════════════ */
-.section {
-  padding: 120px 60px;
-  position: relative;
-}
-
-.section-tag {
-  font-size: 11px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-  display: block;
-}
-
-.section-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(36px, 5vw, 60px);
-  font-weight: 300;
-  line-height: 1.1;
-  color: var(--white);
-  margin-bottom: 20px;
-}
-
-.section-title em {
-  font-style: italic;
-  color: var(--gold-light);
-}
-
-.section-title.dark { color: var(--ink); }
-.section-title.dark em { color: var(--gold); }
-
-.section-intro {
-  font-size: 17px;
-  color: rgba(255,255,255,0.45);
-  max-width: 580px;
-  line-height: 1.85;
-  margin-bottom: 64px;
-}
-
-.section-intro.dark { color: var(--ink-soft); }
-
-.ornament {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin: 64px 0;
-}
-
-.ornament-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
-.ornament-mark { color: var(--gold); font-family: 'Fraunces', serif; font-size: 20px; }
-
-/* ════════════════════════════════════
-   MANIFESTO / ABOUT
-════════════════════════════════════ */
-#sobre {
-  background: var(--midnight-soft);
-  overflow: hidden;
-}
-
-.sobre-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-.sobre-visual {
-  position: relative;
-}
-
-.sobre-frame {
-  width: 100%;
-  aspect-ratio: 3/4;
-  background: linear-gradient(135deg, var(--violet), var(--midnight));
-  border: 1px solid rgba(201,168,76,0.15);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sobre-frame::before {
-  content: '';
-  position: absolute;
-  inset: 20px;
-  border: 1px solid rgba(201,168,76,0.08);
-  pointer-events: none;
-}
-
-.sobre-frame-content {
-  text-align: center;
-  padding: 40px;
-}
-
-.sobre-frame-quote {
-  font-family: 'Fraunces', serif;
-  font-size: 36px;
-  font-style: italic;
-  color: rgba(201,168,76,0.6);
-  line-height: 1.3;
-  margin-bottom: 24px;
-}
-
-.sobre-frame-author {
-  font-size: 11px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-}
-
-.sobre-tag-float {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  background: var(--gold);
-  padding: 20px 28px;
-  color: var(--midnight);
-}
-
-.sobre-tag-float strong {
-  font-family: 'Fraunces', serif;
-  font-size: 32px;
-  font-weight: 600;
-  display: block;
-  line-height: 1;
-}
-
-.sobre-tag-float span {
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
-.sobre-text h2 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(36px, 4vw, 52px);
-  font-weight: 300;
-  line-height: 1.15;
-  color: var(--white);
-  margin-bottom: 28px;
-}
-
-.sobre-text h2 em {
-  font-style: italic;
-  color: var(--gold-light);
-}
-
-.sobre-text p {
-  font-size: 16px;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.9;
-  margin-bottom: 20px;
-}
-
-.sobre-valores {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  margin-top: 40px;
-}
-
-.valor {
-  background: rgba(201,168,76,0.05);
-  padding: 24px 20px;
-  border-top: 2px solid rgba(201,168,76,0.2);
-}
-
-.valor-icon {
-  font-size: 20px;
-  margin-bottom: 10px;
-  display: block;
-}
-
-.valor-titulo {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-
-.valor-desc {
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.7;
-}
-
-/* ════════════════════════════════════
-   SERVIÇOS
-════════════════════════════════════ */
-#servicos {
-  background: var(--midnight);
-}
-
-.servicos-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-
-.servico-card {
-  background: rgba(255,255,255,0.02);
-  padding: 48px 36px;
-  border-top: 1px solid rgba(201,168,76,0.1);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.servico-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-}
-
-.servico-card:hover::before { transform: scaleX(1); }
-
-.servico-card:hover {
-  background: rgba(201,168,76,0.04);
-  transform: translateY(-4px);
-}
-
-.servico-num {
-  font-family: 'Fraunces', serif;
-  font-size: 72px;
-  font-weight: 300;
-  color: rgba(201,168,76,0.08);
-  line-height: 1;
-  margin-bottom: 16px;
-}
-
-.servico-icon {
-  font-size: 28px;
-  margin-bottom: 20px;
-  display: block;
-}
-
-.servico-titulo {
-  font-family: 'Fraunces', serif;
-  font-size: 26px;
-  font-weight: 300;
-  color: var(--white);
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
-
-.servico-desc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.8;
-  margin-bottom: 24px;
-}
-
-.servico-lista {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.servico-lista li {
-  font-size: 13px;
-  color: rgba(201,168,76,0.6);
-  padding-left: 16px;
-  position: relative;
-}
-
-.servico-lista li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
-  color: rgba(201,168,76,0.3);
-}
-
-/* ════════════════════════════════════
-   GALERIA / PORTFOLIO
-════════════════════════════════════ */
-#portfolio {
-  background: var(--midnight-soft);
-}
-
-.portfolio-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 64px;
-}
-
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(2, 260px);
-  gap: 3px;
-}
-
-.porto-item {
-  background: var(--violet);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.porto-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
-.porto-item:nth-child(2) { grid-column: span 4; }
-.porto-item:nth-child(3) { grid-column: span 3; }
-.porto-item:nth-child(4) { grid-column: span 3; }
-.porto-item:nth-child(5) { grid-column: span 4; }
-
-.porto-bg {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 72px;
-  opacity: 0.15;
-  transition: all 0.6s ease;
-}
-
-.porto-item:hover .porto-bg { transform: scale(1.1); opacity: 0.25; }
-
-.porto-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(13,10,26,0.9) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 28px;
-}
-
-.porto-item:hover .porto-overlay { opacity: 1; }
-
-.porto-label {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-
-.porto-tipo {
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.porto-item-1 { background: linear-gradient(135deg, #2a1f5c, #1a1628); }
-.porto-item-2 { background: linear-gradient(135deg, #3d2a5c, #2a1f5c); }
-.porto-item-3 { background: linear-gradient(135deg, #1a1628, #2a1f5c); }
-.porto-item-4 { background: linear-gradient(135deg, #2a1f5c, #0d0a1a); }
-.porto-item-5 { background: linear-gradient(135deg, #1a1628, #3d2a5c); }
-
-/* ════════════════════════════════════
-   PACOTES / PRICING
-════════════════════════════════════ */
-#pacotes {
-  background: var(--midnight);
-}
-
-.pacotes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 64px;
-}
-
-.pacote-card {
-  background: rgba(255,255,255,0.02);
-  padding: 48px 36px;
-  border: 1px solid rgba(201,168,76,0.08);
-  position: relative;
-  transition: all 0.4s ease;
-}
-
-.pacote-card.destaque {
-  background: linear-gradient(135deg, rgba(42,31,92,0.5), rgba(201,168,76,0.05));
-  border-color: rgba(201,168,76,0.3);
-}
-
-.pacote-badge {
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gold);
-  color: var(--midnight);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  padding: 6px 20px;
-  white-space: nowrap;
-}
-
-.pacote-nome {
-  font-family: 'Cinzel', serif;
-  font-size: 18px;
-  letter-spacing: 2px;
-  color: var(--gold-light);
-  margin-bottom: 8px;
-  margin-top: 24px;
-}
-
-.pacote-desc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.35);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-.pacote-preco {
-  font-family: 'Fraunces', serif;
-  font-size: 48px;
-  font-weight: 300;
-  color: var(--white);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.pacote-preco sup {
-  font-size: 22px;
-  vertical-align: super;
-  color: var(--gold);
-}
-
-.pacote-preco-label {
-  font-size: 12px;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 0.1em;
-  margin-bottom: 36px;
-}
-
-.pacote-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.pacote-features li {
-  font-size: 14px;
-  color: rgba(255,255,255,0.5);
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.pacote-features li::before {
-  content: '✦';
-  color: var(--gold);
-  font-size: 8px;
-  flex-shrink: 0;
-  margin-top: 5px;
-}
-
-.btn-pacote {
-  display: block;
-  width: 100%;
-  padding: 16px;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 1px solid rgba(201,168,76,0.3);
-  color: var(--gold-light);
-  transition: all 0.3s;
-}
-
-.btn-pacote:hover, .pacote-card.destaque .btn-pacote {
-  background: var(--gold);
-  color: var(--midnight);
-  border-color: var(--gold);
-}
-
-/* ════════════════════════════════════
-   DEPOIMENTOS
-════════════════════════════════════ */
-#depoimentos {
-  background: var(--midnight-soft);
-}
-
-.depo-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 64px;
-}
-
-.depo-card {
-  background: rgba(255,255,255,0.02);
-  padding: 40px 32px;
-  border-top: 1px solid rgba(201,168,76,0.15);
-  position: relative;
-}
-
-.depo-stars {
-  color: var(--gold);
-  font-size: 14px;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
-  display: block;
-}
-
-.depo-texto {
-  font-family: 'Fraunces', serif;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.6;
-  margin-bottom: 28px;
-}
-
-.depo-autor {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.depo-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--violet), var(--midnight));
-  border: 1px solid rgba(201,168,76,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  color: var(--gold);
-}
-
-.depo-nome {
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.7);
-}
-
-.depo-evento {
-  font-size: 12px;
-  color: rgba(201,168,76,0.5);
-  letter-spacing: 0.1em;
-}
-
-/* ════════════════════════════════════
-   PROCESSO
-════════════════════════════════════ */
-#processo {
-  background: var(--midnight);
-}
-
-.processo-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  margin-top: 64px;
-  position: relative;
-}
-
-.processo-grid::before {
-  content: '';
-  position: absolute;
-  top: 36px;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.3;
-}
-
-.passo {
-  padding: 0 24px;
-  text-align: center;
-  position: relative;
-}
-
-.passo-num {
-  width: 72px;
-  height: 72px;
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 28px;
-  font-family: 'Fraunces', serif;
-  font-size: 28px;
-  color: var(--gold);
-  position: relative;
-  z-index: 1;
-  background: var(--midnight);
-  transition: all 0.3s;
-}
-
-.passo:hover .passo-num {
-  background: var(--gold);
-  color: var(--midnight);
-  border-color: var(--gold);
-}
-
-.passo-titulo {
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  margin-bottom: 12px;
-}
-
-.passo-desc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.35);
-  line-height: 1.75;
-}
-
-/* ════════════════════════════════════
-   CTA / CONTATO
-════════════════════════════════════ */
-#contato {
-  background: var(--midnight-soft);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-#contato::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(42,31,92,0.5) 0%, transparent 70%);
-}
-
-.contato-content {
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.contato-title {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(44px, 7vw, 80px);
-  font-weight: 300;
-  color: var(--white);
-  line-height: 1.0;
-  margin-bottom: 24px;
-}
-
-.contato-title em {
-  font-style: italic;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.contato-sub {
-  font-size: 17px;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.8;
-  margin-bottom: 56px;
-}
-
-.contato-actions {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 64px;
-}
-
-.btn-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px 44px;
-  background: #25D366;
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  transition: all 0.3s;
-}
-
-.btn-whatsapp:hover {
-  background: #128C7E;
-  transform: translateY(-2px);
-}
-
-.contato-info {
-  display: flex;
-  justify-content: center;
-  gap: 60px;
-  padding-top: 56px;
-  border-top: 1px solid rgba(201,168,76,0.1);
-}
-
-.info-item { text-align: center; }
-
-.info-label {
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: rgba(201,168,76,0.5);
-  margin-bottom: 8px;
-  display: block;
-}
-
-.info-val {
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  color: rgba(255,255,255,0.7);
-}
-
-.info-val a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.info-val a:hover { color: var(--gold-light); }
-
-/* ════════════════════════════════════
-   FOOTER
-════════════════════════════════════ */
-footer {
-  background: var(--midnight);
-  padding: 48px 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(201,168,76,0.08);
-}
-
-.footer-logo {
-  font-family: 'Cinzel', serif;
-  font-weight: 900;
-  font-size: 18px;
-  letter-spacing: 3px;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.footer-logo span {
-  display: block;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 300;
-  font-size: 9px;
-  letter-spacing: 4px;
-  color: rgba(201,168,76,0.35);
-  -webkit-text-fill-color: rgba(201,168,76,0.35);
-  text-transform: uppercase;
-  margin-top: -2px;
-}
-
-.footer-links {
-  display: flex;
-  gap: 32px;
-  list-style: none;
-}
-
-.footer-links a {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover { color: var(--gold); }
-
-.footer-copy {
-  font-size: 12px;
-  color: rgba(255,255,255,0.2);
-}
-
-/* ════════════════════════════════════
-   FLOATING WHATSAPP
-════════════════════════════════════ */
-.float-wa {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 1000;
-  width: 56px;
-  height: 56px;
-  background: #25D366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: all 0.3s;
-  animation: pulse-wa 3s ease-in-out infinite;
-}
-
-@keyframes pulse-wa {
-  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
-  50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7); }
-}
-
-.float-wa:hover {
-  background: #128C7E;
-  transform: scale(1.1);
-}
-
-.float-wa svg {
-  width: 28px;
-  height: 28px;
-  fill: white;
-}
-
-/* ════════════════════════════════════
-   ANIMATIONS
-════════════════════════════════════ */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(32px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ════════════════════════════════════
-   MOBILE
-════════════════════════════════════ */
-@media (max-width: 900px) {
-  nav { padding: 20px 24px; }
-  nav.scrolled { padding: 14px 24px; }
-  .nav-links, .nav-cta { display: none; }
-  .nav-hamburger { display: flex; }
-
-  .section { padding: 80px 24px; }
-
-  .hero-content { padding: 0 24px; padding-top: 100px; }
-  .hero-logo-mark { display: none; }
-  .hero-title { font-size: clamp(40px, 10vw, 64px); }
-
-  .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
-  .sobre-frame { aspect-ratio: 4/3; }
-
-  .servicos-grid, .pacotes-grid, .depo-grid { grid-template-columns: 1fr; }
-  .processo-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .processo-grid::before { display: none; }
-
-  .portfolio-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-  }
-  .porto-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-  .porto-item:nth-child(2) { grid-column: span 1; }
-  .porto-item:nth-child(3) { grid-column: span 1; }
-  .porto-item:nth-child(4) { grid-column: span 1; }
-  .porto-item:nth-child(5) { grid-column: span 1; }
-
-  .portfolio-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-
-  .contato-info { flex-direction: column; gap: 28px; }
-
-  footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
-  .footer-links { flex-wrap: wrap; justify-content: center; }
-
-  .hero-actions { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 600px) {
-  .sobre-valores { grid-template-columns: 1fr; }
-  .processo-grid { grid-template-columns: 1fr; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--midnight:#0d0a1a;--midnight-soft:#1a1628;--violet:#2a1f5c;--gold:#c9a84c;--gold-light:#e8cc7a;--cream:#faf7f2;--ink:#1a1714;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--midnight);color:var(--cream);line-height:1.7;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s;}
+nav.scrolled{background:rgba(13,10,26,0.97);backdrop-filter:blur(12px);padding:13px 60px;border-bottom:1px solid rgba(201,168,76,0.12);}
+.nav-logo{font-family:'Cinzel',serif;font-weight:900;font-size:18px;letter-spacing:3px;text-decoration:none;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-logo span{display:block;font-family:'Outfit',sans-serif;font-size:9px;letter-spacing:5px;color:rgba(201,168,76,0.45);-webkit-text-fill-color:rgba(201,168,76,0.45);text-transform:uppercase;margin-top:-3px;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.38);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold-light);}
+.nav-cta{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;padding:10px 24px;border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);text-decoration:none;transition:all 0.3s;}
+.nav-cta:hover{background:var(--gold);color:var(--midnight);}
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.nav-ham span{display:block;width:22px;height:1px;background:var(--gold);}
+
+#hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(42,31,92,0.65) 0%,transparent 70%),var(--midnight);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.025) 1px,transparent 1px);background-size:72px 72px;}
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:float-p linear infinite;}
+@keyframes float-p{0%{opacity:0;transform:translateY(0) scale(0);}10%{opacity:.6;}90%{opacity:.1;transform:translateY(-200px);}100%{opacity:0;}}
+.hero-content{position:relative;z-index:2;padding:140px 60px 80px;max-width:58%;}
+.hero-badge{display:inline-flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.48em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;animation:fade-up .8s .3s ease forwards;}
+.hero-badge::before{content:'';display:block;width:32px;height:1px;background:var(--gold);}
+h1.hero-title{font-family:'Fraunces',serif;font-size:clamp(44px,6.5vw,88px);font-weight:300;line-height:1.0;color:#fff;margin-bottom:22px;opacity:0;animation:fade-up .8s .5s ease forwards;}
+h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.42);max-width:440px;line-height:1.85;margin-bottom:28px;opacity:0;animation:fade-up .8s .7s ease forwards;}
+.hero-price{display:flex;align-items:center;gap:12px;margin-bottom:36px;opacity:0;animation:fade-up .8s .75s ease forwards;}
+.hero-price-label{display:flex;flex-direction:column;gap:1px;}
+.hero-price-from{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);white-space:nowrap;}
+.hero-price-val{font-family:'Fraunces',serif;font-size:48px;font-weight:300;color:var(--gold-light);line-height:1;}
+.hero-price-note{font-size:12px;color:rgba(255,255,255,.3);white-space:nowrap;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fade-up .8s .9s ease forwards;}
+.btn-gold{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;background:var(--gold);color:var(--midnight);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;transition:all .3s;position:relative;overflow:hidden;}
+.btn-gold::before{content:'';position:absolute;inset:0;background:var(--gold-light);transform:translateX(-100%);transition:transform .35s;}
+.btn-gold:hover::before{transform:translateX(0);}
+.btn-gold span{position:relative;z-index:1;}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:16px 24px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);text-decoration:none;font-size:11px;letter-spacing:.22em;text-transform:uppercase;transition:all .3s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-light);}
+.hero-strip{position:absolute;right:0;top:0;bottom:0;width:40%;display:grid;grid-template-rows:1fr 1fr 1fr;gap:2px;opacity:0;animation:fade-in 1.2s 1s ease forwards;}
+.strip-photo{overflow:hidden;position:relative;}
+.strip-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:all .5s;}
+.strip-photo:hover img{filter:brightness(.9);transform:scale(1.03);}
+.strip-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--midnight) 0%,transparent 50%);}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fade-in 1s 1.6s ease forwards;}
+.hero-scroll span{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.2);}
+.scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sc 2s ease-in-out infinite;}
+@keyframes sc{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+.section{padding:96px 60px;}
+.stag{font-size:11px;letter-spacing:.48em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.stitle{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,52px);font-weight:300;line-height:1.1;color:#fff;margin-bottom:16px;}
+.stitle em{font-style:italic;color:var(--gold-light);}
+.sintro{font-size:15px;color:rgba(255,255,255,.4);max-width:540px;line-height:1.88;margin-bottom:48px;}
+.reveal{opacity:0;transform:translateY(32px);transition:all .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+#sobre{background:var(--midnight-soft);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.sobre-photos{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.sphoto{overflow:hidden;aspect-ratio:3/4;}
+.sphoto:first-child{grid-row:span 2;aspect-ratio:auto;}
+.sphoto img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.sphoto:hover img{transform:scale(1.04);}
+.sobre-text{font-size:14px;color:rgba(255,255,255,.44);line-height:1.9;margin-bottom:12px;}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+.pill{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:6px 16px;border:1px solid rgba(201,168,76,.25);}
+
+#combos{background:var(--midnight);}
+.combo-tabs{display:flex;margin-bottom:40px;border-bottom:1px solid rgba(201,168,76,.1);overflow-x:auto;}
+.combo-tab{font-size:11px;letter-spacing:.25em;text-transform:uppercase;padding:13px 26px;color:rgba(255,255,255,.3);cursor:pointer;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .3s;background:none;font-family:'Outfit',sans-serif;white-space:nowrap;}
+.combo-tab.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+.combo-panel{display:none;}
+.combo-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.combo-panel.active.single{grid-template-columns:1fr;max-width:640px;}
+.ccard{background:rgba(255,255,255,.025);border:1px solid rgba(201,168,76,.07);overflow:hidden;transition:all .35s;position:relative;}
+.ccard:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.ccard-badge{position:absolute;top:0;left:0;right:0;text-align:center;background:var(--gold);color:var(--midnight);font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;padding:5px;z-index:2;}
+.ccard-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;height:210px;}
+.ccard-gallery.duo{grid-template-columns:1fr 1fr;}
+.ccard-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.ccard-gallery img:hover{transform:scale(1.05);}
+.ccard-body{padding:24px 22px 28px;}
+.ccard-nome{font-family:'Cinzel',serif;font-size:15px;letter-spacing:2px;color:var(--gold-light);margin-bottom:5px;}
+.ccard-desc{font-size:13px;color:rgba(255,255,255,.35);line-height:1.65;margin-bottom:18px;}
+.ccard-items{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.ccard-items li{font-size:12px;color:rgba(255,255,255,.48);display:flex;gap:8px;}
+.ccard-items li::before{content:'✦';color:var(--gold);font-size:7px;flex-shrink:0;margin-top:5px;}
+.ccard-preco{display:flex;align-items:baseline;gap:5px;margin-bottom:8px;}
+.ccard-cur{font-size:14px;color:var(--gold);margin-top:5px;}
+.ccard-val{font-family:'Fraunces',serif;font-size:38px;font-weight:300;color:#fff;line-height:1;}
+.ccard-pers{font-size:12px;color:rgba(201,168,76,.65);background:rgba(201,168,76,.06);border-left:2px solid rgba(201,168,76,.3);padding:8px 12px;margin-bottom:18px;line-height:1.5;}
+.btn-combo{display:block;width:100%;padding:13px;text-align:center;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(201,168,76,.28);color:var(--gold-light);transition:all .3s;}
+.btn-combo:hover{background:var(--gold);color:var(--midnight);}
+.pers-banner{background:linear-gradient(135deg,rgba(42,31,92,.5),rgba(201,168,76,.07));border:1px solid rgba(201,168,76,.18);padding:36px 44px;margin-top:16px;display:flex;align-items:center;gap:32px;}
+.pb-icon{font-size:36px;flex-shrink:0;}
+.pb-text h3{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:#fff;margin-bottom:6px;}
+.pb-text h3 em{font-style:italic;color:var(--gold-light);}
+.pb-text p{font-size:13px;color:rgba(255,255,255,.42);line-height:1.7;}
+.pb-price{flex-shrink:0;text-align:center;background:var(--gold);color:var(--midnight);padding:18px 24px;}
+.pb-price strong{font-family:'Fraunces',serif;font-size:34px;font-weight:600;display:block;line-height:1;}
+.pb-price span{font-size:10px;letter-spacing:.2em;text-transform:uppercase;}
+.entrega-banner{background:rgba(255,255,255,.02);border:1px solid rgba(201,168,76,.1);padding:22px 36px;margin-top:10px;display:flex;align-items:center;gap:20px;}
+.entrega-banner p{font-size:13px;color:rgba(255,255,255,.42);line-height:1.7;}
+.entrega-banner strong{color:rgba(255,255,255,.7);}
+
+#galeria{background:var(--midnight-soft);}
+.galeria-tabs{display:flex;margin-bottom:36px;border-bottom:1px solid rgba(201,168,76,.1);overflow-x:auto;}
+.galeria-tab{font-size:11px;letter-spacing:.22em;text-transform:uppercase;padding:11px 22px;color:rgba(255,255,255,.3);cursor:pointer;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .3s;background:none;font-family:'Outfit',sans-serif;white-space:nowrap;}
+.galeria-tab.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+.galeria-panel{display:none;}
+.galeria-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.gitem{overflow:hidden;position:relative;aspect-ratio:3/4;cursor:pointer;}
+.gitem img{width:100%;height:100%;object-fit:cover;filter:brightness(.82);transition:all .5s;}
+.gitem:hover img{transform:scale(1.05);filter:brightness(1);}
+.gitem-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,10,26,.85) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;}
+.gitem:hover .gitem-overlay{opacity:1;}
+.gitem-label{font-family:'Fraunces',serif;font-size:16px;color:#fff;margin-bottom:2px;}
+.gitem-tipo{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+
+#processo{background:var(--midnight);}
+.processo-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:52px;position:relative;}
+.processo-steps::before{content:'';position:absolute;top:33px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent);}
+.pstep{padding:0 16px;text-align:center;}
+.pstep-num{width:66px;height:66px;border:1px solid rgba(201,168,76,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-family:'Fraunces',serif;font-size:24px;color:var(--gold);background:var(--midnight);position:relative;z-index:1;transition:all .3s;}
+.pstep:hover .pstep-num{background:var(--gold);color:var(--midnight);}
+.pstep-titulo{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;}
+.pstep-desc{font-size:13px;color:rgba(255,255,255,.32);line-height:1.7;}
+
+#depoimentos{background:var(--midnight-soft);}
+.depo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;margin-top:48px;}
+.depo{background:rgba(255,255,255,.02);padding:32px 28px;border-top:2px solid rgba(201,168,76,.14);}
+.depo-stars{color:var(--gold);font-size:12px;letter-spacing:3px;margin-bottom:16px;display:block;}
+.depo-txt{font-family:'Fraunces',serif;font-size:17px;font-style:italic;font-weight:300;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:22px;}
+.depo-aut{display:flex;align-items:center;gap:12px;}
+.depo-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--midnight));border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);flex-shrink:0;}
+.depo-nome{font-size:13px;font-weight:500;color:rgba(255,255,255,.6);}
+.depo-ev{font-size:11px;color:rgba(201,168,76,.45);}
+
+#contato{background:var(--midnight);text-align:center;position:relative;overflow:hidden;}
+#contato::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(42,31,92,.45) 0%,transparent 70%);}
+.contato-content{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.contato-title{font-family:'Fraunces',serif;font-size:clamp(36px,5.5vw,70px);font-weight:300;color:#fff;line-height:1.0;margin-bottom:16px;}
+.contato-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.contato-sub{font-size:15px;color:rgba(255,255,255,.36);line-height:1.85;margin-bottom:40px;}
+.contato-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:#25D366;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:all .3s;}
+.btn-wa:hover{background:#128C7E;transform:translateY(-2px);}
+.contato-info{display:flex;justify-content:center;gap:48px;padding-top:40px;border-top:1px solid rgba(201,168,76,.08);flex-wrap:wrap;}
+.cinfo-label{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:rgba(201,168,76,.4);margin-bottom:5px;display:block;}
+.cinfo-val{font-family:'Fraunces',serif;font-size:18px;color:rgba(255,255,255,.6);}
+.cinfo-val a{color:inherit;text-decoration:none;}
+.cinfo-val a:hover{color:var(--gold-light);}
+
+footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,.07);flex-wrap:wrap;gap:14px;}
+.foot-logo{font-family:'Cinzel',serif;font-weight:900;font-size:16px;letter-spacing:3px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.foot-logo span{display:block;font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:4px;color:rgba(201,168,76,.3);-webkit-text-fill-color:rgba(201,168,76,.3);text-transform:uppercase;margin-top:-2px;}
+.foot-links{display:flex;gap:22px;list-style:none;flex-wrap:wrap;}
+.foot-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;}
+.foot-links a:hover{color:var(--gold);}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.15);}
+
+.float-wa{position:fixed;bottom:26px;right:26px;z-index:1000;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:all .3s;animation:pulse-wa 3s ease-in-out infinite;}
+@keyframes pulse-wa{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.35);}50%{box-shadow:0 4px 38px rgba(37,211,102,.65);}}
+.float-wa:hover{background:#128C7E;transform:scale(1.1);}
+.float-wa svg{width:25px;height:25px;fill:white;}
+
+@keyframes fade-up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fade-in{from{opacity:0;}to{opacity:1;}}
+
+@media(max-width:900px){
+  nav{padding:16px 22px;}nav.scrolled{padding:11px 22px;}
+  .nav-links,.nav-cta{display:none;}.nav-ham{display:flex;}
+  .section{padding:64px 22px;}
+  .hero-content{padding:100px 22px 80px;max-width:100%;}
+  .hero-strip{display:none;}
+  .hero-scroll{display:none;}
+  .sobre-grid{grid-template-columns:1fr;gap:36px;}
+  .sobre-photos{grid-template-columns:1fr 1fr;}
+  .sobre-photos .sphoto:first-child{grid-row:auto;aspect-ratio:3/4;}
+  .combo-panel.active,.combo-panel.active.single{grid-template-columns:1fr;}
+  .galeria-panel.active{grid-template-columns:1fr 1fr;}
+  .processo-steps{grid-template-columns:1fr 1fr;gap:32px;}
+  .processo-steps::before{display:none;}
+  .depo-grid{grid-template-columns:1fr;}
+  .contato-info{gap:24px;}
+  footer{flex-direction:column;text-align:center;padding:28px 22px;}
+  .foot-links{justify-content:center;}
+  .pers-banner{flex-direction:column;text-align:center;padding:24px 20px;}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="#hero" class="nav-logo">
-    Encantarys
-    <span>Festas</span>
-  </a>
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Encantarys<span>Festas</span></a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#portfolio">Portfólio</a></li>
-    <li><a href="#pacotes">Pacotes</a></li>
+    <li><a href="#combos">Combos</a></li>
+    <li><a href="#galeria">Portfólio</a></li>
+    <li><a href="#processo">Como Funciona</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
-  <a href="https://wa.me/5522988138206" target="_blank" class="nav-cta">Solicitar Orçamento</a>
-  <div class="nav-hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
+  <a href="https://wa.me/5522988138206?text=Oi!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20os%20combos." target="_blank" class="nav-cta">Ver Combos</a>
+  <button class="nav-ham" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-lines"></div>
+  <div class="hero-bg"></div><div class="hero-grid"></div>
   <div class="hero-particles" id="particles"></div>
-
   <div class="hero-content">
-    <div class="hero-badge">Nova Friburgo · RJ · Decoração & Eventos</div>
-    <h1 class="hero-title">
-      Transformamos<br>
-      momentos em<br>
-      <em>memórias eternas</em>
-    </h1>
-    <p class="hero-subtitle">
-      Cada festa é uma obra única. Da concepção ao último detalhe, criamos ambientes que encantam e histórias que ficam para sempre.
-    </p>
-    <div class="hero-actions">
-      <a href="https://wa.me/5522988138206?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20minha%20festa." target="_blank" class="btn-primary">
-        <span>✦ Quero minha festa dos sonhos</span>
-      </a>
-      <a href="#portfolio" class="btn-secondary">Ver portfólio →</a>
-    </div>
-  </div>
-
-  <div class="hero-logo-mark">
-    <div class="logo-circle">
-      <div class="logo-circle-inner">
-        <span class="logo-e">E</span>
+    <div class="hero-badge">Nova Friburgo · RJ · Alugue e Monte</div>
+    <h1 class="hero-title">Sua festa,<br>do seu <em>jeito</em></h1>
+    <p class="hero-sub">Alugue sua decoração completa, monte onde quiser e crie a festa que você sempre sonhou — com praticidade e preço justo.</p>
+    <div class="hero-price">
+      <span class="hero-price-val">R$50</span>
+      <div class="hero-price-label">
+        <span class="hero-price-from">A partir de</span>
+        <span class="hero-price-note">retirada em Nova Friburgo</span>
       </div>
     </div>
+    <div class="hero-actions">
+      <a href="#combos" class="btn-gold"><span>✦ Ver combos</span></a>
+      <a href="https://wa.me/5522988138206?text=Oi!%20Quero%20saber%20mais%20sobre%20a%20decoração." target="_blank" class="btn-ghost">Falar no WhatsApp →</a>
+    </div>
   </div>
-
-  <div class="hero-scroll">
-    <span>Explorar</span>
-    <div class="scroll-line"></div>
+  <div class="hero-strip">
+    <div class="strip-photo"><img src="img/1000333580.jpg" alt="Unicórnio" loading="lazy"></div>
+    <div class="strip-photo"><img src="img/1000333582.jpg" alt="Elegante" loading="lazy"></div>
+    <div class="strip-photo"><img src="img/1000333579.jpg" alt="Oh Baby" loading="lazy"></div>
   </div>
+  <div class="hero-scroll"><span>Explorar</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- SOBRE -->
 <section id="sobre" class="section">
   <div class="sobre-grid">
-    <div class="sobre-visual reveal">
-      <div class="sobre-frame">
-        <div class="sobre-frame-content">
-          <div class="sobre-frame-quote">"Cada detalhe<br>conta uma<br>história"</div>
-          <div class="sobre-frame-author">— Filosofia Encantarys</div>
-        </div>
-      </div>
-      <div class="sobre-tag-float">
-        <strong>100%</strong>
-        <span>Personalizado</span>
-      </div>
+    <div class="sobre-photos reveal">
+      <div class="sphoto"><img src="img/1000333596.jpg" alt="Rosas azuis" loading="lazy"></div>
+      <div class="sphoto"><img src="img/1000330760.png" alt="Urso rosa" loading="lazy"></div>
+      <div class="sphoto"><img src="img/1000333582.jpg" alt="Elegante" loading="lazy"></div>
     </div>
-
-    <div class="sobre-text reveal">
-      <span class="section-tag">Sobre a Encantarys</span>
-      <h2>
-        Nascemos para<br>
-        <em>encantar</em>
-      </h2>
-      <p>
-        A Encantarys Festas é uma empresa de decoração e organização de eventos sediada em Nova Friburgo, RJ. Trabalhamos com amor e precisão para que cada celebração reflita a essência única de quem a vive.
-      </p>
-      <p>
-        Do primeiro contato ao último balão, somos parceiros na construção de memórias que duram para sempre. Festas infantis, casamentos, aniversários, formaturas — nós transformamos qualquer espaço em um cenário de sonho.
-      </p>
-
-      <div class="sobre-valores">
-        <div class="valor">
-          <span class="valor-icon">✨</span>
-          <div class="valor-titulo">Exclusividade</div>
-          <div class="valor-desc">Cada projeto é único, criado sob medida para você.</div>
-        </div>
-        <div class="valor">
-          <span class="valor-icon">🌿</span>
-          <div class="valor-titulo">Cuidado</div>
-          <div class="valor-desc">Atenção obsessiva em cada detalhe do seu evento.</div>
-        </div>
-        <div class="valor">
-          <span class="valor-icon">💛</span>
-          <div class="valor-titulo">Paixão</div>
-          <div class="valor-desc">Amamos o que fazemos e isso aparece no resultado.</div>
-        </div>
-        <div class="valor">
-          <span class="valor-icon">🤝</span>
-          <div class="valor-titulo">Confiança</div>
-          <div class="valor-desc">Entregamos o que prometemos, sempre.</div>
-        </div>
+    <div class="reveal">
+      <span class="stag">Sobre a Encantarys</span>
+      <h2 class="stitle">Decoração que <em>encanta</em></h2>
+      <p class="sobre-text">A Encantarys nasceu em Nova Friburgo com uma proposta simples: decorações de festa lindas, completas e prontas para usar — sem complicação.</p>
+      <p class="sobre-text">Você aluga, monta no seu espaço e devolve depois. Qualquer festa pode ser incrível, com o tema que você quiser e no orçamento que cabe no seu bolso.</p>
+      <p class="sobre-text">Do chá de fraldas ao aniversário adulto — levamos os combos até você.</p>
+      <div class="pills">
+        <span class="pill">Festas Infantis</span><span class="pill">Chá de Bebê</span>
+        <span class="pill">Aniversários</span><span class="pill">Casamentos</span>
+        <span class="pill">Formaturas</span><span class="pill">Chá de Fraldas</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVIÇOS -->
-<section id="servicos" class="section">
-  <span class="section-tag reveal">O que fazemos</span>
-  <h2 class="section-title reveal">Nossos <em>serviços</em></h2>
-  <p class="section-intro reveal">Especialistas em criar atmosferas únicas para cada tipo de celebração. Do planejamento ao dia perfeito.</p>
+<section id="combos" class="section">
+  <span class="stag reveal">Nossos combos</span>
+  <h2 class="stitle reveal">Escolha o seu <em>combo</em></h2>
+  <p class="sintro reveal">Três opções para cada tipo de festa. Todos incluem o painel com o tema da sua escolha.</p>
+  <div class="combo-tabs reveal">
+    <button class="combo-tab active" onclick="showCombo('mini',this)">Mini · R$50</button>
+    <button class="combo-tab" onclick="showCombo('p1',this)">1 Painel · R$75</button>
+    <button class="combo-tab" onclick="showCombo('p2',this)">2 Painéis · R$85</button>
+  </div>
 
-  <div class="servicos-grid">
-    <div class="servico-card reveal">
-      <div class="servico-num">01</div>
-      <span class="servico-icon">🎈</span>
-      <h3 class="servico-titulo">Festas Infantis</h3>
-      <p class="servico-desc">Transformamos o imaginário das crianças em cenários mágicos e inesquecíveis.</p>
-      <ul class="servico-lista">
-        <li>Temáticas personalizadas</li>
-        <li>Decoração completa do espaço</li>
-        <li>Mesa do bolo e candy bar</li>
-        <li>Backdrop e painel fotográfico</li>
-      </ul>
+  <div class="combo-panel active single" id="combo-mini">
+    <div class="ccard">
+      <div class="ccard-gallery duo">
+        <img src="img/1000330760.png" alt="Mini urso rosa" loading="lazy">
+        <img src="img/1000321272.jpg" alt="Mini stitch" loading="lazy">
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-nome">Combo Mini</div>
+        <div class="ccard-desc">Ideal para comemorações íntimas, mesas de bolo e ensaios fotográficos. Pequeno no tamanho, grande no encanto.</div>
+        <ul class="ccard-items">
+          <li>1 Painel redondo temático</li>
+          <li>Cômoda provençal branca</li>
+          <li>Escada decorativa de madeira</li>
+          <li>Acessórios do tema</li>
+        </ul>
+        <div class="ccard-preco"><span class="ccard-cur">R$</span><span class="ccard-val">50</span></div>
+        <div class="ccard-pers">✦ Personalize com o tema que você quiser por apenas +R$30</div>
+        <a href="https://wa.me/5522988138206?text=Oi!%20Quero%20o%20Combo%20Mini%20(R%2450).%20Pode%20me%20ajudar?" target="_blank" class="btn-combo">Quero esse combo</a>
+      </div>
     </div>
+  </div>
 
-    <div class="servico-card reveal">
-      <div class="servico-num">02</div>
-      <span class="servico-icon">🥂</span>
-      <h3 class="servico-titulo">Aniversários & Celebrações</h3>
-      <p class="servico-desc">De 15 anos a bodas douradas, cada aniversário merece ser grandioso.</p>
-      <ul class="servico-lista">
-        <li>Debutantes e 15 anos</li>
-        <li>Aniversários adultos</li>
-        <li>Bodas e celebrações especiais</li>
-        <li>Ambientação temática completa</li>
-      </ul>
+  <div class="combo-panel" id="combo-p1">
+    <div class="ccard">
+      <div class="ccard-badge">✦ Mais Pedido</div>
+      <div class="ccard-gallery" style="margin-top:26px;">
+        <img src="img/1000333579.jpg" alt="Oh Baby" loading="lazy">
+        <img src="img/1000333580.jpg" alt="Unicórnio" loading="lazy">
+        <img src="img/1000333584.jpg" alt="Carmed" loading="lazy">
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-nome">Combo 1 Painel</div>
+        <div class="ccard-desc">O queridinho das mamães! Painel redondo temático com cilindros coloridos. Tudo que a festa precisa em um só kit.</div>
+        <ul class="ccard-items">
+          <li>1 Painel redondo temático</li>
+          <li>3 cilindros decorativos</li>
+          <li>Escada decorativa</li>
+          <li>Tapete felpudo</li>
+          <li>Acessórios e objetos temáticos</li>
+        </ul>
+        <div class="ccard-preco"><span class="ccard-cur">R$</span><span class="ccard-val">75</span></div>
+        <div class="ccard-pers">✦ Personalize com o tema que você quiser por apenas +R$30</div>
+        <a href="https://wa.me/5522988138206?text=Oi!%20Quero%20o%20Combo%201%20Painel%20(R%2475).%20Pode%20me%20ajudar?" target="_blank" class="btn-combo">Quero esse combo</a>
+      </div>
     </div>
+    <div class="ccard">
+      <div class="ccard-gallery">
+        <img src="img/1000333585.jpg" alt="Bobbie Goods" loading="lazy">
+        <img src="img/1000333592.jpg" alt="Minnie" loading="lazy">
+        <img src="img/1000333595.jpg" alt="Rosas azuis" loading="lazy">
+      </div>
+      <div class="ccard-body" style="padding-top:18px;">
+        <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Temas disponíveis: Stitch, Unicórnio, Minnie, Barbie, Frozen, Dinossauros, Fazendinha, Oh Baby e muito mais.</p>
+        <p style="font-size:12px;color:rgba(201,168,76,.5);line-height:1.6;">Garland de balões disponível como adicional. Reserve com pelo menos 1 semana de antecedência.</p>
+      </div>
+    </div>
+  </div>
 
-    <div class="servico-card reveal">
-      <div class="servico-num">03</div>
-      <span class="servico-icon">💍</span>
-      <h3 class="servico-titulo">Casamentos & Formaturas</h3>
-      <p class="servico-desc">O dia mais especial da sua vida merece a produção mais especial do mundo.</p>
-      <ul class="servico-lista">
-        <li>Decoração de cerimônia e recepção</li>
-        <li>Arranjos florais personalizados</li>
-        <li>Mesas dos convidados</li>
-        <li>Iluminação cênica</li>
-      </ul>
+  <div class="combo-panel" id="combo-p2">
+    <div class="ccard">
+      <div class="ccard-gallery">
+        <img src="img/1000333587.jpg" alt="Borboletas" loading="lazy">
+        <img src="img/1000333583.jpg" alt="Barbie" loading="lazy">
+        <img src="img/1000333596.jpg" alt="Rosas azuis" loading="lazy">
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-nome">Combo 2 Painéis</div>
+        <div class="ccard-desc">Maior impacto visual. Painel redondo temático + painel romano neutro. Para festas em salão ou quem quer arrasar.</div>
+        <ul class="ccard-items">
+          <li>1 Painel redondo temático</li>
+          <li>1 Painel romano (arco) neutro</li>
+          <li>3–4 cilindros decorativos</li>
+          <li>Escada decorativa</li>
+          <li>Tapete felpudo</li>
+          <li>Kit completo de acessórios</li>
+        </ul>
+        <div class="ccard-preco"><span class="ccard-cur">R$</span><span class="ccard-val">85</span></div>
+        <div class="ccard-pers">✦ Personalize com o tema que você quiser por apenas +R$30</div>
+        <a href="https://wa.me/5522988138206?text=Oi!%20Quero%20o%20Combo%202%20Pain%C3%A9is%20(R%2485).%20Pode%20me%20ajudar?" target="_blank" class="btn-combo">Quero esse combo</a>
+      </div>
     </div>
+    <div class="ccard">
+      <div class="ccard-gallery">
+        <img src="img/1000333582.jpg" alt="Verde esmeralda" loading="lazy">
+        <img src="img/1000333594.jpg" alt="Bege natural" loading="lazy">
+        <img src="img/1000333581.jpg" alt="Happy Birthday" loading="lazy">
+      </div>
+      <div class="ccard-body" style="padding-top:18px;">
+        <div class="ccard-nome" style="margin-bottom:8px;">Também em versão <em style="font-style:italic;color:var(--gold-light);">elegante</em></div>
+        <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:12px;">Para aniversários adultos, casamentos e formaturas — painel romano neutro com mesas de MDF e acessórios sofisticados.</p>
+        <p style="font-size:12px;color:rgba(201,168,76,.5);line-height:1.6;">Mesmo preço, estilo completamente diferente. Consulte disponibilidade.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pers-banner reveal">
+    <div class="pb-icon">🎨</div>
+    <div class="pb-text">
+      <h3>Personalize com o <em>tema que você amar</em></h3>
+      <p>Qualquer combo pode ter o tema exato da sua festa — Stitch, Frozen, Barbie, Dinossauros, Hello Kitty, Boss Baby e muito mais.</p>
+    </div>
+    <div class="pb-price"><strong>+R$30</strong><span>Personalização</span></div>
+  </div>
+  <div class="entrega-banner reveal">
+    <span style="font-size:26px;flex-shrink:0;">🚗</span>
+    <p><strong>Entrega e retirada disponíveis</strong> · R$2 por km (ida e volta). Ou retire e devolva em Prado, Nova Friburgo.</p>
   </div>
 </section>
 
-<!-- PORTFÓLIO -->
-<section id="portfolio" class="section">
-  <div class="portfolio-header">
+<section id="galeria" class="section">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
     <div>
-      <span class="section-tag reveal">Nossos trabalhos</span>
-      <h2 class="section-title reveal">Galeria de <em>encantos</em></h2>
+      <span class="stag reveal">Nossos trabalhos</span>
+      <h2 class="stitle reveal">Cada festa, uma <em>memória</em></h2>
     </div>
-    <a href="https://wa.me/5522988138206?text=Olá!%20Quero%20ver%20mais%20fotos%20do%20portfólio." target="_blank" class="btn-secondary reveal">Ver portfólio completo →</a>
+    <a href="https://instagram.com/encantarysfestas" target="_blank" class="btn-ghost reveal">Ver no Instagram →</a>
   </div>
-
-  <div class="portfolio-grid reveal">
-    <div class="porto-item porto-item-1">
-      <div class="porto-bg">🌸</div>
-      <div class="porto-overlay">
-        <div class="porto-label">Princesa Encantada</div>
-        <div class="porto-tipo">Festa Infantil</div>
-      </div>
-    </div>
-    <div class="porto-item porto-item-2">
-      <div class="porto-bg">🌙</div>
-      <div class="porto-overlay">
-        <div class="porto-label">Noite Estrelada</div>
-        <div class="porto-tipo">15 Anos</div>
-      </div>
-    </div>
-    <div class="porto-item porto-item-3">
-      <div class="porto-bg">🦋</div>
-      <div class="porto-overlay">
-        <div class="porto-label">Jardim de Borboletas</div>
-        <div class="porto-tipo">Aniversário</div>
-      </div>
-    </div>
-    <div class="porto-item porto-item-4">
-      <div class="porto-bg">💐</div>
-      <div class="porto-overlay">
-        <div class="porto-label">Floral Romântico</div>
-        <div class="porto-tipo">Casamento</div>
-      </div>
-    </div>
-    <div class="porto-item porto-item-5">
-      <div class="porto-bg">🎓</div>
-      <div class="porto-overlay">
-        <div class="porto-label">Formatura 2024</div>
-        <div class="porto-tipo">Formatura</div>
-      </div>
-    </div>
+  <div class="galeria-tabs reveal">
+    <button class="galeria-tab active" onclick="showGaleria('todos',this)">Todos</button>
+    <button class="galeria-tab" onclick="showGaleria('mini',this)">Mini</button>
+    <button class="galeria-tab" onclick="showGaleria('p1',this)">1 Painel</button>
+    <button class="galeria-tab" onclick="showGaleria('p2',this)">2 Painéis</button>
+    <button class="galeria-tab" onclick="showGaleria('elegante',this)">Elegante</button>
   </div>
-</section>
-
-<!-- PACOTES -->
-<section id="pacotes" class="section">
-  <span class="section-tag reveal">Investimento</span>
-  <h2 class="section-title reveal">Nossos <em>pacotes</em></h2>
-  <p class="section-intro reveal">Opções para cada tipo de celebração. Todos os pacotes incluem atendimento personalizado do início ao fim.</p>
-
-  <div class="pacotes-grid">
-    <div class="pacote-card reveal">
-      <div class="pacote-nome">Essencial</div>
-      <div class="pacote-desc">Para celebrações intimistas com toque especial e todo carinho.</div>
-      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
-      <div class="pacote-preco-label">Orçamento personalizado</div>
-      <ul class="pacote-features">
-        <li>Decoração de mesa principal</li>
-        <li>Painel de fundo personalizado</li>
-        <li>Balões e enfeites temáticos</li>
-        <li>Consultoria de tema</li>
-        <li>Montagem e desmontagem</li>
-      </ul>
-      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Essencial.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
-    </div>
-
-    <div class="pacote-card destaque reveal">
-      <div class="pacote-badge">✦ Mais escolhido</div>
-      <div class="pacote-nome">Encantado</div>
-      <div class="pacote-desc">A experiência completa para uma festa que vai impressionar a todos.</div>
-      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
-      <div class="pacote-preco-label">Orçamento personalizado</div>
-      <ul class="pacote-features">
-        <li>Decoração completa do espaço</li>
-        <li>Mesa do bolo + candy bar</li>
-        <li>Painel e backdrop fotográfico</li>
-        <li>Arranjos florais</li>
-        <li>Iluminação cênica</li>
-        <li>Assessoria no dia do evento</li>
-        <li>Montagem e desmontagem</li>
-      </ul>
-      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Encantado.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
-    </div>
-
-    <div class="pacote-card reveal">
-      <div class="pacote-nome">Grandioso</div>
-      <div class="pacote-desc">Para os momentos mais extraordinários da vida. Sem limites para encantar.</div>
-      <div class="pacote-preco"><sup>R$</sup>sob consulta</div>
-      <div class="pacote-preco-label">Orçamento personalizado</div>
-      <ul class="pacote-features">
-        <li>Projeto personalizado completo</li>
-        <li>Decoração de todos os ambientes</li>
-        <li>Floração exuberante</li>
-        <li>Iluminação profissional</li>
-        <li>Coordenação completa do evento</li>
-        <li>Fornecedores parceiros indicados</li>
-        <li>Tudo incluso — do planejamento ao fim</li>
-      </ul>
-      <a href="https://wa.me/5522988138206?text=Olá!%20Tenho%20interesse%20no%20pacote%20Grandioso.%20Pode%20me%20passar%20um%20orçamento?" target="_blank" class="btn-pacote">Solicitar orçamento</a>
-    </div>
+  <div class="galeria-panel active" id="galeria-todos">
+    <div class="gitem"><img src="img/1000333580.jpg" alt="Unicórnio" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Unicórnio</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333587.jpg" alt="Borboletas" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Borboletas</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333582.jpg" alt="Elegante verde" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Verde</div><div class="gitem-tipo">2 Painéis · Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333579.jpg" alt="Oh Baby" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Oh Baby</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333583.jpg" alt="Barbie" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Barbie</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000330760.png" alt="Ursinha Rosa" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Ursinha Rosa</div><div class="gitem-tipo">Mini</div></div></div>
+    <div class="gitem"><img src="img/1000333584.jpg" alt="Carmed Clube" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Carmed Clube</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333596.jpg" alt="Rosas Azuis" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333594.jpg" alt="Elegante Bege" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Bege</div><div class="gitem-tipo">2 Painéis · Adulto</div></div></div>
+  </div>
+  <div class="galeria-panel" id="galeria-mini">
+    <div class="gitem"><img src="img/1000330760.png" alt="Ursinha Rosa" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Ursinha Rosa</div><div class="gitem-tipo">Mini</div></div></div>
+    <div class="gitem"><img src="img/1000321272.jpg" alt="Stitch" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Stitch</div><div class="gitem-tipo">Mini</div></div></div>
+    <div class="gitem"><img src="img/1000321261.jpg" alt="Urso Baby" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Urso Baby</div><div class="gitem-tipo">Mini</div></div></div>
+    <div class="gitem"><img src="img/1000321307.jpg" alt="Raposa" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Raposa</div><div class="gitem-tipo">Mini</div></div></div>
+  </div>
+  <div class="galeria-panel" id="galeria-p1">
+    <div class="gitem"><img src="img/1000333579.jpg" alt="Oh Baby" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Oh Baby</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333580.jpg" alt="Unicórnio" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Unicórnio</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333584.jpg" alt="Carmed Clube" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Carmed Clube</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333585.jpg" alt="Bobbie Goods" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Bobbie Goods</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333590.jpg" alt="Borboletas" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Borboletas</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333592.jpg" alt="Minnie" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Minnie</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333595.jpg" alt="Rosas Azuis" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333597.jpg" alt="Dourado" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Dourado</div><div class="gitem-tipo">1 Painel</div></div></div>
+  </div>
+  <div class="galeria-panel" id="galeria-p2">
+    <div class="gitem"><img src="img/1000333583.jpg" alt="Barbie" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Barbie</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333587.jpg" alt="Borboletas" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Borboletas</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333589.jpg" alt="Minnie" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Minnie</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333596.jpg" alt="Rosas Azuis" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333581.jpg" alt="Happy Birthday" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Happy Birthday</div><div class="gitem-tipo">2 Painéis</div></div></div>
+    <div class="gitem"><img src="img/1000333593.jpg" alt="Rosas Azuis 2" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">2 Painéis</div></div></div>
+  </div>
+  <div class="galeria-panel" id="galeria-elegante">
+    <div class="gitem"><img src="img/1000333582.jpg" alt="Verde Esmeralda" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Verde Esmeralda</div><div class="gitem-tipo">2 Painéis · Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333586.jpg" alt="Marrom & Ouro" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Marrom & Ouro</div><div class="gitem-tipo">2 Painéis · Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333594.jpg" alt="Bege Natural" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Bege Natural</div><div class="gitem-tipo">2 Painéis · Adulto</div></div></div>
   </div>
 </section>
 
-<!-- DEPOIMENTOS -->
-<section id="depoimentos" class="section">
-  <span class="section-tag reveal">O que dizem</span>
-  <h2 class="section-title reveal">Clientes que <em>encantamos</em></h2>
-
-  <div class="depo-grid">
-    <div class="depo-card reveal">
-      <span class="depo-stars">★★★★★</span>
-      <p class="depo-texto">"Minha filha ficou sem palavras ao ver a decoração. Cada cantinho era um conto de fadas. A Encantarys superou todas as expectativas!"</p>
-      <div class="depo-autor">
-        <div class="depo-avatar">A</div>
-        <div>
-          <div class="depo-nome">Ana Paula S.</div>
-          <div class="depo-evento">Festa da Valentina · 5 anos</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="depo-card reveal">
-      <span class="depo-stars">★★★★★</span>
-      <p class="depo-texto">"Profissionalismo impecável do primeiro contato até o fim da festa. Resultado incrível, muito além do que eu imaginava. Recomendo demais!"</p>
-      <div class="depo-autor">
-        <div class="depo-avatar">M</div>
-        <div>
-          <div class="depo-nome">Marina R.</div>
-          <div class="depo-evento">Debutante · 15 anos</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="depo-card reveal">
-      <span class="depo-stars">★★★★★</span>
-      <p class="depo-texto">"Confiei totalmente e fui surpreendida. O casamento foi um sonho realizado. Os detalhes eram perfeitos e os convidados não paravam de elogiar."</p>
-      <div class="depo-autor">
-        <div class="depo-avatar">C</div>
-        <div>
-          <div class="depo-nome">Camila e Rodrigo</div>
-          <div class="depo-evento">Casamento · Nov. 2024</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESSO -->
 <section id="processo" class="section">
-  <span class="section-tag reveal">Como trabalhamos</span>
-  <h2 class="section-title reveal">Do sonho à <em>realidade</em></h2>
-  <p class="section-intro reveal">Um processo simples, pensado para que você relaxe e curta cada etapa da jornada até sua festa perfeita.</p>
+  <span class="stag reveal">Como funciona</span>
+  <h2 class="stitle reveal">Simples assim, <em>fácil assim</em></h2>
+  <p class="sintro reveal">Você cuida da festa. A gente cuida da decoração.</p>
+  <div class="processo-steps">
+    <div class="pstep reveal"><div class="pstep-num">01</div><div class="pstep-titulo">Escolha</div><p class="pstep-desc">Escolha seu combo e o tema pelo WhatsApp.</p></div>
+    <div class="pstep reveal"><div class="pstep-num">02</div><div class="pstep-titulo">Reserve</div><p class="pstep-desc">Confirmamos a data e preparamos tudo com carinho.</p></div>
+    <div class="pstep reveal"><div class="pstep-num">03</div><div class="pstep-titulo">Monte</div><p class="pstep-desc">Retire o kit, monte no seu espaço e arrasa!</p></div>
+    <div class="pstep reveal"><div class="pstep-num">04</div><div class="pstep-titulo">Devolva</div><p class="pstep-desc">Após a festa, devolve o kit. Sem estresse.</p></div>
+  </div>
+</section>
 
-  <div class="processo-grid">
-    <div class="passo reveal">
-      <div class="passo-num">01</div>
-      <div class="passo-titulo">Contato</div>
-      <p class="passo-desc">Você nos conta seu sonho. Escutamos, entendemos e já começamos a criar.</p>
+<section id="depoimentos" class="section">
+  <span class="stag reveal">O que dizem</span>
+  <h2 class="stitle reveal">Clientes que <em>encantamos</em></h2>
+  <div class="depo-grid">
+    <div class="depo reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-txt">"Eu tive um atendimento maravilhoso, as pessoas bem educadas e atenciosas. Adorei o acolhimento — parabéns, continue assim. Que cresça cada dia mais!"</p>
+      <div class="depo-aut"><div class="depo-av">R</div><div><div class="depo-nome">Rosane</div><div class="depo-ev">Cônego · Nova Friburgo</div></div></div>
     </div>
-    <div class="passo reveal">
-      <div class="passo-num">02</div>
-      <div class="passo-titulo">Proposta</div>
-      <p class="passo-desc">Montamos um projeto personalizado com referências, paleta e orçamento detalhado.</p>
+    <div class="depo reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-txt">"Atendimento nota 1000! Peças super conservadas e impecáveis. Fora a disponibilidade de encomendar o tema que não tem. Super indico — são incríveis!"</p>
+      <div class="depo-aut"><div class="depo-av">L</div><div><div class="depo-nome">Luana B.</div><div class="depo-ev">Braunes · Nova Friburgo</div></div></div>
     </div>
-    <div class="passo reveal">
-      <div class="passo-num">03</div>
-      <div class="passo-titulo">Produção</div>
-      <p class="passo-desc">Com tudo aprovado, cuidamos de cada peça, flor e detalhe com carinho e precisão.</p>
+    <div class="depo reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-txt">"Tudo impecável. Veio tudo certinho, total atenção no atendimento! Sempre fazendo de tudo para agradar o cliente. Com certeza fará parte dos próximos aniversários."</p>
+      <div class="depo-aut"><div class="depo-av">A</div><div><div class="depo-nome">Amanda</div><div class="depo-ev">Varginha</div></div></div>
     </div>
-    <div class="passo reveal">
-      <div class="passo-num">04</div>
-      <div class="passo-titulo">Encantamento</div>
-      <p class="passo-desc">No grande dia, você só precisa chegar e se encantar. A mágica já estará feita.</p>
+    <div class="depo reveal">
+      <span class="depo-stars">★★★★★</span>
+      <p class="depo-txt">"Gostei da qualidade e do atendimento de vocês — achei tudo muito bom. Parabéns!"</p>
+      <div class="depo-aut"><div class="depo-av">D</div><div><div class="depo-nome">Douglas</div><div class="depo-ev">Olaria · Nova Friburgo</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- CONTATO -->
 <section id="contato" class="section">
   <div class="contato-content">
-    <span class="section-tag reveal">Vamos conversar</span>
-    <h2 class="contato-title reveal">
-      Sua festa<br>
-      <em>começa aqui</em>
-    </h2>
-    <p class="contato-sub reveal">Entre em contato agora mesmo e dê o primeiro passo para a celebração mais especial da sua vida.</p>
-
+    <span class="stag reveal">Vamos conversar</span>
+    <h2 class="contato-title reveal">Sua festa <em>começa aqui</em></h2>
+    <p class="contato-sub reveal">Manda uma mensagem e a gente te ajuda a escolher o combo perfeito para o seu momento especial.</p>
     <div class="contato-actions reveal">
-      <a href="https://wa.me/5522988138206?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20minha%20festa." target="_blank" class="btn-whatsapp">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
+      <a href="https://wa.me/5522988138206?text=Oi!%20Vim%20pelo%20site%20e%20quero%20montar%20minha%20festa%20com%20a%20Encantarys!" target="_blank" class="btn-wa">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Chamar no WhatsApp
       </a>
-      <a href="https://instagram.com/encantarysfestas" target="_blank" class="btn-secondary">
-        Ver no Instagram →
-      </a>
+      <a href="https://instagram.com/encantarysfestas" target="_blank" class="btn-ghost">Ver Instagram →</a>
     </div>
-
     <div class="contato-info reveal">
-      <div class="info-item">
-        <span class="info-label">Telefone / WhatsApp</span>
-        <div class="info-val"><a href="https://wa.me/5522988138206">(22) 98813-8206</a></div>
-      </div>
-      <div class="info-item">
-        <span class="info-label">Localização</span>
-        <div class="info-val">Nova Friburgo, RJ</div>
-      </div>
-      <div class="info-item">
-        <span class="info-label">Site</span>
-        <div class="info-val"><a href="https://encantarys.com.br">encantarys.com.br</a></div>
-      </div>
+      <div><span class="cinfo-label">WhatsApp</span><div class="cinfo-val"><a href="https://wa.me/5522988138206">(22) 98813-8206</a></div></div>
+      <div><span class="cinfo-label">Localização</span><div class="cinfo-val">Prado · Nova Friburgo, RJ</div></div>
+      <div><span class="cinfo-label">Reserva mínima</span><div class="cinfo-val">1 semana antes</div></div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">
-    Encantarys
-    <span>Festas</span>
-  </div>
-  <ul class="footer-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#portfolio">Portfólio</a></li>
-    <li><a href="#pacotes">Pacotes</a></li>
+  <div class="foot-logo">Encantarys<span>Festas</span></div>
+  <ul class="foot-links">
+    <li><a href="#sobre">Sobre</a></li><li><a href="#combos">Combos</a></li>
+    <li><a href="#galeria">Portfólio</a></li><li><a href="#processo">Como Funciona</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
-  <div class="footer-copy">© 2026 Encantarys Festas · Nova Friburgo, RJ</div>
+  <div class="foot-copy">© 2026 Encantarys Festas · Nova Friburgo, RJ</div>
 </footer>
 
-<!-- FLOATING WHATSAPP -->
-<a href="https://wa.me/5522988138206?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20um%20orçamento." target="_blank" class="float-wa" title="Falar no WhatsApp">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
+<a href="https://wa.me/5522988138206?text=Oi!%20Vim%20pelo%20site!" target="_blank" class="float-wa" title="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <script>
-// NAV scroll effect
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('main-nav');
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-});
-
-// Mobile menu
-function toggleMenu() {
-  const links = document.querySelector('.nav-links');
-  const cta = document.querySelector('.nav-cta');
-  if (links) {
-    const open = links.style.display === 'flex';
-    links.style.display = open ? 'none' : 'flex';
-    links.style.flexDirection = 'column';
-    links.style.position = 'fixed';
-    links.style.top = '70px';
-    links.style.left = '0';
-    links.style.right = '0';
-    links.style.background = 'rgba(13,10,26,0.98)';
-    links.style.padding = '24px';
-    links.style.gap = '20px';
-    links.style.zIndex = '998';
-  }
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);});
+function toggleNav(){
+  const ul=document.querySelector('.nav-links');
+  const open=ul.style.display==='flex';
+  Object.assign(ul.style,{display:open?'none':'flex',flexDirection:'column',position:'fixed',top:'58px',left:'0',right:'0',background:'rgba(13,10,26,0.98)',padding:'22px 28px',gap:'18px',zIndex:'998',borderBottom:'1px solid rgba(201,168,76,.1)'});
 }
-
-// Particle system
-function createParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.top = Math.random() * 100 + 60 + '%';
-    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
-    p.style.animationDelay = (Math.random() * 8) + 's';
-    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
-    container.appendChild(p);
-  }
+function showCombo(id,btn){
+  document.querySelectorAll('.combo-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.combo-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('combo-'+id).classList.add('active');
+  btn.classList.add('active');
 }
-createParticles();
-
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, index * 80);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Smooth scroll for nav links
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+function showGaleria(id,btn){
+  document.querySelectorAll('.galeria-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.galeria-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('galeria-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<24;i++){
+    const p=document.createElement('div');p.className='particle';
+    const s=Math.random()*3+1;
+    p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*60+40}%;width:${s}px;height:${s}px;background:${Math.random()>.5?'#c9a84c':'#e8cc7a'};animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*8}s;`;
+    c.appendChild(p);
+  }
+})();
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,idx)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),idx*60);});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
   });
 });
 </script>
