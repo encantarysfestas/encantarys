@@ -23,8 +23,8 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--midnight);
 
 nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s;}
 nav.scrolled{background:rgba(13,10,26,0.97);backdrop-filter:blur(12px);padding:13px 60px;border-bottom:1px solid rgba(201,168,76,0.12);}
-.nav-logo{font-family:'Cinzel',serif;font-weight:900;font-size:18px;letter-spacing:3px;text-decoration:none;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.nav-logo span{display:block;font-family:'Outfit',sans-serif;font-size:9px;letter-spacing:5px;color:rgba(201,168,76,0.45);-webkit-text-fill-color:rgba(201,168,76,0.45);text-transform:uppercase;margin-top:-3px;}
+.nav-logo{display:flex;align-items:center;text-decoration:none;}
+.nav-logo img{height:36px;width:auto;display:block;}
 .nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.38);text-decoration:none;transition:color 0.2s;}
 .nav-links a:hover{color:var(--gold-light);}
@@ -173,8 +173,8 @@ h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-
 .cinfo-val a:hover{color:var(--gold-light);}
 
 footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,.07);flex-wrap:wrap;gap:14px;}
-.foot-logo{font-family:'Cinzel',serif;font-weight:900;font-size:16px;letter-spacing:3px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.foot-logo span{display:block;font-family:'Outfit',sans-serif;font-size:8px;letter-spacing:4px;color:rgba(201,168,76,.3);-webkit-text-fill-color:rgba(201,168,76,.3);text-transform:uppercase;margin-top:-2px;}
+.foot-logo{display:flex;justify-content:center;margin-bottom:8px;}
+.foot-logo img{height:40px;width:auto;opacity:0.9;}
 .foot-links{display:flex;gap:22px;list-style:none;flex-wrap:wrap;}
 .foot-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;}
 .foot-links a:hover{color:var(--gold);}
@@ -224,7 +224,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 <body>
 
 <nav id="nav">
-  <a href="#hero" class="nav-logo">Encantarys<span>Festas</span></a>
+  <a href="#hero" class="nav-logo"><img src="img/logo.svg" alt="Encantarys Festas"></a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
     <li><a href="#combos">Combos</a></li>
@@ -522,7 +522,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 </section>
 
 <footer>
-  <div class="foot-logo">Encantarys<span>Festas</span></div>
+  <div class="foot-logo"><img src="img/logo.svg" alt="Encantarys Festas"></div>
   <ul class="foot-links">
     <li><a href="#sobre">Sobre</a></li><li><a href="#combos">Combos</a></li>
     <li><a href="#galeria">Portfólio</a></li><li><a href="#processo">Como Funciona</a></li>
