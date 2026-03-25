@@ -98,16 +98,9 @@ h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-
 .ccard{background:rgba(255,255,255,.025);border:1px solid rgba(201,168,76,.07);overflow:hidden;transition:all .35s;position:relative;}
 .ccard:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
 .ccard-badge{position:absolute;top:0;left:0;right:0;text-align:center;background:var(--gold);color:var(--midnight);font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;padding:5px;z-index:2;}
-.ccard-gallery{position:relative;overflow:hidden;aspect-ratio:4/3;background:#0d0a1a;}
-.ccard-gallery img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;transition:opacity .35s ease;opacity:0;pointer-events:none;}
-.ccard-gallery img.active{opacity:1;pointer-events:auto;}
-.ccard-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(13,10,26,.55);border:1px solid rgba(201,168,76,.3);color:var(--gold-light);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:background .2s;user-select:none;}
-.ccard-nav:hover{background:rgba(201,168,76,.25);}
-.ccard-nav.prev{left:8px;}
-.ccard-nav.next{right:8px;}
-.ccard-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:3;}
-.ccard-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .2s;cursor:pointer;}
-.ccard-dot.active{background:var(--gold);}
+.ccard-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;height:300px;background:#0d0a1a;}
+.ccard-gallery.duo{grid-template-columns:1fr 1fr;}
+.ccard-gallery img{width:100%;height:100%;object-fit:contain;object-position:center;background:#0d0a1a;display:block;}
 .ccard-body{padding:24px 22px 28px;}
 .ccard-nome{font-family:'Cinzel',serif;font-size:15px;letter-spacing:2px;color:var(--gold-light);margin-bottom:5px;}
 .ccard-desc{font-size:13px;color:rgba(255,255,255,.35);line-height:1.65;margin-bottom:18px;}
@@ -307,11 +300,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="combo-panel active single" id="combo-mini">
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000330760.jpeg" alt="Ursa Realeza" loading="lazy">
+                <img src="img/1000330760.jpeg" alt="Ursa Realeza" loading="lazy">
         <img src="img/1000321272.jpeg" alt="Stitch" loading="lazy">
         <img src="img/1000333479.jpeg" alt="Chá de Fraldas" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div><div class="ccard-dot" onclick="dotClick(this,2)"></div></div>
       </div>
       <div class="ccard-body">
         <div class="ccard-nome">Combo Mini</div>
@@ -333,11 +324,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <div class="ccard">
       <div class="ccard-badge">✦ Mais Pedido</div>
       <div class="ccard-gallery" style="margin-top:26px;">
-                <img class="active" src="img/1000333580.jpeg" alt="Unicórnio" loading="lazy">
+                <img src="img/1000333580.jpeg" alt="Unicórnio" loading="lazy">
         <img src="img/1000333584.jpeg" alt="Carmed Clube" loading="lazy">
         <img src="img/1000333585.jpeg" alt="Bobie Goods" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div><div class="ccard-dot" onclick="dotClick(this,2)"></div></div>
       </div>
       <div class="ccard-body">
         <div class="ccard-nome">Combo 1 Painel</div>
@@ -356,11 +345,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     </div>
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000333592.jpeg" alt="Minnie Rosa" loading="lazy">
+                <img src="img/1000333592.jpeg" alt="Minnie Rosa" loading="lazy">
         <img src="img/1000333593.jpeg" alt="Rosas Azuis" loading="lazy">
         <img src="img/1000333587.jpeg" alt="Borboletas e Pássaros" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div><div class="ccard-dot" onclick="dotClick(this,2)"></div></div>
       </div>
       <div class="ccard-body" style="padding-top:18px;">
         <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Temas disponíveis: Unicórnio, Minnie, Stitch, Barbie, Bobie Goods, Carmed, Borboletas, Dinossauros, Fazendinha e muito mais.</p>
@@ -372,11 +359,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="combo-panel" id="combo-p2">
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000333579.jpeg" alt="Oh Baby lilás" loading="lazy">
+                <img src="img/1000333579.jpeg" alt="Oh Baby lilás" loading="lazy">
         <img src="img/1000333591.jpeg" alt="Barbie" loading="lazy">
         <img src="img/1000333596.jpeg" alt="Dourado Glitter" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div><div class="ccard-dot" onclick="dotClick(this,2)"></div></div>
       </div>
       <div class="ccard-body">
         <div class="ccard-nome">Combo 2 Painéis</div>
@@ -396,11 +381,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     </div>
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000333588.jpeg" alt="Borboletas" loading="lazy">
+                <img src="img/1000333588.jpeg" alt="Borboletas" loading="lazy">
         <img src="img/1000333589.jpeg" alt="Minnie Rosa" loading="lazy">
         <img src="img/1000333594.jpeg" alt="Rosas Azuis" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div><div class="ccard-dot" onclick="dotClick(this,2)"></div></div>
       </div>
       <div class="ccard-body" style="padding-top:18px;">
         <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Temas disponíveis: Borboletas, Minnie, Barbie, Rosas, Unicórnio, Oh Baby, Frozen e muito mais.</p>
@@ -412,10 +395,8 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="combo-panel" id="combo-elegante">
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000333597.jpeg" alt="Elegante Marrom" loading="lazy">
+                <img src="img/1000333597.jpeg" alt="Elegante Marrom" loading="lazy">
         <img src="img/1000333595.jpeg" alt="Elegante Clean Dourado" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div></div>
       </div>
       <div class="ccard-body">
         <div class="ccard-nome">Combo Elegante</div>
@@ -433,10 +414,8 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     </div>
     <div class="ccard">
       <div class="ccard-gallery">
-                <img class="active" src="img/1000333583.jpeg" alt="Elegante Bege" loading="lazy">
+                <img src="img/1000333583.jpeg" alt="Elegante Bege" loading="lazy">
         <img src="img/1000333582.jpeg" alt="Elegante Verde Petróleo" loading="lazy">
-        <div class="ccard-nav prev" onclick="slideNav(this,-1)">&#8249;</div><div class="ccard-nav next" onclick="slideNav(this,1)">&#8250;</div>
-        <div class="ccard-dots"><div class="ccard-dot  active" onclick="dotClick(this,0)"></div><div class="ccard-dot" onclick="dotClick(this,1)"></div></div>
       </div>
       <div class="ccard-body" style="padding-top:18px;">
         <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Disponível em variações Bege, Marrom, Verde Petróleo e Dourado — cada montagem é única e pode ser combinada com sua paleta.</p>
@@ -592,26 +571,6 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 
 <script>
 
-function slideNav(btn,dir){
-  const gallery=btn.closest('.ccard-gallery');
-  const imgs=gallery.querySelectorAll('img');
-  const dots=gallery.querySelectorAll('.ccard-dot');
-  let cur=Array.from(imgs).findIndex(i=>i.classList.contains('active'));
-  imgs[cur].classList.remove('active');
-  if(dots[cur]) dots[cur].classList.remove('active');
-  cur=(cur+dir+imgs.length)%imgs.length;
-  imgs[cur].classList.add('active');
-  if(dots[cur]) dots[cur].classList.add('active');
-}
-function dotClick(dot,idx){
-  const gallery=dot.closest('.ccard-gallery');
-  const imgs=gallery.querySelectorAll('img');
-  const dots=gallery.querySelectorAll('.ccard-dot');
-  imgs.forEach(i=>i.classList.remove('active'));
-  dots.forEach(d=>d.classList.remove('active'));
-  imgs[idx].classList.add('active');
-  dot.classList.add('active');
-}
 
 window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);});
 function toggleNav(){
