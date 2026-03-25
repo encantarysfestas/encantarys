@@ -14,6 +14,8 @@ gtag('consent','default',{'analytics_storage':'denied'});
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="img/logo-redonda.svg">
+<link rel="shortcut icon" href="img/logo-redonda.svg">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{--midnight:#0d0a1a;--midnight-soft:#1a1628;--violet:#2a1f5c;--gold:#c9a84c;--gold-light:#e8cc7a;--cream:#faf7f2;--ink:#1a1714;}
@@ -96,9 +98,9 @@ h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-
 .ccard{background:rgba(255,255,255,.025);border:1px solid rgba(201,168,76,.07);overflow:hidden;transition:all .35s;position:relative;}
 .ccard:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
 .ccard-badge{position:absolute;top:0;left:0;right:0;text-align:center;background:var(--gold);color:var(--midnight);font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;padding:5px;z-index:2;}
-.ccard-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;height:210px;}
+.ccard-gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;height:210px;overflow:hidden;}
 .ccard-gallery.duo{grid-template-columns:1fr 1fr;}
-.ccard-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.ccard-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block;}
 .ccard-gallery img:hover{transform:scale(1.05);}
 .ccard-body{padding:24px 22px 28px;}
 .ccard-nome{font-family:'Cinzel',serif;font-size:15px;letter-spacing:2px;color:var(--gold-light);margin-bottom:5px;}
@@ -133,7 +135,7 @@ h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-
 .gitem{overflow:hidden;position:relative;aspect-ratio:3/4;cursor:pointer;}
 .gitem img{width:100%;height:100%;object-fit:cover;filter:brightness(.82);transition:all .5s;}
 .gitem:hover img{transform:scale(1.05);filter:brightness(1);}
-.gitem-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,10,26,.85) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;}
+.gitem-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,10,26,.88) 0%,transparent 55%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;}
 .gitem:hover .gitem-overlay{opacity:1;}
 .gitem-label{font-family:'Fraunces',serif;font-size:16px;color:#fff;margin-bottom:2px;}
 .gitem-tipo{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
@@ -293,6 +295,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <button class="combo-tab active" onclick="showCombo('mini',this)">Mini · R$50</button>
     <button class="combo-tab" onclick="showCombo('p1',this)">1 Painel · R$75</button>
     <button class="combo-tab" onclick="showCombo('p2',this)">2 Painéis · R$85</button>
+    <button class="combo-tab" onclick="showCombo('elegante',this)">Elegante ✦</button>
   </div>
 
   <div class="combo-panel active single" id="combo-mini">
@@ -356,9 +359,9 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="combo-panel" id="combo-p2">
     <div class="ccard">
       <div class="ccard-gallery">
-        <img src="img/1000333579.jpeg" alt="Oh Baby 2 painéis" loading="lazy">
+        <img src="img/1000333579.jpeg" alt="Oh Baby lilás" loading="lazy">
         <img src="img/1000333591.jpeg" alt="Barbie" loading="lazy">
-        <img src="img/1000333594.jpeg" alt="Rosas Azuis" loading="lazy">
+        <img src="img/1000333596.jpeg" alt="Dourado Glitter" loading="lazy">
       </div>
       <div class="ccard-body">
         <div class="ccard-nome">Combo 2 Painéis</div>
@@ -378,14 +381,47 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     </div>
     <div class="ccard">
       <div class="ccard-gallery">
+        <img src="img/1000333588.jpeg" alt="Borboletas" loading="lazy">
+        <img src="img/1000333589.jpeg" alt="Minnie Rosa" loading="lazy">
+        <img src="img/1000333594.jpeg" alt="Rosas Azuis" loading="lazy">
+      </div>
+      <div class="ccard-body" style="padding-top:18px;">
+        <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Temas disponíveis: Borboletas, Minnie, Barbie, Rosas, Unicórnio, Oh Baby, Frozen e muito mais.</p>
+        <p style="font-size:12px;color:rgba(201,168,76,.5);line-height:1.6;">Garland de balões disponível como adicional. Reserve com pelo menos 1 semana de antecedência.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="combo-panel" id="combo-elegante">
+    <div class="ccard">
+      <div class="ccard-gallery">
         <img src="img/1000333597.jpeg" alt="Elegante Marrom Cômoda" loading="lazy">
         <img src="img/1000333586.jpeg" alt="Elegante Marrom Bronze" loading="lazy">
         <img src="img/1000333582.jpeg" alt="Elegante Verde Petróleo" loading="lazy">
       </div>
+      <div class="ccard-body">
+        <div class="ccard-nome">Combo Elegante</div>
+        <div class="ccard-desc">Para aniversários adultos, casamentos e formaturas. Mesas de MDF, painel romano neutro e acessórios sofisticados — sem painel temático infantil.</div>
+        <ul class="ccard-items">
+          <li>Mesas de MDF decorativas</li>
+          <li>1 Painel romano neutro</li>
+          <li>Acessórios sofisticados</li>
+          <li>Paleta de cores personalizada</li>
+        </ul>
+        <div class="ccard-preco"><span class="ccard-cur">R$</span><span class="ccard-val">85</span></div>
+        <div class="ccard-pers">✦ Personalize a paleta de cores e acessórios do seu jeito</div>
+        <a href="https://wa.me/5522988138206?text=Oi!%20Tenho%20interesse%20no%20Combo%20Elegante%20(R%2485).%20Pode%20me%20ajudar?" target="_blank" class="btn-combo">Quero esse combo</a>
+      </div>
+    </div>
+    <div class="ccard">
+      <div class="ccard-gallery">
+        <img src="img/1000333583.jpeg" alt="Elegante Branco" loading="lazy">
+        <img src="img/1000333595.jpeg" alt="Clean Dourado" loading="lazy">
+        <img src="img/1000333581.jpeg" alt="Happy Birthday" loading="lazy">
+      </div>
       <div class="ccard-body" style="padding-top:18px;">
-        <div class="ccard-nome" style="margin-bottom:8px;">Também em versão <em style="font-style:italic;color:var(--gold-light);">elegante</em></div>
-        <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:12px;">Para aniversários adultos, casamentos e formaturas — painel romano neutro com mesas de MDF e acessórios sofisticados.</p>
-        <p style="font-size:12px;color:rgba(201,168,76,.5);line-height:1.6;">Mesmo preço, estilo completamente diferente. Consulte disponibilidade.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.35);line-height:1.7;margin-bottom:14px;">Disponível em variações Branco, Marrom Bronze, Verde Petróleo, Dourado e mais — cada montagem é única.</p>
+        <p style="font-size:12px;color:rgba(201,168,76,.5);line-height:1.6;">Ideal para eventos noturnos, comemorações de 15 anos, casamentos e festas corporativas.</p>
       </div>
     </div>
   </div>
@@ -422,13 +458,13 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="galeria-panel active" id="galeria-todos">
     <div class="gitem"><img src="img/1000333580.jpeg" alt="Unicórnio" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Unicórnio</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333588.jpeg" alt="Borboletas" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Borboletas</div><div class="gitem-tipo">2 Painéis</div></div></div>
-    <div class="gitem"><img src="img/1000333597.jpeg" alt="Elegante Marrom" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Marrom</div><div class="gitem-tipo">Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333586.jpeg" alt="Elegante Marrom Bronze" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Marrom</div><div class="gitem-tipo">Elegante</div></div></div>
     <div class="gitem"><img src="img/1000333479.jpeg" alt="Oh Baby" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Oh Baby</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333591.jpeg" alt="Barbie" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Barbie</div><div class="gitem-tipo">2 Painéis</div></div></div>
     <div class="gitem"><img src="img/1000330760.jpeg" alt="Ursa Realeza" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Ursa Realeza</div><div class="gitem-tipo">Mini</div></div></div>
     <div class="gitem"><img src="img/1000333584.jpeg" alt="Carmed Clube" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Carmed Clube</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333594.jpeg" alt="Rosas Azuis" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">2 Painéis</div></div></div>
-    <div class="gitem"><img src="img/1000333582.jpeg" alt="Elegante Verde" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Verde</div><div class="gitem-tipo">Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333582.jpeg" alt="Elegante Verde Petróleo" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Verde</div><div class="gitem-tipo">Elegante</div></div></div>
   </div>
   <div class="galeria-panel" id="galeria-mini">
     <div class="gitem"><img src="img/1000330760.jpeg" alt="Ursa Realeza" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Ursa Realeza</div><div class="gitem-tipo">Mini</div></div></div>
@@ -442,6 +478,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <div class="gitem"><img src="img/1000333584.jpeg" alt="Carmed Clube" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Carmed Clube</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333585.jpeg" alt="Flork / Bento Cake" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Flork</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333587.jpeg" alt="Borboletas e Pássaros" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Borboletas</div><div class="gitem-tipo">1 Painel</div></div></div>
+    <div class="gitem"><img src="img/1000333580.jpeg" alt="Unicórnio" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Unicórnio</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333592.jpeg" alt="Minnie Rosa" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Minnie Rosa</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333593.jpeg" alt="Rosas Azuis" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Rosas Azuis</div><div class="gitem-tipo">1 Painel</div></div></div>
     <div class="gitem"><img src="img/1000333595.jpeg" alt="Clean Branco e Dourado" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Clean Dourado</div><div class="gitem-tipo">1 Painel</div></div></div>
@@ -455,10 +492,10 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <div class="gitem"><img src="img/1000333596.jpeg" alt="Dourado Glitter" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Dourado Glitter</div><div class="gitem-tipo">2 Painéis</div></div></div>
   </div>
   <div class="galeria-panel" id="galeria-elegante">
-    <div class="gitem"><img src="img/1000333582.jpeg" alt="Elegante Verde Petróleo" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Verde Petróleo</div><div class="gitem-tipo">Adulto</div></div></div>
-    <div class="gitem"><img src="img/1000333586.jpeg" alt="Elegante Marrom Bronze" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Marrom Bronze</div><div class="gitem-tipo">Adulto</div></div></div>
-    <div class="gitem"><img src="img/1000333583.jpeg" alt="Elegante Branco" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Elegante Branco</div><div class="gitem-tipo">Adulto</div></div></div>
-    <div class="gitem"><img src="img/1000333597.jpeg" alt="Elegante Marrom Cômoda" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Marrom com Cômoda</div><div class="gitem-tipo">Adulto</div></div></div>
+    <div class="gitem"><img src="img/1000333597.jpeg" alt="Elegante Marrom com Cômoda" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Marrom com Mesas</div><div class="gitem-tipo">Elegante</div></div></div>
+    <div class="gitem"><img src="img/1000333586.jpeg" alt="Elegante Marrom Bronze" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Marrom Bronze</div><div class="gitem-tipo">Elegante</div></div></div>
+    <div class="gitem"><img src="img/1000333582.jpeg" alt="Elegante Verde Petróleo" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Verde Petróleo</div><div class="gitem-tipo">Elegante</div></div></div>
+    <div class="gitem"><img src="img/1000333583.jpeg" alt="Elegante Branco" loading="lazy"><div class="gitem-overlay"><div class="gitem-label">Branco Elegante</div><div class="gitem-tipo">Elegante</div></div></div>
   </div>
 </section>
 
