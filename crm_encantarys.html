@@ -689,7 +689,7 @@ body { font-family: 'Outfit', sans-serif; font-weight: 300; background: var(--cr
 // ==========================================
 // CONFIGURAÇÃO — cole aqui a URL do seu Webhook do Google Apps Script
 // ==========================================
-const WEBHOOK_URL = '';
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec';
 
 // ==========================================
 // KITS — edite aqui os kits, preços e descrições
@@ -962,7 +962,7 @@ async function handleSearch() {
   hint.className = 'search-hint';
   icon.textContent = '⏳';
 
-  if (WEBHOOK_URL === '') {
+  if (WEBHOOK_URL === 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec') {
     // MODO DEMO — sem webhook configurado
     setTimeout(() => {
       hint.textContent = '⚠️ Webhook não configurado. Configure a URL no código.';
