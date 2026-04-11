@@ -962,7 +962,7 @@ async function handleSearch() {
   hint.className = 'search-hint';
   icon.textContent = '⏳';
 
-  if (WEBHOOK_URL === 'COLE_SUA_WEBHOOK_URL_AQUI') {
+  if (WEBHOOK_URL === 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec') {
     // MODO DEMO — sem webhook configurado
     setTimeout(() => {
       hint.textContent = '⚠️ Webhook não configurado. Configure a URL no código.';
@@ -1047,7 +1047,7 @@ async function handleSave(statusOverride) {
     childName: document.getElementById('crmChildName').value.trim()
   };
 
-  if (WEBHOOK_URL === 'COLE_SUA_WEBHOOK_URL_AQUI') {
+  if (WEBHOOK_URL === 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec') {
     setTimeout(() => {
       btn.classList.remove('loading');
       btnText.textContent = 'Salvar & Agendar na Agenda';
