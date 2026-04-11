@@ -196,14 +196,6 @@ body { font-family: 'Outfit', sans-serif; font-weight: 300; background: var(--cr
 /* PAINEL DIREITO */
 .panel-right { padding: 32px; overflow-y: auto; }
 
-/* CARDS DE CLIENTES RECENTES */
-.right-header {
-  display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: 24px;
-}
-.right-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 300; color: var(--ink); }
-.right-title em { font-style: italic; color: var(--gold); }
-
 /* KIT CARDS */
 .kit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 28px; }
 .kit-card {
@@ -687,13 +679,12 @@ body { font-family: 'Outfit', sans-serif; font-weight: 300; background: var(--cr
 
 <script>
 // ==========================================
-// CONFIGURAÇÃO — cole aqui a URL do seu Webhook do Google Apps Script
+// CONFIGURAÇÃO
 // ==========================================
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec';
 
 // ==========================================
-// KITS — edite aqui os kits, preços e descrições
-// preco: null = Sob Consulta
+// KITS
 // ==========================================
 const KITS = [
   {
@@ -886,11 +877,9 @@ function updateClientCard() {
     badge.style.fontWeight = '500';
   }
 
-  // atualizar scripts
   updateScripts();
 }
 
-// Atualizar card ao digitar
 ['crmName','crmChildName','crmDate','crmTheme'].forEach(id => {
   document.getElementById(id).addEventListener('input', updateClientCard);
 });
@@ -948,7 +937,7 @@ function showToast(msg, type = '') {
 }
 
 // ==========================================
-// BUSCA (SEARCH)
+// BUSCA — SEM BLOCO DE MODO DEMO
 // ==========================================
 async function handleSearch() {
   const phone = document.getElementById('crmPhone').value.trim();
@@ -961,16 +950,6 @@ async function handleSearch() {
   hint.textContent = 'Buscando...';
   hint.className = 'search-hint';
   icon.textContent = '⏳';
-
-  if (WEBHOOK_URL === 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec') {
-    // MODO DEMO — sem webhook configurado
-    setTimeout(() => {
-      hint.textContent = '⚠️ Webhook não configurado. Configure a URL no código.';
-      hint.className = 'search-hint error';
-      icon.textContent = '🔍';
-    }, 800);
-    return;
-  }
 
   try {
     const res = await fetch(WEBHOOK_URL, {
@@ -1017,7 +996,7 @@ async function handleSearch() {
 }
 
 // ==========================================
-// SALVAR
+// SALVAR — SEM BLOCO DE MODO DEMO
 // ==========================================
 async function handleSave(statusOverride) {
   const phone = document.getElementById('crmPhone').value.trim();
@@ -1046,16 +1025,6 @@ async function handleSave(statusOverride) {
     status: statusOverride || currentStatus,
     childName: document.getElementById('crmChildName').value.trim()
   };
-
-  if (WEBHOOK_URL === 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec') {
-    setTimeout(() => {
-      btn.classList.remove('loading');
-      btnText.textContent = 'Salvar & Agendar na Agenda';
-      btnIcon.textContent = '✨';
-      showToast('⚠️ Configure a URL do Webhook no código HTML para salvar.', '');
-    }, 1000);
-    return;
-  }
 
   try {
     await fetch(WEBHOOK_URL, {
