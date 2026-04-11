@@ -428,18 +428,16 @@ body { font-family: 'Outfit', sans-serif; font-weight: 300; background: var(--cr
     <div class="panel-section">
       <div class="section-label">✨ Opcionais</div>
       <div class="check-group">
-        <label class="check-item" id="checkCustomized" onclick="toggleCheck('customized')">
-          <input type="checkbox" id="crmCustomized">
+        <div class="check-item" id="checkCustomized" onclick="toggleCheck('customized')">
           <div class="check-box"><span class="check-box-tick">✓</span></div>
           <div class="check-text">Tema personalizado</div>
           <div class="check-badge">+R$30</div>
-        </label>
-        <label class="check-item" id="checkDelivery" onclick="toggleCheck('delivery')">
-          <input type="checkbox" id="crmDelivery">
+        </div>
+        <div class="check-item" id="checkDelivery" onclick="toggleCheck('delivery')">
           <div class="check-box"><span class="check-box-tick">✓</span></div>
           <div class="check-text">Delivery / Frete</div>
           <div class="check-badge">R$2/km</div>
-        </label>
+        </div>
       </div>
       <div class="km-group" id="kmGroup" style="display:none">
         <input class="input-field" type="number" id="kmDistance" placeholder="0" min="0" style="width:80px" onchange="updatePrice()">
