@@ -937,7 +937,7 @@ function showToast(msg, type = '') {
 // ==========================================
 // BUSCA — SEM BLOCO DE MODO DEMO
 // ==========================================
-async function handleSearch() {
+function handleSearch() {
   const phone = document.getElementById('crmPhone').value.trim();
   if (!phone) {
     showToast('⚠️ Digite o WhatsApp antes de buscar.', '');
@@ -949,11 +949,18 @@ async function handleSearch() {
   hint.className = 'search-hint';
   icon.textContent = '⏳';
 
-  try {
-    const res = await fetch(WEBHOOK_URL + '?action=search&phone=' + encodeURIComponent(phone), {
-      method: 'GET'
-    });
-    const data = await res.json();
+  const cbName = 'crmCb_' + Date.now();
+  const timer = setTimeout(() => {
+    delete window[cbName];
+    hint.textContent = '✗ Tempo esgotado. Verifique a conexão.';
+    hint.className = 'search-hint error';
+    icon.textContent = '🔍';
+  }, 10000);
+
+  window[cbName] = function(data) {
+    clearTimeout(timer);
+    delete window[cbName];
+    icon.textContent = '🔍';
 
     if (data.status === 'success' && data.data) {
       const d = data.data;
@@ -969,8 +976,6 @@ async function handleSearch() {
       isDelivery = d.delivery === true || d.delivery === 'TRUE';
       document.getElementById('checkCustomized').classList.toggle('checked', isCustomized);
       document.getElementById('checkDelivery').classList.toggle('checked', isDelivery);
-      document.getElementById('crmCustomized').checked = isCustomized;
-      document.getElementById('crmDelivery').checked = isDelivery;
       document.getElementById('kmGroup').style.display = isDelivery ? 'flex' : 'none';
 
       setStatus(d.status || 'Prospect');
@@ -984,11 +989,18 @@ async function handleSearch() {
       hint.textContent = '✗ Número não encontrado. Preencha os dados para cadastrar.';
       hint.className = 'search-hint error';
     }
-  } catch (e) {
+  };
+
+  const script = document.createElement('script');
+  script.src = WEBHOOK_URL + '?action=search&phone=' + encodeURIComponent(phone) + '&callback=' + cbName;
+  script.onerror = () => {
+    clearTimeout(timer);
+    delete window[cbName];
     hint.textContent = '✗ Erro de conexão. Verifique o webhook.';
     hint.className = 'search-hint error';
-  }
-  icon.textContent = '🔍';
+    icon.textContent = '🔍';
+  };
+  document.head.appendChild(script);
 }
 
 // ==========================================
