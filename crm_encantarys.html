@@ -2,1134 +2,1253 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encantarys · CRM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Encantarys · CRM v2</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Cinzel:wght@400;600;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --midnight: #0d0a1a;
-  --midnight-soft: #1a1628;
-  --violet: #2a1f5c;
-  --gold: #c9a84c;
-  --gold-light: #e8cc7a;
-  --gold-pale: #f5edd6;
-  --blush: #e8c4c4;
-  --cream: #faf7f2;
-  --cream-mid: #f0ebe1;
-  --ink: #1a1714;
-  --ink-soft: #3d3830;
-  --success: #2d6a4f;
-  --success-bg: #d8f3dc;
-  --error: #c1121f;
-  --error-bg: #ffe0e0;
-  --warning-bg: #fff3cd;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --midnight:#0d0a1a; --violet:#1a1040; --surface:#16122a;
+  --gold:#c9a84c; --gold-lt:#e8cc7a; --gold-pale:#fff8e8;
+  --cream:#faf7f2; --cream-mid:#f0ebe1;
+  --ink:#1a1714; --ink-soft:#3d3830; --ink-dim:rgba(26,23,20,.45);
+  --ok:#2d6a4f; --ok-bg:#d8f3dc;
+  --warn:#b8860b; --warn-bg:#fff3cd;
+  --err:#c1121f; --err-bg:#ffe0e0;
+  --info:#1a6090; --info-bg:#dbeafe;
+  --border:rgba(201,168,76,.18);
+  --r:12px; --r-sm:8px;
 }
-html { scroll-behavior: smooth; }
-body { font-family: 'Outfit', sans-serif; font-weight: 300; background: var(--cream); color: var(--ink); min-height: 100vh; }
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);color:var(--ink);min-height:100vh;font-size:14px;}
 
-/* HEADER */
-.header {
-  background: var(--midnight);
-  padding: 18px 32px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid rgba(201,168,76,0.2);
-  position: sticky; top: 0; z-index: 100;
-}
-.header-brand { display: flex; align-items: center; gap: 14px; }
-.header-brand-text {}
-.header-title {
-  font-family: 'Cinzel', serif; font-weight: 900; font-size: 20px; letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.header-sub { font-size: 11px; letter-spacing: 0.35em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
-.header-badge {
-  font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 400;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--gold); border: 1px solid rgba(201,168,76,0.3);
-  padding: 4px 12px; border-radius: 20px;
-}
+/* ── TOPO ── */
+.topo{background:var(--midnight);padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(201,168,76,.15);}
+.topo-logo{font-family:'Cinzel',serif;font-weight:900;font-size:18px;letter-spacing:2px;background:linear-gradient(135deg,var(--gold-lt),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
+.topo-sub{font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.25);text-transform:uppercase;}
+.topo-spacer{flex:1;}
+.topo-btn{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:6px 14px;border-radius:20px;font-family:'Outfit',sans-serif;font-size:11px;cursor:pointer;letter-spacing:.05em;transition:all .15s;}
+.topo-btn:hover{background:var(--gold-pale);color:var(--ink);}
+.topo-btn.primary{background:var(--gold);color:var(--midnight);border-color:var(--gold);font-weight:500;}
+.topo-btn.primary:hover{background:var(--gold-lt);}
 
-/* LAYOUT PRINCIPAL */
-.layout { display: grid; grid-template-columns: 400px 1fr; min-height: calc(100vh - 65px); }
+/* ── NAV TABS ── */
+.nav-tabs{background:white;border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:0;}
+.nav-tab{padding:12px 18px;font-size:12px;letter-spacing:.08em;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Outfit',sans-serif;}
+.nav-tab:hover{color:var(--ink);}
+.nav-tab.ativo{color:var(--gold);border-bottom-color:var(--gold);font-weight:500;}
+.nav-badge{display:inline-block;min-width:18px;height:18px;border-radius:9px;background:var(--gold);color:var(--midnight);font-size:10px;font-weight:600;text-align:center;line-height:18px;padding:0 4px;margin-left:6px;}
 
-/* PAINEL ESQUERDO */
-.panel-left {
-  background: white;
-  border-right: 1px solid rgba(201,168,76,0.15);
-  display: flex; flex-direction: column;
-  overflow-y: auto; max-height: calc(100vh - 65px);
-  position: sticky; top: 65px;
-}
-.panel-section {
-  padding: 24px 28px;
-  border-bottom: 1px solid rgba(201,168,76,0.12);
-}
-.panel-section:last-child { border-bottom: none; }
-.section-label {
-  font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+/* ── PÁGINAS ── */
+.pagina{display:none;padding:16px;}
+.pagina.ativa{display:block;}
 
-/* BUSCA WHATSAPP */
-.search-group { display: flex; gap: 8px; margin-bottom: 12px; }
-.input-field {
-  width: 100%; padding: 11px 14px; border: 1.5px solid rgba(201,168,76,0.25);
-  border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
-  color: var(--ink); background: var(--cream);
-  transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-}
-.input-field:focus {
-  border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
-  background: white;
-}
-.input-field::placeholder { color: rgba(61,56,48,0.4); }
+/* ── DASHBOARD ── */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.stat-card{background:white;border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;}
+.stat-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:6px;}
+.stat-valor{font-family:'Fraunces',serif;font-size:26px;font-weight:300;color:var(--ink);line-height:1;}
+.stat-sub{font-size:10px;color:var(--ink-dim);margin-top:4px;}
+.stat-card.gold .stat-valor{color:var(--gold);}
+.stat-card.ok .stat-valor{color:var(--ok);}
 
-.btn-search {
-  padding: 11px 14px; background: var(--midnight); color: var(--gold-light);
-  border: none; border-radius: 10px; cursor: pointer; font-size: 16px;
-  transition: background 0.2s; white-space: nowrap; min-width: 46px;
-  display: flex; align-items: center; justify-content: center;
-}
-.btn-search:hover { background: var(--violet); }
+.sec-titulo{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.sec-titulo::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* FORM FIELDS */
-.field-group { margin-bottom: 14px; }
-.field-label {
-  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--ink-soft); font-weight: 500; margin-bottom: 6px; display: block;
-}
-.field-required { color: var(--gold); }
+/* ── EVENTO CARD (na lista e dashboard) ── */
+.ev-card{background:white;border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:border-color .15s;}
+.ev-card:hover{border-color:var(--gold);}
+.ev-card.urgente{border-left:3px solid var(--gold);}
+.ev-card-topo{display:flex;align-items:flex-start;gap:10px;}
+.ev-data{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--ink-dim);min-width:28px;text-align:center;line-height:1;}
+.ev-mes{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-dim);text-align:center;}
+.ev-info{flex:1;}
+.ev-nome{font-size:14px;font-weight:500;color:var(--ink);}
+.ev-tema{font-size:12px;color:var(--ink-soft);margin-top:1px;}
+.ev-rodape{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:400;}
+.badge-status-realizado{background:var(--ok-bg);color:var(--ok);}
+.badge-status-fechado{background:var(--info-bg);color:var(--info);}
+.badge-status-prospect{background:var(--warn-bg);color:var(--warn);}
+.badge-status-arquivado{background:var(--cream-mid);color:var(--ink-dim);}
+.badge-status-cancelado{background:var(--err-bg);color:var(--err);}
+.badge-kit{background:rgba(201,168,76,.12);color:var(--warn);border:1px solid rgba(201,168,76,.25);}
+.badge-vip{background:linear-gradient(135deg,#ffd700,#ffa500);color:#fff;font-weight:600;}
+.badge-repeat{background:var(--violet);color:rgba(255,255,255,.85);}
+.ev-valor{margin-left:auto;font-size:12px;font-weight:500;color:var(--ok);}
+.ev-valor.pendente{color:var(--err);}
+.ev-dias{font-size:10px;color:var(--gold);font-weight:500;}
 
-.input-select {
-  width: 100%; padding: 11px 14px; border: 1.5px solid rgba(201,168,76,0.25);
-  border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
-  color: var(--ink); background: var(--cream); cursor: pointer;
-  transition: border-color 0.2s; outline: none; appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 14px center;
-}
-.input-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); background-color: white; }
+/* ── LISTA DE CLIENTES ── */
+.search-bar{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:10px 14px;width:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);outline:none;margin-bottom:12px;transition:border-color .2s;}
+.search-bar:focus{border-color:var(--gold);}
+.search-bar::placeholder{color:var(--ink-dim);}
 
-/* STATUS PILLS */
-.status-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.status-pill {
-  padding: 9px 12px; border-radius: 8px; border: 1.5px solid transparent;
-  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 400;
-  cursor: pointer; transition: all 0.15s; text-align: center; background: var(--cream-mid);
-  color: var(--ink-soft);
-}
-.status-pill:hover { border-color: var(--gold); }
-.status-pill.active-prospect { background: #e8f4fd; border-color: #3a86c8; color: #1a5276; font-weight: 500; }
-.status-pill.active-fechado { background: #d8f3dc; border-color: #2d6a4f; color: #1b4332; font-weight: 500; }
-.status-pill.active-arquivado { background: var(--warning-bg); border-color: #b8860b; color: #7d5a00; font-weight: 500; }
-.status-pill.active-cancelado { background: #ffe0e0; border-color: #c1121f; color: #7b0d0d; font-weight: 500; }
+.filter-pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;}
+.filter-pill{background:var(--cream-mid);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:11px;color:var(--ink-soft);cursor:pointer;white-space:nowrap;transition:all .12s;}
+.filter-pill.ativo,.filter-pill:hover{background:var(--gold-pale);border-color:var(--gold);color:var(--ink);}
 
-/* CHECKBOXES */
-.check-group { display: flex; flex-direction: column; gap: 10px; }
-.check-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 14px; border-radius: 10px; cursor: pointer;
-  background: var(--cream-mid); border: 1.5px solid transparent;
-  transition: all 0.15s;
-}
-.check-item:hover { border-color: rgba(201,168,76,0.3); }
-.check-item.checked { background: #fff8e8; border-color: var(--gold); }
-.check-item input[type=checkbox] { display: none; }
-.check-box {
-  width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid rgba(201,168,76,0.4);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  background: white; transition: all 0.15s;
-}
-.check-item.checked .check-box { background: var(--gold); border-color: var(--gold); }
-.check-box-tick { color: white; font-size: 12px; opacity: 0; transition: opacity 0.1s; }
-.check-item.checked .check-box-tick { opacity: 1; }
-.check-text { font-size: 13px; color: var(--ink); }
-.check-badge {
-  margin-left: auto; font-size: 11px; font-weight: 500;
-  padding: 2px 8px; border-radius: 20px;
-  background: rgba(201,168,76,0.15); color: var(--gold);
-}
+.cl-card{background:white;border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:border-color .15s;display:flex;align-items:center;gap:12px;}
+.cl-card:hover{border-color:var(--gold);}
+.cl-avatar{width:40px;height:40px;border-radius:50%;background:var(--midnight);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;color:var(--gold-lt);flex-shrink:0;}
+.cl-info{flex:1;min-width:0;}
+.cl-nome{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cl-meta{font-size:11px;color:var(--ink-dim);margin-top:2px;}
+.cl-badges{display:flex;flex-direction:column;gap:3px;align-items:flex-end;flex-shrink:0;}
 
-/* BOTÕES DE AÇÃO */
-.actions-bar { display: flex; flex-direction: column; gap: 10px; }
-.btn-primary {
-  width: 100%; padding: 14px; background: var(--midnight); color: white;
-  border: none; border-radius: 12px; cursor: pointer;
-  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
-  letter-spacing: 0.05em; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-primary:hover { background: var(--violet); transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
-.btn-primary.loading { opacity: 0.7; cursor: wait; }
-.btn-secondary {
-  width: 100%; padding: 12px; background: transparent; color: var(--ink-soft);
-  border: 1.5px solid rgba(61,56,48,0.2); border-radius: 12px; cursor: pointer;
-  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
-  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-secondary:hover { border-color: var(--gold); color: var(--ink); }
-.btn-danger {
-  width: 100%; padding: 12px; background: transparent; color: #c1121f;
-  border: 1.5px solid rgba(193,18,31,0.2); border-radius: 12px; cursor: pointer;
-  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
-  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-danger:hover { background: #ffe0e0; border-color: #c1121f; }
+/* ── PERFIL DO CLIENTE ── */
+.perfil-overlay{display:none;position:fixed;inset:0;z-index:300;background:var(--cream);overflow-y:auto;}
+.perfil-overlay.aberto{display:block;}
+.perfil-topo{background:var(--midnight);padding:16px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;}
+.btn-voltar{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0;}
+.perfil-nome-topo{font-family:'Cinzel',serif;font-size:16px;color:var(--gold-lt);letter-spacing:.08em;flex:1;}
+.btn-edit-cl{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:5px 12px;border-radius:20px;font-size:11px;cursor:pointer;}
 
-/* TOAST / NOTIFICAÇÃO */
-.toast {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--midnight); color: white; padding: 14px 24px; border-radius: 12px;
-  font-family: 'Outfit', sans-serif; font-size: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3); z-index: 1000;
-  transition: transform 0.3s ease; white-space: nowrap;
-  border: 1px solid rgba(201,168,76,0.2);
-  display: flex; align-items: center; gap: 10px;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-.toast.success { border-color: rgba(45,106,79,0.5); }
-.toast.error { border-color: rgba(193,18,31,0.4); }
+.perfil-header{background:white;padding:20px 18px;border-bottom:1px solid var(--border);}
+.perfil-avatar-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.perfil-avatar{width:52px;height:52px;border-radius:50%;background:var(--midnight);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:18px;color:var(--gold-lt);flex-shrink:0;}
+.perfil-nome{font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:var(--ink);}
+.perfil-fone{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+.perfil-tags-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.perfil-notas{background:var(--cream-mid);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;color:var(--ink-soft);line-height:1.5;}
 
-/* PAINEL DIREITO */
-.panel-right { padding: 32px; overflow-y: auto; }
+.timeline-header{padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between;}
+.timeline-titulo{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);}
+.btn-novo-ev{background:var(--midnight);color:var(--gold-lt);border:none;border-radius:20px;padding:7px 14px;font-family:'Outfit',sans-serif;font-size:11px;cursor:pointer;letter-spacing:.04em;}
 
-/* KIT CARDS */
-.kit-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 28px; }
-.kit-card {
-  background: white; border: 1.5px solid rgba(201,168,76,0.15); border-radius: 14px;
-  padding: 18px 20px; cursor: pointer; transition: all 0.2s;
-}
-.kit-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(201,168,76,0.12); }
-.kit-card.selected { border-color: var(--gold); background: #fff8e8; box-shadow: 0 4px 16px rgba(201,168,76,0.15); }
-.kit-name { font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 4px; }
-.kit-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
-.kit-price { font-size: 13px; color: var(--gold); font-weight: 500; margin-top: 8px; }
+.timeline-body{padding:12px 18px;}
+.timeline-item{position:relative;padding-left:28px;margin-bottom:4px;}
+.timeline-dot{position:absolute;left:4px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid white;box-shadow:0 0 0 2px var(--border);}
+.timeline-line{position:absolute;left:8px;top:26px;width:1px;bottom:-4px;background:var(--border);}
+.timeline-item:last-child .timeline-line{display:none;}
 
-/* ACERVO */
-.acervo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.acervo-tag {
-  background: var(--cream-mid); border: 1px solid rgba(201,168,76,0.15);
-  border-radius: 20px; padding: 6px 12px; font-size: 12px; color: var(--ink-soft);
-  cursor: pointer; text-align: center; transition: all 0.15s;
-}
-.acervo-tag:hover { background: #fff8e8; border-color: var(--gold); color: var(--ink); }
-.acervo-tag.custom { border-style: dashed; border-color: rgba(201,168,76,0.3); color: var(--gold); }
+/* ── CATÁLOGO ── */
+.kit-card{background:white;border:1.5px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;}
+.kit-card.selecionado{border-color:var(--gold);background:var(--gold-pale);}
+.kit-nome{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:4px;}
+.kit-preco{font-size:18px;font-weight:600;color:var(--gold);margin-bottom:6px;}
+.kit-desc{font-size:12px;color:var(--ink-soft);line-height:1.55;}
+.kit-itens{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.kit-item{background:var(--cream-mid);border-radius:4px;padding:2px 8px;font-size:11px;color:var(--ink-soft);}
 
-/* SCRIPTS PÓS-VENDA */
-.script-timeline { display: flex; flex-direction: column; gap: 0; }
-.script-item {
-  display: flex; gap: 0; position: relative;
-}
-.script-timeline-col {
-  display: flex; flex-direction: column; align-items: center; width: 52px; flex-shrink: 0;
-}
-.timeline-dot {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--midnight);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600; color: var(--gold-light); flex-shrink: 0;
-  border: 2px solid rgba(201,168,76,0.3);
-}
-.timeline-line { width: 1px; flex: 1; background: rgba(201,168,76,0.2); min-height: 16px; }
-.script-content {
-  flex: 1; background: white; border: 1.5px solid rgba(201,168,76,0.15); border-radius: 12px;
-  padding: 16px; margin-bottom: 12px; margin-left: 8px;
-}
-.script-timing { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-.script-title { font-weight: 500; font-size: 14px; color: var(--ink); margin-bottom: 8px; }
-.script-text {
-  font-size: 13px; color: var(--ink-soft); line-height: 1.65;
-  background: var(--cream); border-radius: 8px; padding: 12px;
-  border-left: 3px solid rgba(201,168,76,0.3);
-}
-.btn-copy {
-  margin-top: 10px; padding: 7px 14px; background: transparent;
-  border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; cursor: pointer;
-  font-family: 'Outfit', sans-serif; font-size: 12px; color: var(--gold);
-  transition: all 0.15s; display: flex; align-items: center; gap: 6px;
-}
-.btn-copy:hover { background: #fff8e8; border-color: var(--gold); }
+/* ── VOZ ── */
+.voz-card{background:white;border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;}
+.voz-head{padding:12px 16px;background:rgba(201,168,76,.06);display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.voz-titulo{font-size:12px;font-weight:500;color:var(--ink);}
+.voz-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);}
+.voz-body{padding:12px 16px;font-size:13px;color:var(--ink-soft);line-height:1.7;background:var(--cream);}
+.voz-template{background:white;border-left:3px solid rgba(201,168,76,.4);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:10px 12px;margin-top:8px;font-size:12px;line-height:1.65;white-space:pre-wrap;}
+.btn-copiar{margin-top:8px;padding:5px 12px;background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);font-size:11px;color:var(--gold);cursor:pointer;transition:all .12s;}
+.btn-copiar:hover{background:var(--gold-pale);border-color:var(--gold);}
 
-/* CLIENTE CARD NO PAINEL DIREITO */
-.client-card {
-  background: white; border: 1.5px solid rgba(201,168,76,0.2); border-radius: 16px;
-  padding: 22px 24px; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 16px;
-}
-.client-avatar {
-  width: 52px; height: 52px; border-radius: 50%; background: var(--midnight);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Cinzel', serif; font-size: 18px; color: var(--gold-light);
-  flex-shrink: 0;
-}
-.client-info { flex: 1; }
-.client-name { font-weight: 500; font-size: 17px; color: var(--ink); margin-bottom: 2px; }
-.client-child { font-size: 13px; color: var(--ink-soft); margin-bottom: 4px; }
-.client-meta { font-size: 12px; color: rgba(61,56,48,0.55); }
-.client-status-badge {
-  padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
-}
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(13,10,26,.7);align-items:flex-end;justify-content:center;}
+.modal-overlay.aberto{display:flex;}
+.modal{background:white;border-radius:var(--r) var(--r) 0 0;width:100%;max-height:92vh;overflow-y:auto;padding:20px 18px 32px;}
+.modal-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 16px;}
+.modal-titulo{font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:var(--ink);margin-bottom:16px;}
 
-/* ORNAMENTO */
-.ornament { display: flex; align-items: center; gap: 16px; margin: 20px 0; }
-.ornament-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
-.ornament-mark { font-family: 'Fraunces', serif; font-size: 14px; color: var(--gold); }
+.campo{margin-bottom:14px;}
+.campo-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;margin-bottom:6px;display:block;}
+.campo-input,.campo-select,.campo-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:border-color .2s;}
+.campo-input:focus,.campo-select:focus,.campo-textarea:focus{border-color:var(--gold);background:white;}
+.campo-textarea{resize:none;line-height:1.5;}
+.campo-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 
-/* SEÇÃO LABEL DIREITO */
-.section-heading {
-  font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+.status-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.status-opt{padding:8px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:12px;text-align:center;cursor:pointer;transition:all .12s;}
+.status-opt:hover{border-color:var(--gold);}
+.status-opt.ativo-realizado{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:500;}
+.status-opt.ativo-fechado{background:var(--info-bg);border-color:var(--info);color:var(--info);font-weight:500;}
+.status-opt.ativo-prospect{background:var(--warn-bg);border-color:var(--warn);color:var(--warn);font-weight:500;}
+.status-opt.ativo-arquivado{background:var(--cream-mid);border-color:var(--ink-dim);color:var(--ink-dim);font-weight:500;}
+.status-opt.ativo-cancelado{background:var(--err-bg);border-color:var(--err);color:var(--err);font-weight:500;}
+
+.toggle-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--cream);border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;}
+.toggle-row.ativo{background:var(--gold-pale);border-color:var(--gold);}
+.toggle-box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:white;}
+.toggle-row.ativo .toggle-box{background:var(--gold);border-color:var(--gold);}
+.toggle-tick{color:white;font-size:11px;display:none;}
+.toggle-row.ativo .toggle-tick{display:block;}
+.toggle-label{font-size:13px;color:var(--ink);}
+.toggle-badge{margin-left:auto;font-size:11px;color:var(--gold);background:rgba(201,168,76,.15);padding:2px 8px;border-radius:10px;}
+
+.btn-salvar{width:100%;padding:14px;background:var(--midnight);color:white;border:none;border-radius:var(--r);font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:16px;}
+.btn-salvar:hover{background:var(--violet);}
+.btn-perigo{width:100%;padding:11px;background:transparent;color:var(--err);border:1px solid rgba(193,18,31,.2);border-radius:var(--r);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-top:8px;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--midnight);color:white;padding:12px 20px;border-radius:var(--r);font-size:13px;z-index:1000;transition:transform .25s;white-space:nowrap;border:1px solid rgba(201,168,76,.2);box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.ok{border-color:rgba(45,106,79,.4);}
+.toast.err{border-color:rgba(193,18,31,.35);}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:40px 20px;color:var(--ink-dim);}
+.empty-icon{font-size:36px;margin-bottom:10px;opacity:.4;}
+.empty-txt{font-family:'Fraunces',serif;font-size:16px;font-weight:300;margin-bottom:6px;}
+.empty-sub{font-size:12px;}
+
+/* ── KIT SELECT NO MODAL ── */
+.kit-opts{display:flex;flex-direction:column;gap:6px;}
+.kit-opt{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;display:flex;justify-content:space-between;align-items:center;}
+.kit-opt:hover{border-color:var(--gold);}
+.kit-opt.ativo{background:var(--gold-pale);border-color:var(--gold);}
+.kit-opt-nome{font-size:13px;color:var(--ink);font-weight:400;}
+.kit-opt-preco{font-size:13px;color:var(--gold);font-weight:500;}
+
+@media(min-width:640px){
+  .stats-grid{grid-template-columns:repeat(4,1fr);}
+  .modal-overlay{align-items:center;}
+  .modal{border-radius:var(--r);max-width:480px;max-height:88vh;}
 }
-.section-heading::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
-
-/* SPINNER */
-@keyframes spin { to { transform: rotate(360deg); } }
-.spinner {
-  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite;
-}
-
-/* ESTADO VAZIO */
-.empty-state {
-  text-align: center; padding: 60px 40px; color: rgba(61,56,48,0.45);
-}
-.empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
-.empty-state-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; margin-bottom: 8px; }
-.empty-state-sub { font-size: 13px; }
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  .panel-left { max-height: none; position: relative; top: 0; }
-  .kit-grid { grid-template-columns: 1fr 1fr; }
-  .acervo-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 500px) {
-  .header { padding: 14px 20px; }
-  .panel-section { padding: 20px; }
-  .panel-right { padding: 20px; }
-  .kit-grid { grid-template-columns: 1fr; }
-  .status-group { grid-template-columns: 1fr 1fr; }
-}
-
-/* INDICADOR DE CARREGAMENTO NA BUSCA */
-.search-hint { font-size: 12px; color: rgba(61,56,48,0.5); margin-top: 6px; min-height: 18px; }
-.search-hint.success { color: var(--success); }
-.search-hint.error { color: var(--error); }
-
-/* TABS PAINEL DIREITO */
-.tabs { display: flex; gap: 0; border-bottom: 1px solid rgba(201,168,76,0.15); margin-bottom: 24px; }
-.tab {
-  padding: 10px 20px; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 400;
-  color: rgba(61,56,48,0.5); cursor: pointer; border-bottom: 2px solid transparent;
-  margin-bottom: -1px; transition: all 0.15s; letter-spacing: 0.05em;
-}
-.tab:hover { color: var(--ink); }
-.tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 500; }
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* RESUMO DE PREÇO */
-.price-summary {
-  background: var(--midnight); border-radius: 14px; padding: 18px 20px;
-  margin-top: 8px;
-}
-.price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.price-label { font-size: 13px; color: rgba(255,255,255,0.55); }
-.price-value { font-size: 13px; color: rgba(255,255,255,0.8); }
-.price-total { 
-  border-top: 1px solid rgba(201,168,76,0.2); padding-top: 10px; margin-top: 4px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.price-total-label { font-size: 14px; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; }
-.price-total-value { font-family: 'Fraunces', serif; font-size: 22px; color: var(--gold-light); }
-
-/* INPUT DE KM */
-.km-group { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
-.km-group input { width: 80px; }
-.km-label { font-size: 13px; color: var(--ink-soft); }
-
-/* KIT CARDS MINI (painel esquerdo) */
-.kit-card-mini {
-  background: var(--cream-mid); border: 1.5px solid rgba(201,168,76,0.15);
-  border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: all 0.15s;
-}
-.kit-card-mini:hover { border-color: rgba(201,168,76,0.4); background: #fff8e8; }
-.kit-card-mini.selected { border-color: var(--gold); background: #fff8e8; box-shadow: 0 2px 8px rgba(201,168,76,0.15); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-brand">
-    <div class="header-brand-text">
-      <div class="header-title">ENCANTARYS</div>
-      <div class="header-sub">CRM · Gestão de Clientes</div>
-    </div>
+<!-- TOPO -->
+<header class="topo">
+  <div>
+    <div class="topo-logo">ENCANTARYS</div>
+    <div class="topo-sub">CRM · Pegue e Monte</div>
   </div>
-  <div class="header-badge">✦ Fernanda</div>
+  <div class="topo-spacer"></div>
+  <button class="topo-btn primary" onclick="abrirModalNovoCliente()">+ Cliente</button>
 </header>
 
-<!-- LAYOUT PRINCIPAL -->
-<div class="layout">
+<!-- NAV TABS -->
+<nav class="nav-tabs">
+  <button class="nav-tab ativo" onclick="irPagina('dashboard',this)">Dashboard</button>
+  <button class="nav-tab" onclick="irPagina('clientes',this)">Clientes <span class="nav-badge" id="badge-clientes">0</span></button>
+  <button class="nav-tab" onclick="irPagina('catalogo',this)">Catálogo</button>
+  <button class="nav-tab" onclick="irPagina('voz',this)">Voz da Fernanda</button>
+</nav>
 
-  <!-- PAINEL ESQUERDO: FORMULÁRIO -->
-  <aside class="panel-left">
-
-    <!-- BUSCA -->
-    <div class="panel-section">
-      <div class="section-label">🔍 Buscar cliente</div>
-      <div class="search-group">
-        <input class="input-field" type="tel" id="crmPhone" placeholder="(22) 99999-9999" inputmode="tel">
-        <button class="btn-search" onclick="handleSearch()" title="Buscar cliente">
-          <span id="searchIcon">🔍</span>
-        </button>
-      </div>
-      <div class="search-hint" id="searchHint">Digite o WhatsApp e clique na lupa para buscar</div>
-    </div>
-
-    <!-- DADOS DO CLIENTE -->
-    <div class="panel-section">
-      <div class="section-label">👤 Dados do cliente</div>
-
-      <div class="field-group">
-        <label class="field-label">Nome do cliente <span class="field-required">*</span></label>
-        <input class="input-field" type="text" id="crmName" placeholder="Ex: Ana Paula Souza">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Nome da criança / aniversariante</label>
-        <input class="input-field" type="text" id="crmChildName" placeholder="Ex: Luísa (3 anos)">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Data da festa <span class="field-required">*</span></label>
-        <input class="input-field" type="date" id="crmDate">
-      </div>
-
-      <div class="field-group">
-        <label class="field-label">Tema escolhido</label>
-        <input class="input-field" type="text" id="crmTheme" placeholder="Ex: Jardim Encantado">
-      </div>
-    </div>
-
-    <!-- KIT -->
-    <div class="panel-section">
-      <div class="section-label">🎀 Kit alugado</div>
-      <div id="kitCards" style="display:flex;flex-direction:column;gap:8px"></div>
-      <input type="hidden" id="crmKit">
-    </div>
-
-    <!-- OPCIONAIS -->
-    <div class="panel-section">
-      <div class="section-label">✨ Opcionais</div>
-      <div class="check-group">
-        <div class="check-item" id="checkCustomized" onclick="toggleCheck('customized')">
-          <div class="check-box"><span class="check-box-tick">✓</span></div>
-          <div class="check-text">Tema personalizado</div>
-          <div class="check-badge">+R$30</div>
-        </div>
-        <div class="check-item" id="checkDelivery" onclick="toggleCheck('delivery')">
-          <div class="check-box"><span class="check-box-tick">✓</span></div>
-          <div class="check-text">Delivery / Frete</div>
-          <div class="check-badge">R$2/km</div>
-        </div>
-      </div>
-      <div class="km-group" id="kmGroup" style="display:none">
-        <input class="input-field" type="number" id="kmDistance" placeholder="0" min="0" style="width:80px" onchange="updatePrice()">
-        <span class="km-label">km de distância</span>
-      </div>
-    </div>
-
-    <!-- STATUS DA VENDA -->
-    <div class="panel-section">
-      <div class="section-label">📊 Status da venda</div>
-      <div class="status-group">
-        <button class="status-pill active-prospect" id="status-Prospect" onclick="setStatus('Prospect')">🔵 Prospect</button>
-        <button class="status-pill" id="status-Fechado" onclick="setStatus('Fechado')">🟢 Fechado</button>
-        <button class="status-pill" id="status-Arquivado" onclick="setStatus('Arquivado')">🟡 Arquivado</button>
-        <button class="status-pill" id="status-Cancelado" onclick="setStatus('Cancelado')">🔴 Cancelado</button>
-      </div>
-    </div>
-
-    <!-- AÇÕES -->
-    <div class="panel-section">
-      <div class="section-label">💾 Salvar</div>
-      <div class="actions-bar">
-        <button class="btn-primary" id="btnSave" onclick="handleSave()">
-          <span id="btnSaveIcon">✨</span>
-          <span id="btnSaveText">Salvar & Agendar na Agenda</span>
-        </button>
-        <button class="btn-secondary" onclick="handleArchive()">
-          📁 Arquivar cliente
-        </button>
-        <button class="btn-danger" onclick="handleCancel()">
-          ✕ Cancelar venda
-        </button>
-        <button class="btn-danger" style="opacity:0.6;font-size:12px;padding:9px" onclick="handleClear()">
-          🗑️ Limpar formulário
-        </button>
-      </div>
-    </div>
-
-  </aside>
-
-  <!-- PAINEL DIREITO -->
-  <main class="panel-right">
-
-    <!-- TABS -->
-    <div class="tabs">
-      <div class="tab active" onclick="switchTab('resumo')">Resumo da Venda</div>
-      <div class="tab" onclick="switchTab('acervo')">Acervo de Temas</div>
-      <div class="tab" onclick="switchTab('scripts')">Scripts Pós-Venda</div>
-    </div>
-
-    <!-- TAB: RESUMO -->
-    <div class="tab-content active" id="tab-resumo">
-      
-      <!-- CARD DO CLIENTE (aparece quando tem dados) -->
-      <div id="clientCard" style="display:none">
-        <div class="client-card" id="clientCardInner">
-          <div class="client-avatar" id="clientAvatar">?</div>
-          <div class="client-info">
-            <div class="client-name" id="clientNameDisplay">—</div>
-            <div class="client-child" id="clientChildDisplay" style="display:none"></div>
-            <div class="client-meta" id="clientMetaDisplay">—</div>
-          </div>
-          <div class="client-status-badge" id="clientStatusBadge">Prospect</div>
-        </div>
-      </div>
-
-      <!-- ESTADO VAZIO -->
-      <div id="emptyState">
-        <div class="empty-state">
-          <div class="empty-state-icon">🎪</div>
-          <div class="empty-state-text">Nenhum cliente selecionado</div>
-          <div class="empty-state-sub">Busque pelo WhatsApp ou preencha os dados ao lado para registrar um novo atendimento.</div>
-        </div>
-      </div>
-
-      <!-- RESUMO DE PREÇO -->
-      <div id="priceCard" style="display:none">
-        <div class="section-heading">💰 Estimativa de valor</div>
-        <div class="price-summary">
-          <div class="price-row">
-            <div class="price-label" id="priceKitLabel">Kit</div>
-            <div class="price-value" id="priceKitValue">R$0</div>
-          </div>
-          <div class="price-row" id="priceCustomRow" style="display:none">
-            <div class="price-label">Personalização</div>
-            <div class="price-value">+ R$30</div>
-          </div>
-          <div class="price-row" id="priceDeliveryRow" style="display:none">
-            <div class="price-label" id="priceDeliveryLabel">Frete</div>
-            <div class="price-value" id="priceDeliveryValue">R$0</div>
-          </div>
-          <div class="price-total">
-            <div class="price-total-label">Total estimado</div>
-            <div class="price-total-value" id="priceTotal">R$0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DICAS RÁPIDAS -->
-      <div class="ornament" style="margin-top:28px"><div class="ornament-line"></div><div class="ornament-mark">✦</div><div class="ornament-line"></div></div>
-      <div class="section-heading">💡 Lembretes rápidos</div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="background:white;border:1.5px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-soft);line-height:1.6">
-          <strong style="color:var(--ink);display:block;margin-bottom:4px">📦 Tema fora do acervo</strong>
-          Cobrar +R$30 de personalização e marcar o checkbox acima.
-        </div>
-        <div style="background:white;border:1.5px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-soft);line-height:1.6">
-          <strong style="color:var(--ink);display:block;margin-bottom:4px">🚚 Frete</strong>
-          R$2/km calculado ida + volta a partir do Prado. Ex: 10 km = R$40. Retirada no Prado é grátis!
-        </div>
-        <div style="background:white;border:1.5px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--ink-soft);line-height:1.6">
-          <strong style="color:var(--ink);display:block;margin-bottom:4px">📅 Agenda automática</strong>
-          Ao salvar com status "Fechado", a agenda já cria os lembretes de pós-venda (T+1, T+90, T+330) automaticamente!
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: ACERVO -->
-    <div class="tab-content" id="tab-acervo">
-      <div class="section-heading">🎠 Infantis / Personagens</div>
-      <div class="acervo-grid" style="margin-bottom:20px">
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Minnie</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Barbie</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Bobie Goods</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Ursinho Baloeiro</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Unicórnio</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Stitch e Angel</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Poderoso Chefinho</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Hello Kitty</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Masha e o Urso</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Frozen</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Homem-Aranha</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Carmed</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Fazendinha</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Patrulha Canina</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Ursinha Realeza</div>
-      </div>
-
-      <div class="section-heading">🍵 Chá de Bebê / Mesversário</div>
-      <div class="acervo-grid" style="margin-bottom:20px">
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Oh Baby</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Ursinho</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Ursinha Realeza</div>
-      </div>
-
-      <div class="section-heading">🥂 Outros & Adulto</div>
-      <div class="acervo-grid" style="margin-bottom:20px">
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Botafogo</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Futebol</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Festa Junina</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Tardezinha</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Chá de Cozinha</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Feliz Dia dos Pais</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Margaridas/Floral</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Gratidão</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Borboletas</div>
-      </div>
-
-      <div class="section-heading">💍 Casamento / 15 Anos (Combo Elegante)</div>
-      <div class="acervo-grid" style="margin-bottom:20px">
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Dourado</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Branco</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Rosa</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Verde</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Rústico</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Glitter</div>
-        <div class="acervo-tag" onclick="usarTema(this.textContent)">Happy Birthday</div>
-      </div>
-
-      <div style="background:#fff8e8;border:1.5px dashed rgba(201,168,76,0.4);border-radius:12px;padding:16px;font-size:13px;color:var(--ink-soft);line-height:1.6">
-        <strong style="color:var(--gold)">⚠️ Tema fora do acervo?</strong><br>
-        Cobrar <strong>+R$30</strong> de personalização e marcar o checkbox "Tema personalizado" no formulário ao lado. Nunca confirmar tema que não esteja nesta lista!
-      </div>
-    </div>
-
-    <!-- TAB: SCRIPTS -->
-    <div class="tab-content" id="tab-scripts">
-      <p style="font-size:13px;color:var(--ink-soft);margin-bottom:20px;line-height:1.65">
-        Scripts prontos para enviar no WhatsApp. Clique em <strong>Copiar</strong> e cole direto na conversa com a cliente. Quando salvar com status <em>Fechado</em>, a agenda já cria os lembretes nas datas certas automaticamente! 📅
-      </p>
-
-      <div class="script-timeline">
-
-        <!-- T+1 -->
-        <div class="script-item">
-          <div class="script-timeline-col">
-            <div class="timeline-dot">+1</div>
-            <div class="timeline-line"></div>
-          </div>
-          <div class="script-content">
-            <div class="script-timing">1 dia após a festa · Obrigado & Avaliação</div>
-            <div class="script-title">💜 Mensagem de Agradecimento</div>
-            <div class="script-text" id="script1">Oi, <span class="script-client">[Nome]</span>! 🌟 Esperamos que a festinha de <span class="script-child">[Criança]</span> tenha sido tudo de mais especial! Se tiver alguma fotinho da montagem, adoraríamos ver 💕 E se quiser nos ajudar, deixa uma avaliação rápida aqui — faz toda a diferença pra a gente! ✨<br><a href="https://g.page/r/Ca7Vqyn8YZFdEBM/review" target="_blank" style="color:var(--gold);font-size:12px">https://g.page/r/Ca7Vqyn8YZFdEBM/review</a></div>
-            <button class="btn-copy" onclick="copiarScript('script1')">📋 Copiar mensagem</button>
-          </div>
-        </div>
-
-        <!-- T+90 -->
-        <div class="script-item">
-          <div class="script-timeline-col">
-            <div class="timeline-dot" style="font-size:9px">+90</div>
-            <div class="timeline-line"></div>
-          </div>
-          <div class="script-content">
-            <div class="script-timing">3 meses após a festa · Indicação Estratégica</div>
-            <div class="script-title">🤝 Pedido de Indicação</div>
-            <div class="script-text" id="script2">Oi, <span class="script-client">[Nome]</span>! Três meses voaram desde a festinha de <span class="script-child">[Criança]</span>, né? 🥹 Se você conhecer alguma amiga ou familiar planejando um aniversário, nos indica! Tenho um Guia de Montagem especial pra te enviar de presente por cada indicação que fechar 🎁</div>
-            <button class="btn-copy" onclick="copiarScript('script2')">📋 Copiar mensagem</button>
-          </div>
-        </div>
-
-        <!-- T+330 -->
-        <div class="script-item">
-          <div class="script-timeline-col">
-            <div class="timeline-dot" style="font-size:8px">+330</div>
-          </div>
-          <div class="script-content">
-            <div class="script-timing">11 meses após a festa · Antecipação do próximo ano</div>
-            <div class="script-title">🎂 Renovação para o Próximo Ano</div>
-            <div class="script-text" id="script3">Oi, <span class="script-client">[Nome]</span>! Mal acredito que o próximo aniversário de <span class="script-child">[Criança]</span> já se aproxima! 🎉 Nossa agenda fecha bem rápido, então queria te dar prioridade de escolha de tema. Quando quiser bater um papo sobre a festinha deste ano, me chama! 💫</div>
-            <button class="btn-copy" onclick="copiarScript('script3')">📋 Copiar mensagem</button>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:16px;background:#fff8e8;border-radius:12px;padding:14px 16px;font-size:12px;color:var(--ink-soft)">
-        💡 <strong>Dica:</strong> Substitua <em>[Nome]</em> e <em>[Criança]</em> antes de enviar. Ao salvar como "Fechado", os lembretes aparecem automaticamente na agenda do Google!
-      </div>
-    </div>
-
-  </main>
+<!-- ════════════ DASHBOARD ════════════ -->
+<div class="pagina ativa" id="pg-dashboard">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="sec-titulo">Próximos 14 dias</div>
+  <div id="proximos-eventos"></div>
+  <div class="sec-titulo" style="margin-top:16px;">Alertas de pagamento</div>
+  <div id="alertas-pag"></div>
 </div>
 
-<!-- TOAST -->
+<!-- ════════════ CLIENTES ════════════ -->
+<div class="pagina" id="pg-clientes">
+  <input class="search-bar" type="text" id="search-input" placeholder="🔍  Buscar por nome ou telefone..." oninput="filtrarClientes()">
+  <div class="filter-pills">
+    <button class="filter-pill ativo" onclick="setFiltro('todos',this)">Todos</button>
+    <button class="filter-pill" onclick="setFiltro('futuros',this)">Com evento futuro</button>
+    <button class="filter-pill" onclick="setFiltro('prospects',this)">Prospects</button>
+    <button class="filter-pill" onclick="setFiltro('repeat',this)">Clientes repeat</button>
+    <button class="filter-pill" onclick="setFiltro('vip',this)">VIP</button>
+  </div>
+  <div id="lista-clientes"></div>
+</div>
+
+<!-- ════════════ CATÁLOGO ════════════ -->
+<div class="pagina" id="pg-catalogo">
+  <div class="sec-titulo" style="margin-top:4px;">Combos disponíveis</div>
+  <div id="catalogo-kits"></div>
+  <div class="sec-titulo" style="margin-top:8px;">Extras</div>
+  <div id="catalogo-extras"></div>
+  <div class="sec-titulo" style="margin-top:8px;">Temas trabalhados</div>
+  <div id="catalogo-temas"></div>
+</div>
+
+<!-- ════════════ VOZ DA FERNANDA ════════════ -->
+<div class="pagina" id="pg-voz">
+  <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px;">
+    Scripts e expressões capturados das conversas reais com clientes — base para treinar a IA de atendimento no futuro.
+  </p>
+  <div id="voz-cards"></div>
+</div>
+
+<!-- ════════════ PERFIL DO CLIENTE ════════════ -->
+<div class="perfil-overlay" id="perfil-overlay">
+  <header class="perfil-topo">
+    <button class="btn-voltar" onclick="fecharPerfil()">←</button>
+    <div class="perfil-nome-topo" id="perfil-nome-topo">—</div>
+    <button class="btn-edit-cl" onclick="editarClienteAtual()">✏️ Editar</button>
+  </header>
+
+  <div class="perfil-header">
+    <div class="perfil-avatar-row">
+      <div class="perfil-avatar" id="perfil-avatar">?</div>
+      <div>
+        <div class="perfil-nome" id="perfil-nome-h">—</div>
+        <div class="perfil-fone" id="perfil-fone-h">—</div>
+      </div>
+    </div>
+    <div class="perfil-tags-row" id="perfil-tags-row"></div>
+    <div class="perfil-notas" id="perfil-notas-h" style="display:none;"></div>
+  </div>
+
+  <div class="timeline-header">
+    <span class="timeline-titulo">Timeline de eventos</span>
+    <button class="btn-novo-ev" onclick="novoEventoClienteAtual()">+ Novo evento</button>
+  </div>
+  <div class="timeline-body" id="timeline-body"></div>
+</div>
+
+<!-- ════════════ MODAL EVENTO ════════════ -->
+<div class="modal-overlay" id="modal-ev">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-titulo" id="modal-ev-titulo">Novo evento</div>
+    <input type="hidden" id="ev-cliente-id">
+    <input type="hidden" id="ev-id">
+
+    <div class="campo-row">
+      <div class="campo">
+        <label class="campo-label">Data do evento</label>
+        <input class="campo-input" type="date" id="ev-data">
+      </div>
+      <div class="campo">
+        <label class="campo-label">Tipo</label>
+        <select class="campo-select" id="ev-tipo">
+          <option value="Aniversário Infantil">Aniversário Infantil</option>
+          <option value="Chá de Bebê">Chá de Bebê</option>
+          <option value="Chá de Fraldas">Chá de Fraldas</option>
+          <option value="Chá de Panela">Chá de Panela</option>
+          <option value="Chá Revelação">Chá Revelação</option>
+          <option value="Casamento">Casamento</option>
+          <option value="Aniversário Adulto">Aniversário Adulto</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="campo-row">
+      <div class="campo">
+        <label class="campo-label">Nome da criança</label>
+        <input class="campo-input" type="text" id="ev-crianca" placeholder="Opcional">
+      </div>
+      <div class="campo">
+        <label class="campo-label">Tema</label>
+        <input class="campo-input" type="text" id="ev-tema" placeholder="Ex: Bluey, Capivara...">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Kit</label>
+      <div class="kit-opts" id="kit-opts-modal"></div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Personalização de tema (+R$20)</label>
+      <div class="toggle-row" id="toggle-custom" onclick="toggleCampo('toggle-custom','ev-custom')">
+        <input type="hidden" id="ev-custom" value="false">
+        <div class="toggle-box"><span class="toggle-tick">✓</span></div>
+        <span class="toggle-label">Tema personalizado</span>
+        <span class="toggle-badge">+R$20</span>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Entrega a domicílio</label>
+      <div class="toggle-row" id="toggle-entrega" onclick="toggleCampo('toggle-entrega','ev-entrega');toggleFrete()">
+        <input type="hidden" id="ev-entrega" value="false">
+        <div class="toggle-box"><span class="toggle-tick">✓</span></div>
+        <span class="toggle-label">Entrega + recolhimento</span>
+        <span class="toggle-badge" id="badge-frete-label">R$2/km</span>
+      </div>
+    </div>
+
+    <div class="campo" id="campo-frete" style="display:none;">
+      <label class="campo-label">Valor do frete (R$)</label>
+      <input class="campo-input" type="number" id="ev-frete" placeholder="Ex: 30" oninput="calcTotal()">
+    </div>
+
+    <div class="campo-row">
+      <div class="campo">
+        <label class="campo-label">Total (R$)</label>
+        <input class="campo-input" type="number" id="ev-total" placeholder="0" oninput="calcPendente()">
+      </div>
+      <div class="campo">
+        <label class="campo-label">Valor pago (R$)</label>
+        <input class="campo-input" type="number" id="ev-pago" placeholder="0" oninput="calcPendente()">
+      </div>
+    </div>
+    <div id="pendente-label" style="font-size:11px;color:var(--err);margin-top:-8px;margin-bottom:8px;"></div>
+
+    <div class="campo">
+      <label class="campo-label">Status</label>
+      <div class="status-opts" id="status-opts-ev">
+        <div class="status-opt" onclick="setStatusEv('Prospect',this)">🔍 Prospect</div>
+        <div class="status-opt" onclick="setStatusEv('Fechado',this)">📋 Fechado</div>
+        <div class="status-opt" onclick="setStatusEv('Realizado',this)">✅ Realizado</div>
+        <div class="status-opt" onclick="setStatusEv('Arquivado',this)">📁 Arquivado</div>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="campo-label">Notas internas</label>
+      <textarea class="campo-textarea" id="ev-notas" rows="2" placeholder="Observações, endereço de entrega..."></textarea>
+    </div>
+
+    <button class="btn-salvar" onclick="salvarEvento()">Salvar evento</button>
+    <button class="btn-perigo" id="btn-excluir-ev" onclick="excluirEventoAtual()" style="display:none;">Excluir este evento</button>
+    <button style="width:100%;padding:11px;background:transparent;border:none;color:var(--ink-dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-top:4px;" onclick="fecharModal('modal-ev')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ════════════ MODAL CLIENTE ════════════ -->
+<div class="modal-overlay" id="modal-cl">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-titulo" id="modal-cl-titulo">Novo cliente</div>
+    <input type="hidden" id="cl-id">
+
+    <div class="campo">
+      <label class="campo-label">Nome <span style="color:var(--gold);">*</span></label>
+      <input class="campo-input" type="text" id="cl-nome" placeholder="Nome completo">
+    </div>
+    <div class="campo">
+      <label class="campo-label">WhatsApp</label>
+      <input class="campo-input" type="tel" id="cl-fone" placeholder="22 9xxxx-xxxx">
+    </div>
+    <div class="campo">
+      <label class="campo-label">Tags</label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <div class="toggle-row" id="tag-vip-toggle" onclick="toggleTag('VIP')" style="flex:1;min-width:120px;padding:7px 10px;">
+          <input type="hidden" id="tag-vip" value="false">
+          <div class="toggle-box" id="tag-vip-box"><span class="toggle-tick">✓</span></div>
+          <span class="toggle-label" style="font-size:12px;">👑 VIP</span>
+        </div>
+        <div class="toggle-row" id="tag-repeat-toggle" onclick="toggleTag('Repeat')" style="flex:1;min-width:120px;padding:7px 10px;">
+          <input type="hidden" id="tag-repeat" value="false">
+          <div class="toggle-box" id="tag-repeat-box"><span class="toggle-tick">✓</span></div>
+          <span class="toggle-label" style="font-size:12px;">🔄 Repeat</span>
+        </div>
+      </div>
+    </div>
+    <div class="campo">
+      <label class="campo-label">Notas sobre a cliente</label>
+      <textarea class="campo-textarea" id="cl-notas" rows="3" placeholder="Preferências, filhos, observações pessoais..."></textarea>
+    </div>
+
+    <button class="btn-salvar" onclick="salvarCliente()">Salvar cliente</button>
+    <button class="btn-perigo" id="btn-excluir-cl" onclick="excluirClienteAtual()" style="display:none;">Excluir cliente</button>
+    <button style="width:100%;padding:11px;background:transparent;border:none;color:var(--ink-dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-top:4px;" onclick="fecharModal('modal-cl')">Cancelar</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ==========================================
-// CONFIGURAÇÃO
-// ==========================================
-const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec';
-
-// ==========================================
-// KITS
-// ==========================================
+// ════════════════════════════════════════════════
+// CATÁLOGO DE KITS
+// ════════════════════════════════════════════════
 const KITS = [
-  {
-    id: 'Combo Mini',
-    preco: 50,
-    badge: '',
-    desc: '1 Painel redondo · Cômoda provençal · Escada rústica · Suportes e buchinho',
-    nota: 'Ideal para festas íntimas (até 15 pessoas)'
-  },
-  {
-    id: 'Combo 1 Painel',
-    preco: 75,
-    badge: '⭐ mais popular',
-    desc: '1 Painel redondo · Trio de cilindros · 5 a 7 suportes · Tapete · Displays',
-    nota: 'Recomendado por padrão — melhor custo-benefício'
-  },
-  {
-    id: 'Cilindros + Painel',
-    preco: 60,
-    badge: '',
-    desc: '1 Painel redondo · Trio de cilindros · Suportes básicos',
-    nota: 'Opção mais em conta para quem quer só o essencial'
-  },
-  {
-    id: 'Combo 2 Painéis',
-    preco: 85,
-    badge: '',
-    desc: '2 Painéis (redondo + arco romano lateral) · Cilindros/mesinhas · Tapete · Até 10 suportes',
-    nota: 'Para 30–50 pessoas, mais impacto visual'
-  },
-  {
-    id: 'Combo Elegante',
-    preco: null,
-    badge: '',
-    desc: 'Painéis em arco · Mesas tripé/ferro · Tapete rústico · Suportes de luxo',
-    nota: 'Casamentos, 15 anos, eventos sofisticados — valor sob consulta'
-  }
+  {id:'kit_mini', nome:'Mini Festa', preco:50,
+   itens:['Tapete','2 cilindros c/ capas','1 painel redondo','Vasos mini','Bandejas (3)'],
+   desc:'Ideal para mini festas e decorações de mesa.'},
+  {id:'kit_1p', nome:'1 Painel', preco:75,
+   itens:['3 cilindros c/ capas','1 painel romano','Escadinha de mesa','Bandejas (5)','Vasos de flores'],
+   desc:'Decoração com um painel central. Clássico e elegante.'},
+  {id:'kit_2p', nome:'2 Painéis (Completo)', preco:85,
+   itens:['3 cilindros c/ capas','1 painel redondo','1 painel romano','Escadinha','Bandejas (5)','Vasos de flores','Tapete'],
+   desc:'Kit completo com dois painéis. O mais popular.'},
+  {id:'kit_elegante', nome:'Elegante', preco:85,
+   itens:['Armário branco','2+ cilindros','Painéis personalizados','Flores exclusivas','Extras sob consulta'],
+   desc:'Para festas mais sofisticadas. Sob consulta.'},
+  {id:'kit_custom', nome:'Personalizado', preco:0,
+   itens:['Conforme briefing'],
+   desc:'Monte o kit conforme a necessidade da cliente.'},
 ];
 
-// ==========================================
-// ESTADO
-// ==========================================
-let currentStatus = 'Prospect';
-let isCustomized = false;
-let isDelivery = false;
-let selectedKitId = '';
+const EXTRAS = [
+  {nome:'Personalização de tema', preco:'+R$20',desc:'Capa ou painel com nome/tema específico'},
+  {nome:'Entrega + recolhimento', preco:'R$2/km',desc:'A partir do Prado, Nova Friburgo'},
+  {nome:'Mini arco de balões', preco:'Consultar',desc:'Apenas para Mini festas'},
+];
 
-// ==========================================
-// RENDERIZAR KIT CARDS
-// ==========================================
-function renderKitCards() {
-  const container = document.getElementById('kitCards');
-  container.innerHTML = '';
-  KITS.forEach(kit => {
-    const card = document.createElement('div');
-    card.className = 'kit-card-mini' + (selectedKitId === kit.id ? ' selected' : '');
-    card.onclick = () => selectKit(kit.id);
-    card.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
-        '<span style="font-weight:500;font-size:13px;color:var(--ink)">' + kit.id + '</span>' +
-        '<span style="font-size:12px;color:var(--gold);font-weight:500">' +
-          (kit.preco !== null ? 'R$' + kit.preco : 'Sob Consulta') +
-          (kit.badge ? ' <span style="font-size:10px;color:var(--ink-soft)">' + kit.badge + '</span>' : '') +
-        '</span>' +
-      '</div>' +
-      '<div style="font-size:11px;color:var(--ink-soft);line-height:1.5">' + kit.desc + '</div>' +
-      '<div style="font-size:10px;color:rgba(61,56,48,0.5);margin-top:3px;font-style:italic">' + kit.nota + '</div>';
-    container.appendChild(card);
-  });
-}
+const TEMAS = [
+  'Bluey','Lucas Neto','Dinossauro','Capivara Mini','Ursinho Azul','Ursinho Pooh',
+  'Borboleta','Homem Aranha','Super Heróis','Hulk','Oh Baby','Chá de Bebê',
+  'Floral','Rosa Claro','Stitch','Unicórnio','Barbie','Minnie','Bobi Goods',
+  'Carmed','Fazendinha','Flamingo','Jardim Encantado','Personalizado',
+];
 
-function selectKit(id) {
-  selectedKitId = id;
-  document.getElementById('crmKit').value = id;
-  document.querySelectorAll('.kit-card-mini').forEach(c => c.classList.remove('selected'));
-  document.querySelectorAll('.kit-card-mini').forEach(c => {
-    if (c.querySelector('span').textContent.trim() === id) c.classList.add('selected');
-  });
-  updatePrice();
-  updateClientCard();
-}
+// ════════════════════════════════════════════════
+// VOZ DA FERNANDA — scripts capturados
+// ════════════════════════════════════════════════
+const VOZ = [
+  {cat:'Abertura automática', titulo:'Mensagem de boas-vindas',
+   obs:'Enviada automaticamente quando a cliente entra em contato.',
+   template:`Oi! Aqui é a Fernanda, da Encantarys Festas. 😊
+Me conta o que você precisa que te ajudo!`},
+  {cat:'Abertura automática', titulo:'Fora do horário',
+   obs:'Segunda a sábado, 8h–20h.',
+   template:`Oi! Recebi sua mensagem.
+Estou fora do horário agora, mas te respondo assim que puder.
+Se preferir, dá uma olhada no nosso site: encantarys.com.br 😊`},
+  {cat:'Qualificação', titulo:'Pergunta inicial de tema',
+   obs:'Após saber que a cliente quer decoração.',
+   template:`Que bom! Me conta qual é o tema da festa? 🎉
+Vou verificar a disponibilidade e te ajudo a escolher o melhor combo!`},
+  {cat:'Qualificação', titulo:'Informar combos e preços (/preco)',
+   obs:'Enviar quando a cliente pergunta sobre preços.',
+   template:`Nossos combos são:
 
-// ==========================================
-// STATUS
-// ==========================================
-function setStatus(status) {
-  currentStatus = status;
-  document.querySelectorAll('.status-pill').forEach(p => {
-    p.className = 'status-pill';
-    if (p.id === 'status-' + status) {
-      p.classList.add('active-' + status.toLowerCase());
-    }
-  });
-  updateClientCard();
-}
+✨ Mini Festa — R$50
+✨ 1 Painel — R$75
+✨ 2 Painéis (Completo) — R$85
+✨ Elegante — R$85
 
-// ==========================================
-// CHECKBOXES
-// ==========================================
-function toggleCheck(type) {
-  if (type === 'customized') {
-    isCustomized = !isCustomized;
-    const el = document.getElementById('checkCustomized');
-    el.classList.toggle('checked', isCustomized);
-    document.getElementById('crmCustomized').checked = isCustomized;
-  } else {
-    isDelivery = !isDelivery;
-    const el = document.getElementById('checkDelivery');
-    el.classList.toggle('checked', isDelivery);
-    document.getElementById('crmDelivery').checked = isDelivery;
-    document.getElementById('kmGroup').style.display = isDelivery ? 'flex' : 'none';
+Personalização de tema: +R$20 em qualquer combo.
+Entrega: R$2/km a partir do Prado, Nova Friburgo.`},
+  {cat:'Qualificação', titulo:'Temas disponíveis (/tema)',
+   obs:'Quando a cliente pergunta quais temas têm.',
+   template:`Trabalhamos com qualquer tema!
+Bluey, Lucas Neto, Dinossauro, Capivara, Ursinho, Borboleta, Barbie, Stitch, Unicórnio, Carmed, Oh Baby, Fazendinha e muito mais.
+
+Me fala qual você quer que verifico a disponibilidade. 😊`},
+  {cat:'Fechamento', titulo:'Como reservar (/reserva)',
+   obs:'Quando a cliente demonstra interesse.',
+   template:`É só me confirmar o tema, a data e o combo escolhido.
+Reserve com pelo menos 1 semana de antecedência.
+Para garantir a data, a gente faz um contrato simples e o pagamento de 30% de entrada. 😊`},
+  {cat:'Fechamento', titulo:'Sem kit disponível na data',
+   obs:'Quando não tem disponibilidade.',
+   template:`Infelizmente para essa data não tenho mais kits disponíveis. 😕
+Mas fica de olho no nosso Instagram e site para saber das novidades!
+Agradeço muito o contato. 😊🙏🏽`},
+  {cat:'Pós-venda', titulo:'Avaliação no Google (T+1 dia)',
+   obs:'Enviar 1 dia após a festa.',
+   template:`Oi, [NOME]! Esperamos que a festinha tenha sido tudo de mais especial! 🥳
+Se tiver alguma fotinha da montagem, adoraria ver.
+E se quiser nos ajudar, deixa uma avaliação rápida aqui:
+👉 https://g.page/r/Ca7Vqyn8YZFdEBM/review`},
+  {cat:'Pós-venda', titulo:'Indicação (T+3 meses)',
+   obs:'Enviar ~90 dias após a festa.',
+   template:`Oi, [NOME]! Três meses voaram desde a festinha, né? 🎈
+Se conhecer alguma amiga ou familiar planejando um aniversário, nos indica!
+Tenho um Guia de Montagem especial para te enviar de presente por cada indicação que fechar. 😊`},
+  {cat:'Pós-venda', titulo:'Renovação (T+11 meses)',
+   obs:'Enviar ~330 dias após a festa — para o próximo aniversário.',
+   template:`Oi, [NOME]! Mal acredito que o próximo aniversário já se aproxima! 🎂
+Nossa agenda fecha bem rápido, então queria te dar prioridade de escolha de tema.
+Quando quiser bater um papo sobre a festinha deste ano, me chama! 😊✨`},
+  {cat:'Tom de voz', titulo:'Expressões características da Fernanda',
+   obs:'Padrões observados nas conversas com clientes.',
+   template:`• "Tudo bem? 😊" — abertura calorosa
+• "Que lindo!" / "Que nome lindo!" — reação a temas e nomes
+• "Prazer, me chamo Fernanda 🤭" — apresentação descontraída
+• "Perdão a demora" — quando demora a responder
+• "Fica à vontade" — ao dar espaço para decidir
+• "Deus abençoe!" / "graças a Deus" — religiosidade natural
+• "Pode sim" / "Pode" — confirmação direta e positiva
+• "Tá ótimo!" / "Tá certo!" — confirmação entusiasmada
+• "Obrigada o contato! 😊🙏🏽" — encerramento`},
+  {cat:'IA futura', titulo:'Instruções para o modelo de IA',
+   obs:'Resumo do comportamento esperado para quando a IA for treinada.',
+   template:`Você é a Fernanda, da Encantarys Festas (Nova Friburgo, RJ).
+Negócio: aluguel de kits de decoração "pegue e monte" para festas.
+
+Personalidade:
+- Calorosa, atenciosa, informal mas profissional
+- Usa emojis com moderação (😊🎉✨🙏🏽)
+- Religiosa (pode usar "graças a Deus", "Deus abençoe")
+- Paciente e nunca pressiona
+- Quando não tem disponibilidade, não deixa a cliente sem saída
+
+Regras de atendimento:
+1. Sempre confirmar o tema e a data antes de discutir preço
+2. Mencionar o contrato de 30% de entrada ao fechar
+3. Nunca vender itens individuais (apenas kits completos)
+4. Se não tiver o que a cliente quer, sugerir alternativas
+5. Horário: seg a sáb 8h–20h
+
+Preços: Mini R$50 | 1 Painel R$75 | 2 Painéis R$85 | Elegante R$85
+Extra: +R$20 tema personalizado | R$2/km entrega`},
+];
+
+// ════════════════════════════════════════════════
+// DADOS SEED (todos os clientes das conversas)
+// ════════════════════════════════════════════════
+const SEED = {clientes:[
+  {id:'c01',nome:'Patrícia Canella',fone:'',tags:['VIP'],notas:'Sempre pede entrega cedo (7:30h)',criado:'2025-11-01',eventos:[
+    {id:'e01',data:'2025-12-13',tipo:'Evento',crianca:'',tema:'2 Painéis Romanos Rosa e Branca',kit:'kit_2p',custom:false,entrega:true,frete:35,total:120,pago:120,status:'Realizado',notas:'Entrega 7:30h'}
+  ]},
+  {id:'c02',nome:'Jaqueline',fone:'22999987782',tags:[],notas:'Chá de bebê',criado:'2025-12-01',eventos:[
+    {id:'e02',data:'2025-12-14',tipo:'Chá de Bebê',crianca:'',tema:'Chá de Bebê Completo',kit:'kit_2p',custom:false,entrega:false,frete:0,total:85,pago:42.5,status:'Realizado',notas:'Pago R$42,50 + troco R$2,50 na entrega'}
+  ]},
+  {id:'c03',nome:'Samara',fone:'22988744058',tags:[],notas:'',criado:'2025-12-15',eventos:[
+    {id:'e03',data:'2026-01-17',tipo:'Aniversário Infantil',crianca:'',tema:'Dinossauro',kit:'kit_2p',custom:true,entrega:false,frete:0,total:85,pago:85,status:'Realizado',notas:'Tapete verde. Tema dinossauro personalizado.'}
+  ]},
+  {id:'c04',nome:'Juliano',fone:'',tags:[],notas:'',criado:'2026-01-07',eventos:[
+    {id:'e04',data:'2026-01-07',tipo:'Retirada',crianca:'',tema:'',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Realizado',notas:'Conversa de confirmação de retirada'}
+  ]},
+  {id:'c05',nome:'Lívia Senai',fone:'22998873503',tags:[],notas:'Pagou 50% de entrada',criado:'2026-01-05',eventos:[
+    {id:'e05',data:'2026-01-07',tipo:'Evento',crianca:'',tema:'Rosa Claro com Painel Romano',kit:'kit_1p',custom:false,entrega:false,frete:0,total:70,pago:70,status:'Realizado',notas:'Pagou 50% na reserva (incomum, padrão é 30%)'}
+  ]},
+  {id:'c06',nome:'Alcimara',fone:'',tags:[],notas:'Gosta de Lucas Neto e Bluey',criado:'2026-01-05',eventos:[
+    {id:'e06',data:'2026-01-24',tipo:'Aniversário Infantil',crianca:'',tema:'Lucas Neto + Bluey',kit:'kit_2p',custom:true,entrega:true,frete:30,total:85,pago:85,status:'Realizado',notas:'Dois temas combinados. Frete incluído.'}
+  ]},
+  {id:'c07',nome:'Viviane (Vivih)',fone:'',tags:['Repeat','VIP'],notas:'Família voltará todo ano. Vizinha/conhecida.',criado:'2025-01-01',eventos:[
+    {id:'e07a',data:'2026-02-01',tipo:'Aniversário Infantil',crianca:'Tatiene',tema:'Kit Florido + Armário Branco + Puf',kit:'kit_elegante',custom:true,entrega:true,frete:30,total:95,pago:125,status:'Realizado',notas:'Kit especial com armário branco e puf. Total R$95 + R$30 frete = R$125.'}
+  ]},
+  {id:'c08',nome:'Juliana (Juju)',fone:'22999810275',tags:[],notas:'',criado:'2026-02-01',eventos:[
+    {id:'e08',data:'2026-03-06',tipo:'Aniversário Infantil',crianca:'Sara',tema:'Bluey',kit:'kit_1p',custom:false,entrega:false,frete:0,total:70,pago:70,status:'Realizado',notas:'Sara 6 anos'}
+  ]},
+  {id:'c09',nome:'Thay Fracacio',fone:'',tags:[],notas:'Olaria / Sonho',criado:'2026-02-15',eventos:[
+    {id:'e09',data:'2026-03-07',tipo:'Aniversário Infantil',crianca:'',tema:'Floral / Cilindros Floridos',kit:'kit_2p',custom:false,entrega:false,frete:0,total:85,pago:0,status:'Realizado',notas:'Pagamento em 3x R$40,83. Localização: Olaria (Sonho)'}
+  ]},
+  {id:'c10',nome:'Analicia',fone:'22981062190',tags:[],notas:'Chá revelação, menina. Bebê: Aurora.',criado:'2026-03-07',eventos:[
+    {id:'e10',data:'2026-03-21',tipo:'Chá de Fraldas',crianca:'Aurora',tema:'Oh Baby',kit:'kit_2p',custom:false,entrega:false,frete:0,total:85,pago:25,status:'Realizado',notas:'Capas trocadas para rosa. Sinal 30% = R$25 (pago 17/03)'}
+  ]},
+  {id:'c11',nome:'Nathália',fone:'99221817',tags:[],notas:'',criado:'2026-03-10',eventos:[
+    {id:'e11',data:'2026-03-21',tipo:'Aniversário Infantil',crianca:'',tema:'Rosa / 2 Painéis Romanos',kit:'kit_2p',custom:false,entrega:true,frete:30,total:115,pago:25.5,status:'Realizado',notas:'Entrega. Sinal 30% = R$25,50'}
+  ]},
+  {id:'c12',nome:'Bia Miranda',fone:'22998245401',tags:[],notas:'',criado:'2026-03-10',eventos:[
+    {id:'e12',data:'2026-03-21',tipo:'Aniversário Infantil',crianca:'Bianca Miranda',tema:'Ursinho Baby Mini',kit:'kit_mini',custom:false,entrega:false,frete:0,total:50,pago:50,status:'Realizado',notas:'Mini arco de balões incluso. Tapete bege de presente.'}
+  ]},
+  {id:'c13',nome:'Christiane',fone:'',tags:[],notas:'',criado:'2026-03-01',eventos:[
+    {id:'e13',data:'2026-03-27',tipo:'Aniversário Infantil',crianca:'Valentina',tema:'Pegue e Monte',kit:'kit_mini',custom:false,entrega:false,frete:0,total:40,pago:40,status:'Realizado',notas:'Valentina 9 anos'}
+  ]},
+  {id:'c14',nome:'Natiele',fone:'',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e14',data:'2026-04-12',tipo:'Aniversário Infantil',crianca:'Maria Teresa',tema:'Capivara Mini',kit:'kit_mini',custom:true,entrega:true,frete:40,total:90,pago:90,status:'Realizado',notas:'Entrega R$40. Painel Carmed personalizado.'}
+  ]},
+  {id:'c15',nome:'Carol Almeida',fone:'',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e15',data:'2026-04-18',tipo:'Aniversário Infantil',crianca:'',tema:'Ursinho Azul',kit:'kit_mini',custom:true,entrega:false,frete:0,total:50,pago:50,status:'Realizado',notas:'Kit customizado para ursinho azul'}
+  ]},
+  {id:'c16',nome:'Victoria',fone:'22988110585',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e16',data:'2026-04-18',tipo:'Aniversário Infantil',crianca:'',tema:'Super Heróis Mini',kit:'kit_mini',custom:false,entrega:true,frete:40,total:90,pago:90,status:'Realizado',notas:'Entrega: Rua Alair Rocha nº6, Jacina'}
+  ]},
+  {id:'c17',nome:'Larissa',fone:'22992577323',tags:[],notas:'Localidade: Califórnia',criado:'2026-04-20',eventos:[
+    {id:'e17',data:'2026-04-25',tipo:'Aniversário Infantil',crianca:'',tema:'Hulk',kit:'kit_1p',custom:false,entrega:true,frete:30,total:105,pago:105,status:'Realizado',notas:'Entrega Califórnia. Kit 1 painel R$75 + frete R$30'}
+  ]},
+  {id:'c18',nome:'Nicoly',fone:'',tags:['Repeat'],notas:'Cliente antiga. Voltou.',criado:'2026-04-01',eventos:[
+    {id:'e18',data:'2026-05-02',tipo:'Aniversário/Evento',crianca:'',tema:'Rosa e Bege / 2 Painéis',kit:'kit_2p',custom:false,entrega:false,frete:0,total:85,pago:40,status:'Fechado',notas:'Sinal pago. Saldo R$45 pendente.'}
+  ]},
+  {id:'c19',nome:'Nicole',fone:'22998627789',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e19',data:'2026-05-10',tipo:'Chá de Bebê',crianca:'',tema:'Oh Baby (2 painéis)',kit:'kit_2p',custom:false,entrega:false,frete:0,total:85,pago:25.5,status:'Fechado',notas:'30% pago = R$25,50'}
+  ]},
+  {id:'c20',nome:'Naiara Oliveira',fone:'22981050163',tags:[],notas:'',criado:'2026-04-15',eventos:[
+    {id:'e20',data:'2026-05-12',tipo:'Aniversário Infantil',crianca:'',tema:'Ursinho Pooh Mini',kit:'kit_mini',custom:false,entrega:true,frete:45,total:95,pago:0,status:'Fechado',notas:'Sem bolo fake. Frete R$45. Pagamento pendente.'}
+  ]},
+  {id:'c21',nome:'Larissa (Borboleta)',fone:'',tags:[],notas:'',criado:'2026-04-10',eventos:[
+    {id:'e21',data:'2026-06-06',tipo:'Aniversário Infantil',crianca:'',tema:'Borboleta',kit:'kit_1p',custom:false,entrega:false,frete:0,total:70,pago:0,status:'Fechado',notas:'Agendado para 06/06'}
+  ]},
+  {id:'c22',nome:'Adriana Martins',fone:'',tags:['VIP'],notas:'Não conseguiu kit — data muito próxima',criado:'2026-03-27',eventos:[
+    {id:'e22',data:'2026-03-28',tipo:'Chá de Panela',crianca:'',tema:'Chá de Panela',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Arquivado',notas:'Sem kit disponível. Potencial cliente futuro.'}
+  ]},
+  {id:'c23',nome:'Sadafh Marinho',fone:'',tags:[],notas:'',criado:'2026-04-13',eventos:[
+    {id:'e23',data:'2026-05-01',tipo:'Aniversário Infantil',crianca:'Luna',tema:'Show da Luna',kit:'kit_mini',custom:true,entrega:false,frete:0,total:70,pago:0,status:'Prospect',notas:'Tema personalizado +R$20. Alternativa: Luan Santana.'}
+  ]},
+  {id:'c24',nome:'Rayssah',fone:'',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e24',data:'',tipo:'Chá',crianca:'',tema:'Chá de Revelação',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Prospect',notas:'Navegando temas, sem data confirmada'}
+  ]},
+  {id:'c25',nome:'Thamires',fone:'',tags:[],notas:'',criado:'2026-04-20',eventos:[
+    {id:'e25',data:'2026-05-17',tipo:'Aniversário Infantil',crianca:'',tema:'Capa Lisa Bege/Amarelo',kit:'kit_2p',custom:true,entrega:false,frete:0,total:105,pago:0,status:'Prospect',notas:'Capa personalizada sendo encomendada. Confirmar data.'}
+  ]},
+  {id:'c26',nome:'Évora',fone:'',tags:[],notas:'',criado:'2026-04-25',eventos:[
+    {id:'e26',data:'2026-04-27',tipo:'Aniversário Infantil',crianca:'',tema:'Homem Aranha Mini',kit:'kit_mini',custom:false,entrega:false,frete:0,total:50,pago:0,status:'Prospect',notas:'Aguardando confirmação. Sem lembrancinhas.'}
+  ]},
+  {id:'c27',nome:'Marcela Chagas',fone:'',tags:[],notas:'',criado:'2026-03-01',eventos:[
+    {id:'e27',data:'',tipo:'',crianca:'',tema:'',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Arquivado',notas:'Queria só escadinha individual — produto não vendido separado'}
+  ]},
+  {id:'c28',nome:'André Lima',fone:'',tags:[],notas:'',criado:'2026-04-01',eventos:[
+    {id:'e28',data:'',tipo:'',crianca:'',tema:'Balão com Hélio',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Arquivado',notas:'Produto não oferecido — balão com hélio'}
+  ]},
+  {id:'c29',nome:'Ana Bella',fone:'',tags:[],notas:'',criado:'2026-03-23',eventos:[
+    {id:'e29',data:'2026-03-23',tipo:'Casamento',crianca:'',tema:'Casamento Verde',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Arquivado',notas:'Contato inicial, sem desenvolvimento'}
+  ]},
+  {id:'c30',nome:'Rafaela IBP',fone:'',tags:[],notas:'',criado:'2026-03-01',eventos:[
+    {id:'e30',data:'',tipo:'',crianca:'',tema:'',kit:'',custom:false,entrega:false,frete:0,total:0,pago:0,status:'Arquivado',notas:'Contato breve, sem detalhes'}
+  ]},
+]};
+
+// ════════════════════════════════════════════════
+// ESTADO DA APLICAÇÃO
+// ════════════════════════════════════════════════
+let db = {clientes:[]};
+let clienteAtivoId = null;
+let filtroAtivo = 'todos';
+let statusEvModal = 'Prospect';
+let kitEvModal = '';
+
+function carregar(){
+  const raw = localStorage.getItem('enc_crm_v2');
+  if(raw){
+    try{ db = JSON.parse(raw); } catch(e){ db = {clientes:[]}; }
   }
-  updatePrice();
-}
-
-// ==========================================
-// PREÇO
-// ==========================================
-function updatePrice() {
-  const kitId = document.getElementById('crmKit').value;
-  const km = parseInt(document.getElementById('kmDistance').value) || 0;
-  const kitDef = KITS.find(k => k.id === kitId);
-
-  const hasData = kitId || isCustomized || isDelivery;
-  document.getElementById('priceCard').style.display = hasData ? 'block' : 'none';
-
-  const kitPrice = kitDef ? kitDef.preco : 0;
-  const sobConsulta = kitDef && kitDef.preco === null;
-  const customPrice = isCustomized ? 30 : 0;
-  const deliveryPrice = isDelivery ? km * 2 * 2 : 0;
-
-  document.getElementById('priceKitLabel').textContent = kitId || 'Kit (não selecionado)';
-  document.getElementById('priceKitValue').textContent = sobConsulta ? 'Sob Consulta' : ('R$' + (kitPrice || 0));
-  document.getElementById('priceCustomRow').style.display = isCustomized ? 'flex' : 'none';
-  document.getElementById('priceDeliveryRow').style.display = isDelivery ? 'flex' : 'none';
-  document.getElementById('priceDeliveryLabel').textContent = 'Frete (' + km + ' km ida+volta)';
-  document.getElementById('priceDeliveryValue').textContent = 'R$' + deliveryPrice;
-
-  if (sobConsulta) {
-    document.getElementById('priceTotal').textContent = 'Sob Consulta';
-  } else {
-    document.getElementById('priceTotal').textContent = 'R$' + ((kitPrice || 0) + customPrice + deliveryPrice);
+  if(!db.clientes || db.clientes.length === 0){
+    db = JSON.parse(JSON.stringify(SEED));
+    salvarDb();
   }
 }
+function salvarDb(){
+  localStorage.setItem('enc_crm_v2', JSON.stringify(db));
+}
+function uid(){return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);}
 
-// ==========================================
-// CARD DO CLIENTE
-// ==========================================
-function updateClientCard() {
-  const name = document.getElementById('crmName').value.trim();
-  const child = document.getElementById('crmChildName').value.trim();
-  const date = document.getElementById('crmDate').value;
-  const theme = document.getElementById('crmTheme').value.trim();
-
-  const isEmpty = !name && !child && !date && !theme;
-  document.getElementById('clientCard').style.display = isEmpty ? 'none' : 'block';
-  document.getElementById('emptyState').style.display = isEmpty ? 'block' : 'none';
-
-  if (!isEmpty) {
-    const initials = name ? name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase() : '?';
-    document.getElementById('clientAvatar').textContent = initials;
-    document.getElementById('clientNameDisplay').textContent = name || '—';
-
-    if (child) {
-      document.getElementById('clientChildDisplay').style.display = 'block';
-      document.getElementById('clientChildDisplay').textContent = '🎂 ' + child;
-    } else {
-      document.getElementById('clientChildDisplay').style.display = 'none';
-    }
-
-    const meta = [];
-    if (date) meta.push('📅 ' + new Date(date + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'}));
-    if (theme) meta.push('🎨 ' + theme);
-    document.getElementById('clientMetaDisplay').textContent = meta.join(' · ') || '—';
-
-    const badge = document.getElementById('clientStatusBadge');
-    badge.textContent = currentStatus;
-    const colors = {
-      Prospect: {bg:'#e8f4fd',color:'#1a5276'},
-      Fechado: {bg:'#d8f3dc',color:'#1b4332'},
-      Arquivado: {bg:'#fff3cd',color:'#7d5a00'},
-      Cancelado: {bg:'#ffe0e0',color:'#7b0d0d'}
-    };
-    const c = colors[currentStatus] || colors.Prospect;
-    badge.style.background = c.bg;
-    badge.style.color = c.color;
-    badge.style.padding = '5px 14px';
-    badge.style.borderRadius = '20px';
-    badge.style.fontSize = '12px';
-    badge.style.fontWeight = '500';
-  }
-
-  updateScripts();
+// ════════════════════════════════════════════════
+// HELPERS DE DATA
+// ════════════════════════════════════════════════
+function hoje(){ return new Date().toISOString().split('T')[0]; }
+function fmtData(d){
+  if(!d) return '—';
+  const [y,m,dd] = d.split('-');
+  const meses=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  return `${parseInt(dd)} ${meses[parseInt(m)-1]} ${y}`;
+}
+function diasAte(d){
+  if(!d) return null;
+  const diff = (new Date(d+'T00:00:00') - new Date(hoje()+'T00:00:00')) / 86400000;
+  return Math.round(diff);
+}
+function iniciais(nome){
+  if(!nome) return '?';
+  const p = nome.trim().split(' ');
+  return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
 }
 
-['crmName','crmChildName','crmDate','crmTheme'].forEach(id => {
-  document.getElementById(id).addEventListener('input', updateClientCard);
-});
-
-// ==========================================
-// SCRIPTS PÓS-VENDA
-// ==========================================
-function updateScripts() {
-  const name = document.getElementById('crmName').value.trim() || '[Nome da cliente]';
-  const child = document.getElementById('crmChildName').value.trim() || '[Nome da criança]';
-  
-  document.querySelectorAll('.script-client').forEach(el => el.textContent = name);
-  document.querySelectorAll('.script-child').forEach(el => el.textContent = child);
+// ════════════════════════════════════════════════
+// NAVEGAÇÃO
+// ════════════════════════════════════════════════
+function irPagina(id, btn){
+  document.querySelectorAll('.pagina').forEach(p=>p.classList.remove('ativa'));
+  document.getElementById('pg-'+id).classList.add('ativa');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('ativo'));
+  if(btn) btn.classList.add('ativo');
+  if(id==='dashboard') renderDashboard();
+  if(id==='clientes') renderClientes();
+  if(id==='catalogo') renderCatalogo();
+  if(id==='voz') renderVoz();
 }
 
-function copiarScript(id) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('✓ Mensagem copiada!', 'success');
-  }).catch(() => {
-    showToast('❌ Erro ao copiar. Selecione e copie manualmente.', 'error');
-  });
-}
-
-// ==========================================
-// ACERVO: CLICAR NO TEMA
-// ==========================================
-function usarTema(tema) {
-  document.getElementById('crmTheme').value = tema;
-  updateClientCard();
-  switchTab('resumo');
-  showToast('✓ Tema "' + tema + '" selecionado!', 'success');
-}
-
-// ==========================================
-// TABS
-// ==========================================
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    const tabs = ['resumo','acervo','scripts'];
-    t.classList.toggle('active', tabs[i] === tab);
-  });
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-}
-
-// ==========================================
-// TOAST
-// ==========================================
-function showToast(msg, type = '') {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.className = 'toast ' + type + ' show';
-  setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-// ==========================================
-// BUSCA — SEM BLOCO DE MODO DEMO
-// ==========================================
-function handleSearch() {
-  const phone = document.getElementById('crmPhone').value.trim();
-  if (!phone) {
-    showToast('⚠️ Digite o WhatsApp antes de buscar.', '');
-    return;
-  }
-  const hint = document.getElementById('searchHint');
-  const icon = document.getElementById('searchIcon');
-  hint.textContent = 'Buscando...';
-  hint.className = 'search-hint';
-  icon.textContent = '⏳';
-
-  const cbName = 'crmCb_' + Date.now();
-  const timer = setTimeout(() => {
-    delete window[cbName];
-    hint.textContent = '✗ Tempo esgotado. Verifique a conexão.';
-    hint.className = 'search-hint error';
-    icon.textContent = '🔍';
-  }, 10000);
-
-  window[cbName] = function(data) {
-    clearTimeout(timer);
-    delete window[cbName];
-    icon.textContent = '🔍';
-
-    if (data.status === 'success' && data.data) {
-      const d = data.data;
-      document.getElementById('crmName').value = d.name || '';
-      document.getElementById('crmChildName').value = d.childName || '';
-      document.getElementById('crmDate').value = d.eventDate || '';
-      document.getElementById('crmTheme').value = d.theme || '';
-      document.getElementById('crmKit').value = d.kit || '';
-      selectedKitId = d.kit || '';
-      renderKitCards();
-
-      isCustomized = d.customized === true || d.customized === 'TRUE';
-      isDelivery = d.delivery === true || d.delivery === 'TRUE';
-      document.getElementById('checkCustomized').classList.toggle('checked', isCustomized);
-      document.getElementById('checkDelivery').classList.toggle('checked', isDelivery);
-      document.getElementById('kmGroup').style.display = isDelivery ? 'flex' : 'none';
-
-      setStatus(d.status || 'Prospect');
-      updateClientCard();
-      updatePrice();
-
-      hint.textContent = '✓ Cliente encontrada! Dados carregados.';
-      hint.className = 'search-hint success';
-      showToast('✓ Cliente ' + d.name + ' carregada!', 'success');
-    } else {
-      hint.textContent = '✗ Número não encontrado. Preencha os dados para cadastrar.';
-      hint.className = 'search-hint error';
-    }
-  };
-
-  const script = document.createElement('script');
-  script.src = WEBHOOK_URL + '?action=search&phone=' + encodeURIComponent(phone) + '&callback=' + cbName;
-  script.onerror = () => {
-    clearTimeout(timer);
-    delete window[cbName];
-    hint.textContent = '✗ Erro de conexão. Verifique o webhook.';
-    hint.className = 'search-hint error';
-    icon.textContent = '🔍';
-  };
-  document.head.appendChild(script);
-}
-
-// ==========================================
-// SALVAR — SEM BLOCO DE MODO DEMO
-// ==========================================
-async function handleSave(statusOverride) {
-  const phone = document.getElementById('crmPhone').value.trim();
-  const name = document.getElementById('crmName').value.trim();
-
-  if (!phone || !name) {
-    showToast('⚠️ WhatsApp e nome são obrigatórios!', '');
-    return;
-  }
-
-  const btn = document.getElementById('btnSave');
-  const btnText = document.getElementById('btnSaveText');
-  const btnIcon = document.getElementById('btnSaveIcon');
-  btn.classList.add('loading');
-  btnText.textContent = 'Salvando...';
-  btnIcon.innerHTML = '<div class="spinner"></div>';
-
-  const payload = {
-    action: 'save',
-    name, phone,
-    eventDate: document.getElementById('crmDate').value,
-    theme: document.getElementById('crmTheme').value,
-    kit: document.getElementById('crmKit').value,
-    customized: isCustomized,
-    delivery: isDelivery,
-    status: statusOverride || currentStatus,
-    childName: document.getElementById('crmChildName').value.trim()
-  };
-
-  try {
-    await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
+// ════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════
+function renderDashboard(){
+  const hj = hoje();
+  const emBreve = [];
+  let receitaMes = 0, pendenteMes = 0;
+  const mesAtual = hj.slice(0,7);
+  db.clientes.forEach(c=>{
+    c.eventos.forEach(ev=>{
+      const d = diasAte(ev.data);
+      if(d!==null && d>=0 && d<=14 && ['Fechado','Prospect'].includes(ev.status)){
+        emBreve.push({...ev, clienteNome:c.nome, clienteId:c.id});
+      }
+      if(ev.data && ev.data.startsWith(mesAtual)){
+        receitaMes += parseFloat(ev.pago)||0;
+        pendenteMes += (parseFloat(ev.total)||0) - (parseFloat(ev.pago)||0);
+      }
     });
-    const isFinalizado = (payload.status === 'Arquivado' || payload.status === 'Cancelado');
-    if (isFinalizado) {
-      showToast('✓ Status atualizado. Eventos futuros apagados da agenda.', 'success');
-      handleClear(true);
-    } else if (payload.status === 'Fechado') {
-      showToast('✓ Fechado! Lembretes T+1, T+90 e T+330 criados na agenda 🎉', 'success');
-    } else {
-      showToast('✓ Salvo com sucesso!', 'success');
-    }
-  } catch(e) {
-    showToast('✗ Erro ao salvar. Tente novamente.', 'error');
-  }
-
-  btn.classList.remove('loading');
-  btnText.textContent = 'Salvar & Agendar na Agenda';
-  btnIcon.textContent = '✨';
-}
-
-// ==========================================
-// ARQUIVAR
-// ==========================================
-function handleArchive() {
-  if (!document.getElementById('crmPhone').value.trim()) {
-    showToast('⚠️ Nenhum cliente carregado para arquivar.', '');
-    return;
-  }
-  const name = document.getElementById('crmName').value.trim() || 'este cliente';
-  if (confirm('Arquivar ' + name + '?\n\n✓ Status muda para "Arquivado" na planilha\n✓ Eventos futuros na agenda serão apagados')) {
-    handleSave('Arquivado');
-  }
-}
-
-// ==========================================
-// CANCELAR VENDA
-// ==========================================
-function handleCancel() {
-  if (!document.getElementById('crmPhone').value.trim()) {
-    showToast('⚠️ Nenhum cliente carregado.', '');
-    return;
-  }
-  const name = document.getElementById('crmName').value.trim() || 'este cliente';
-  if (confirm('Cancelar a venda de ' + name + '?\n\n✓ Status muda para "Cancelado" na planilha\n✓ Eventos futuros na agenda serão apagados')) {
-    setStatus('Cancelado');
-    handleSave('Cancelado');
-  }
-}
-
-// ==========================================
-// LIMPAR
-// ==========================================
-function handleClear(silent = false) {
-  if (!silent && !confirm('Limpar todos os campos do formulário?')) return;
-  
-  ['crmPhone','crmName','crmChildName','crmDate','crmTheme'].forEach(id => {
-    document.getElementById(id).value = '';
   });
-  document.getElementById('crmKit').value = '';
-  selectedKitId = '';
-  renderKitCards();
-  document.getElementById('kmDistance').value = '';
-  
-  isCustomized = false;
-  isDelivery = false;
-  document.getElementById('checkCustomized').classList.remove('checked');
-  document.getElementById('checkDelivery').classList.remove('checked');
-  document.getElementById('crmCustomized').checked = false;
-  document.getElementById('crmDelivery').checked = false;
-  document.getElementById('kmGroup').style.display = 'none';
-  
-  setStatus('Prospect');
-  updateClientCard();
-  updatePrice();
-  
-  document.getElementById('searchHint').textContent = 'Digite o WhatsApp e clique na lupa para buscar';
-  document.getElementById('searchHint').className = 'search-hint';
-  
-  if (!silent) showToast('✓ Formulário limpo!', '');
+  emBreve.sort((a,b)=>(a.data||'').localeCompare(b.data||''));
+
+  const totalCl = db.clientes.length;
+  const evFuturos = db.clientes.reduce((s,c)=>s+c.eventos.filter(e=>diasAte(e.data)>=0&&['Fechado','Prospect'].includes(e.status)).length,0);
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card gold"><div class="stat-label">Clientes</div><div class="stat-valor">${totalCl}</div><div class="stat-sub">cadastrados</div></div>
+    <div class="stat-card"><div class="stat-label">Eventos futuros</div><div class="stat-valor">${evFuturos}</div><div class="stat-sub">agendados</div></div>
+    <div class="stat-card ok"><div class="stat-label">Pago este mês</div><div class="stat-valor">R$${receitaMes.toFixed(0)}</div><div class="stat-sub">${mesAtual.slice(5)}/2026</div></div>
+    <div class="stat-card"><div class="stat-label">Pendente mês</div><div class="stat-valor" style="${pendenteMes>0?'color:var(--err)':''}">R$${Math.max(0,pendenteMes).toFixed(0)}</div><div class="stat-sub">a receber</div></div>
+  `;
+
+  const elProximos = document.getElementById('proximos-eventos');
+  if(!emBreve.length){
+    elProximos.innerHTML = '<div class="empty"><div class="empty-icon">🎉</div><div class="empty-txt">Nenhum evento nos próximos 14 dias</div></div>';
+  } else {
+    elProximos.innerHTML = emBreve.map(ev=>evCardHtml(ev, ev.clienteNome, ev.clienteId)).join('');
+  }
+
+  // alertas de pagamento
+  const pendentes = [];
+  db.clientes.forEach(c=>{
+    c.eventos.forEach(ev=>{
+      const pend = (parseFloat(ev.total)||0) - (parseFloat(ev.pago)||0);
+      if(pend>0 && ['Fechado','Realizado'].includes(ev.status)){
+        pendentes.push({...ev, clienteNome:c.nome, clienteId:c.id, pendente:pend});
+      }
+    });
+  });
+  const elAl = document.getElementById('alertas-pag');
+  if(!pendentes.length){
+    elAl.innerHTML = '<p style="font-size:12px;color:var(--ink-dim);padding:8px 0;">✓ Nenhum pagamento pendente</p>';
+  } else {
+    elAl.innerHTML = pendentes.map(ev=>`
+      <div class="ev-card" onclick="abrirPerfil('${ev.clienteId}')">
+        <div class="ev-card-topo">
+          <div><div class="ev-data">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
+          <div class="ev-info"><div class="ev-nome">${ev.clienteNome}</div><div class="ev-tema">${ev.tema||ev.tipo||'—'}</div></div>
+          <div class="ev-valor pendente">−R$${ev.pendente.toFixed(0)}</div>
+        </div>
+      </div>`).join('');
+  }
 }
 
-// ==========================================
-// ENTER NA BUSCA
-// ==========================================
-document.getElementById('crmPhone').addEventListener('keydown', e => {
-  if (e.key === 'Enter') handleSearch();
+function evCardHtml(ev, nomeCliente, clienteId){
+  const d = diasAte(ev.data);
+  const diasTxt = d===0?'hoje':d===1?'amanhã':`${d}d`;
+  const kitObj = KITS.find(k=>k.id===ev.kit);
+  const statusCls = 'badge-status-'+(ev.status||'prospect').toLowerCase().replace(' ','-');
+  return `<div class="ev-card ${d<=3?'urgente':''}" onclick="abrirPerfil('${clienteId}')">
+    <div class="ev-card-topo">
+      <div><div class="ev-data">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
+      <div class="ev-info">
+        <div class="ev-nome">${nomeCliente}${ev.crianca?' · '+ev.crianca:''}</div>
+        <div class="ev-tema">${ev.tema||ev.tipo||'—'}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div class="ev-dias">${ev.data?diasTxt:''}</div>
+        ${ev.total?`<div class="ev-valor ${ev.pago<ev.total?'pendente':''}">R$${ev.total}</div>`:''}
+      </div>
+    </div>
+    <div class="ev-rodape">
+      <span class="badge ${statusCls}">${ev.status||'Prospect'}</span>
+      ${kitObj?`<span class="badge badge-kit">${kitObj.nome}</span>`:''}
+      ${ev.pago<ev.total&&ev.total?`<span class="badge" style="background:var(--err-bg);color:var(--err);">Pendente R$${((ev.total||0)-(ev.pago||0)).toFixed(0)}</span>`:''}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════
+// LISTA DE CLIENTES
+// ════════════════════════════════════════════════
+function setFiltro(f, btn){
+  filtroAtivo = f;
+  document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('ativo'));
+  if(btn) btn.classList.add('ativo');
+  renderClientes();
+}
+
+function filtrarClientes(){ renderClientes(); }
+
+function renderClientes(){
+  const busca = (document.getElementById('search-input')?.value||'').toLowerCase().trim();
+  let lista = [...db.clientes];
+
+  if(busca){
+    lista = lista.filter(c=>
+      c.nome.toLowerCase().includes(busca)||
+      (c.fone||'').includes(busca)||
+      c.eventos.some(ev=>(ev.tema||'').toLowerCase().includes(busca))
+    );
+  }
+
+  if(filtroAtivo==='futuros'){
+    lista = lista.filter(c=>c.eventos.some(ev=>{const d=diasAte(ev.data);return d!==null&&d>=0&&['Fechado','Prospect'].includes(ev.status);}));
+  } else if(filtroAtivo==='prospects'){
+    lista = lista.filter(c=>c.eventos.some(ev=>ev.status==='Prospect'));
+  } else if(filtroAtivo==='repeat'){
+    lista = lista.filter(c=>c.tags&&c.tags.includes('Repeat'));
+  } else if(filtroAtivo==='vip'){
+    lista = lista.filter(c=>c.tags&&c.tags.includes('VIP'));
+  }
+
+  lista.sort((a,b)=>a.nome.localeCompare(b.nome));
+  document.getElementById('badge-clientes').textContent = db.clientes.length;
+
+  const el = document.getElementById('lista-clientes');
+  if(!lista.length){
+    el.innerHTML='<div class="empty"><div class="empty-icon">🌸</div><div class="empty-txt">Nenhuma cliente encontrada</div></div>';
+    return;
+  }
+  el.innerHTML = lista.map(c=>{
+    const proxEv = c.eventos.filter(ev=>diasAte(ev.data)>=0&&['Fechado','Prospect'].includes(ev.status)).sort((a,b)=>(a.data||'').localeCompare(b.data||''))[0];
+    const ultimoEv = c.eventos.filter(ev=>ev.status==='Realizado').sort((a,b)=>(b.data||'').localeCompare(a.data||''))[0];
+    const qtd = c.eventos.length;
+    const badges = (c.tags||[]).map(t=>t==='VIP'?`<span class="badge badge-vip">👑 VIP</span>`:t==='Repeat'?`<span class="badge badge-repeat">🔄 Repeat</span>`:'').join('');
+    let meta = '';
+    if(proxEv){
+      const d=diasAte(proxEv.data);
+      meta=`📅 ${proxEv.tema||proxEv.tipo||'—'} · ${d===0?'hoje':d===1?'amanhã':d+'d'}`;
+    } else if(ultimoEv){
+      meta=`✓ Último: ${fmtData(ultimoEv.data).slice(0,-5)}`;
+    }
+    return `<div class="cl-card" onclick="abrirPerfil('${c.id}')">
+      <div class="cl-avatar">${iniciais(c.nome)}</div>
+      <div class="cl-info">
+        <div class="cl-nome">${c.nome}</div>
+        <div class="cl-meta">${c.fone?'📱 '+c.fone+' · ':''}${qtd} evento${qtd!==1?'s':''}</div>
+        ${meta?`<div class="cl-meta" style="color:var(--ink-soft);">${meta}</div>`:''}
+      </div>
+      <div class="cl-badges">${badges}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════
+// PERFIL DO CLIENTE
+// ════════════════════════════════════════════════
+function abrirPerfil(id){
+  const c = db.clientes.find(x=>x.id===id);
+  if(!c) return;
+  clienteAtivoId = id;
+  document.getElementById('perfil-nome-topo').textContent = c.nome;
+  document.getElementById('perfil-avatar').textContent = iniciais(c.nome);
+  document.getElementById('perfil-nome-h').textContent = c.nome;
+  document.getElementById('perfil-fone-h').textContent = c.fone?'📱 '+c.fone:'Sem telefone cadastrado';
+
+  const tagsEl = document.getElementById('perfil-tags-row');
+  tagsEl.innerHTML = (c.tags||[]).map(t=>t==='VIP'?`<span class="badge badge-vip">👑 VIP</span>`:t==='Repeat'?`<span class="badge badge-repeat">🔄 ${c.eventos.length} evento${c.eventos.length!==1?'s':''}</span>`:'').join('');
+
+  const notasEl = document.getElementById('perfil-notas-h');
+  if(c.notas){notasEl.textContent=c.notas;notasEl.style.display='block';}
+  else notasEl.style.display='none';
+
+  renderTimeline(c);
+  document.getElementById('perfil-overlay').classList.add('aberto');
+  document.getElementById('perfil-overlay').scrollTop=0;
+}
+
+function fecharPerfil(){
+  document.getElementById('perfil-overlay').classList.remove('aberto');
+  clienteAtivoId = null;
+}
+
+function renderTimeline(c){
+  const evs = [...c.eventos].sort((a,b)=>(b.data||'0000').localeCompare(a.data||'0000'));
+  const el = document.getElementById('timeline-body');
+  if(!evs.length){
+    el.innerHTML='<div class="empty" style="padding:20px 0;"><div class="empty-txt">Nenhum evento ainda</div><div class="empty-sub">Toque em "+ Novo evento" para adicionar</div></div>';
+    return;
+  }
+  el.innerHTML = evs.map((ev,i)=>{
+    const kitObj = KITS.find(k=>k.id===ev.kit);
+    const statusCls = 'badge-status-'+(ev.status||'prospect').toLowerCase().replace(/\s/,'-');
+    const pend = (parseFloat(ev.total)||0)-(parseFloat(ev.pago)||0);
+    return `<div class="timeline-item">
+      <div class="timeline-dot" style="${ev.status==='Realizado'?'background:var(--ok)':ev.status==='Fechado'?'background:var(--info)':ev.status==='Arquivado'?'background:var(--ink-dim)':'background:var(--warn)'}"></div>
+      ${i<evs.length-1?'<div class="timeline-line"></div>':''}
+      <div class="ev-card" style="margin-bottom:0;" onclick="editarEvento('${c.id}','${ev.id}')">
+        <div class="ev-card-topo">
+          <div><div class="ev-data">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
+          <div class="ev-info">
+            <div class="ev-nome">${ev.tipo||'Evento'}${ev.crianca?' · '+ev.crianca:''}</div>
+            <div class="ev-tema">${ev.tema||'—'}</div>
+          </div>
+        </div>
+        <div class="ev-rodape">
+          <span class="badge ${statusCls}">${ev.status}</span>
+          ${kitObj?`<span class="badge badge-kit">${kitObj.nome}</span>`:''}
+          ${ev.total?`<span style="font-size:11px;color:var(--ink-dim);">R$${ev.pago||0}/${ev.total}</span>`:''}
+          ${pend>0&&ev.total?`<span class="badge" style="background:var(--err-bg);color:var(--err);">-R$${pend.toFixed(0)}</span>`:''}
+          ${ev.entrega?`<span class="badge" style="background:rgba(26,23,20,.06);color:var(--ink-soft);">🚗 Entrega</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function novoEventoClienteAtual(){
+  if(!clienteAtivoId) return;
+  abrirModalEvento(clienteAtivoId, null);
+}
+
+// ════════════════════════════════════════════════
+// MODAL EVENTO
+// ════════════════════════════════════════════════
+function abrirModalEvento(clienteId, eventoId){
+  const c = db.clientes.find(x=>x.id===clienteId);
+  const ev = eventoId ? c?.eventos.find(e=>e.id===eventoId) : null;
+
+  document.getElementById('ev-cliente-id').value = clienteId;
+  document.getElementById('ev-id').value = eventoId||'';
+  document.getElementById('modal-ev-titulo').textContent = ev?'Editar evento':'Novo evento';
+  document.getElementById('btn-excluir-ev').style.display = ev?'block':'none';
+
+  // Reset
+  document.getElementById('ev-data').value = ev?.data||hoje();
+  document.getElementById('ev-tipo').value = ev?.tipo||'Aniversário Infantil';
+  document.getElementById('ev-crianca').value = ev?.crianca||'';
+  document.getElementById('ev-tema').value = ev?.tema||'';
+  document.getElementById('ev-total').value = ev?.total||'';
+  document.getElementById('ev-pago').value = ev?.pago||'';
+  document.getElementById('ev-notas').value = ev?.notas||'';
+  document.getElementById('ev-frete').value = ev?.frete||'';
+
+  kitEvModal = ev?.kit||'';
+  renderKitOpts();
+
+  // toggles
+  const setToggle = (id, val) => {
+    document.getElementById(id).value = String(val);
+    document.getElementById('toggle-'+id.replace('ev-','')).classList.toggle('ativo',!!val);
+  };
+  setToggle('ev-custom', ev?.custom||false);
+  setToggle('ev-entrega', ev?.entrega||false);
+  document.getElementById('campo-frete').style.display = ev?.entrega?'block':'none';
+
+  statusEvModal = ev?.status||'Prospect';
+  renderStatusOpts();
+  calcPendente();
+
+  abrirModal('modal-ev');
+}
+
+function editarEvento(clienteId, eventoId){
+  abrirModalEvento(clienteId, eventoId);
+}
+
+function renderKitOpts(){
+  document.getElementById('kit-opts-modal').innerHTML = KITS.filter(k=>k.id!=='kit_custom').map(k=>`
+    <div class="kit-opt ${kitEvModal===k.id?'ativo':''}" onclick="selecionarKit('${k.id}')">
+      <span class="kit-opt-nome">${k.nome}</span>
+      <span class="kit-opt-preco">${k.preco?'R$'+k.preco:'—'}</span>
+    </div>`).join('');
+}
+
+function selecionarKit(id){
+  kitEvModal = kitEvModal===id?'':id;
+  renderKitOpts();
+  const k = KITS.find(x=>x.id===id);
+  if(k&&k.preco){
+    const custom = document.getElementById('ev-custom').value==='true';
+    const frete = parseFloat(document.getElementById('ev-frete').value)||0;
+    document.getElementById('ev-total').value = k.preco + (custom?20:0) + frete;
+    calcPendente();
+  }
+}
+
+function calcTotal(){
+  const k = KITS.find(x=>x.id===kitEvModal);
+  const base = k?.preco||parseFloat(document.getElementById('ev-total').value)||0;
+  const custom = document.getElementById('ev-custom').value==='true';
+  const frete = parseFloat(document.getElementById('ev-frete').value)||0;
+  document.getElementById('ev-total').value = (k?k.preco:base) + (custom?20:0) + frete;
+  calcPendente();
+}
+
+function calcPendente(){
+  const total = parseFloat(document.getElementById('ev-total').value)||0;
+  const pago = parseFloat(document.getElementById('ev-pago').value)||0;
+  const el = document.getElementById('pendente-label');
+  if(total>0&&pago<total) el.textContent=`Pendente: R$${(total-pago).toFixed(2)}`;
+  else if(total>0&&pago>=total) el.textContent='✓ Pago integralmente';
+  else el.textContent='';
+}
+
+function renderStatusOpts(){
+  document.querySelectorAll('#status-opts-ev .status-opt').forEach(el=>{
+    const s = el.textContent.trim().split(' ').pop();
+    el.className = 'status-opt' + (s===statusEvModal?' ativo-'+statusEvModal.toLowerCase():'');
+  });
+}
+
+function setStatusEv(s, el){
+  statusEvModal = s;
+  renderStatusOpts();
+}
+
+function toggleFrete(){
+  const on = document.getElementById('ev-entrega').value==='true';
+  document.getElementById('campo-frete').style.display = on?'block':'none';
+  calcTotal();
+}
+
+function toggleCampo(toggleId, inputId){
+  const inp = document.getElementById(inputId);
+  const on = inp.value !== 'true';
+  inp.value = String(on);
+  document.getElementById(toggleId).classList.toggle('ativo', on);
+  calcTotal();
+}
+
+function salvarEvento(){
+  const clienteId = document.getElementById('ev-cliente-id').value;
+  const eventoId = document.getElementById('ev-id').value;
+  const c = db.clientes.find(x=>x.id===clienteId);
+  if(!c) return;
+
+  const ev = {
+    id: eventoId||uid(),
+    data: document.getElementById('ev-data').value,
+    tipo: document.getElementById('ev-tipo').value,
+    crianca: document.getElementById('ev-crianca').value.trim(),
+    tema: document.getElementById('ev-tema').value.trim(),
+    kit: kitEvModal,
+    custom: document.getElementById('ev-custom').value==='true',
+    entrega: document.getElementById('ev-entrega').value==='true',
+    frete: parseFloat(document.getElementById('ev-frete').value)||0,
+    total: parseFloat(document.getElementById('ev-total').value)||0,
+    pago: parseFloat(document.getElementById('ev-pago').value)||0,
+    status: statusEvModal,
+    notas: document.getElementById('ev-notas').value.trim(),
+  };
+
+  if(eventoId){
+    const idx = c.eventos.findIndex(e=>e.id===eventoId);
+    if(idx>=0) c.eventos[idx]=ev; else c.eventos.push(ev);
+  } else {
+    c.eventos.push(ev);
+    if(c.eventos.length>1&&!c.tags.includes('Repeat')) c.tags.push('Repeat');
+  }
+
+  salvarDb();
+  fecharModal('modal-ev');
+  toast('✓ Evento salvo!','ok');
+  renderTimeline(c);
+  renderDashboard();
+}
+
+function excluirEventoAtual(){
+  const clienteId = document.getElementById('ev-cliente-id').value;
+  const eventoId = document.getElementById('ev-id').value;
+  if(!eventoId||!confirm('Excluir este evento?')) return;
+  const c = db.clientes.find(x=>x.id===clienteId);
+  if(!c) return;
+  c.eventos = c.eventos.filter(e=>e.id!==eventoId);
+  salvarDb();
+  fecharModal('modal-ev');
+  toast('Evento excluído');
+  renderTimeline(c);
+}
+
+// ════════════════════════════════════════════════
+// MODAL CLIENTE
+// ════════════════════════════════════════════════
+function abrirModalNovoCliente(){
+  document.getElementById('cl-id').value='';
+  document.getElementById('cl-nome').value='';
+  document.getElementById('cl-fone').value='';
+  document.getElementById('cl-notas').value='';
+  document.getElementById('modal-cl-titulo').textContent='Novo cliente';
+  document.getElementById('btn-excluir-cl').style.display='none';
+  document.getElementById('tag-vip').value='false';
+  document.getElementById('tag-repeat').value='false';
+  document.getElementById('tag-vip-toggle').classList.remove('ativo');
+  document.getElementById('tag-repeat-toggle').classList.remove('ativo');
+  abrirModal('modal-cl');
+}
+
+function editarClienteAtual(){
+  if(!clienteAtivoId) return;
+  const c = db.clientes.find(x=>x.id===clienteAtivoId);
+  if(!c) return;
+  document.getElementById('cl-id').value=c.id;
+  document.getElementById('cl-nome').value=c.nome;
+  document.getElementById('cl-fone').value=c.fone||'';
+  document.getElementById('cl-notas').value=c.notas||'';
+  document.getElementById('modal-cl-titulo').textContent='Editar cliente';
+  document.getElementById('btn-excluir-cl').style.display='block';
+  const vip=c.tags?.includes('VIP');const rep=c.tags?.includes('Repeat');
+  document.getElementById('tag-vip').value=String(vip);
+  document.getElementById('tag-repeat').value=String(rep);
+  document.getElementById('tag-vip-toggle').classList.toggle('ativo',vip);
+  document.getElementById('tag-repeat-toggle').classList.toggle('ativo',rep);
+  abrirModal('modal-cl');
+}
+
+function toggleTag(tag){
+  const id='tag-'+tag.toLowerCase();
+  const togId='tag-'+tag.toLowerCase()+'-toggle';
+  const on = document.getElementById(id).value!=='true';
+  document.getElementById(id).value=String(on);
+  document.getElementById(togId).classList.toggle('ativo',on);
+}
+
+function salvarCliente(){
+  const nome = document.getElementById('cl-nome').value.trim();
+  if(!nome){toast('Nome obrigatório','err');return;}
+  const id = document.getElementById('cl-id').value||uid();
+  const tags=[];
+  if(document.getElementById('tag-vip').value==='true') tags.push('VIP');
+  if(document.getElementById('tag-repeat').value==='true') tags.push('Repeat');
+  const cl={id,nome,fone:document.getElementById('cl-fone').value.trim(),tags,notas:document.getElementById('cl-notas').value.trim(),criado:hoje(),eventos:[]};
+  const idx = db.clientes.findIndex(c=>c.id===id);
+  if(idx>=0){cl.eventos=db.clientes[idx].eventos;db.clientes[idx]=cl;}
+  else db.clientes.push(cl);
+  salvarDb();
+  fecharModal('modal-cl');
+  toast('✓ Cliente salva!','ok');
+  renderClientes();
+  if(document.getElementById('perfil-overlay').classList.contains('aberto')) abrirPerfil(id);
+}
+
+function excluirClienteAtual(){
+  const id = document.getElementById('cl-id').value;
+  if(!id||!confirm('Excluir esta cliente e todos os eventos?')) return;
+  db.clientes = db.clientes.filter(c=>c.id!==id);
+  salvarDb();
+  fecharModal('modal-cl');
+  fecharPerfil();
+  renderClientes();
+  toast('Cliente excluída');
+}
+
+// ════════════════════════════════════════════════
+// CATÁLOGO
+// ════════════════════════════════════════════════
+function renderCatalogo(){
+  document.getElementById('catalogo-kits').innerHTML = KITS.map(k=>`
+    <div class="kit-card">
+      <div class="kit-nome">${k.nome}</div>
+      <div class="kit-preco">${k.preco?'R$'+k.preco:'Sob consulta'}</div>
+      <div class="kit-desc">${k.desc}</div>
+      <div class="kit-itens">${k.itens.map(it=>`<span class="kit-item">${it}</span>`).join('')}</div>
+    </div>`).join('');
+
+  document.getElementById('catalogo-extras').innerHTML = EXTRAS.map(e=>`
+    <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-size:13px;font-weight:500;color:var(--ink);">${e.nome}</div><div style="font-size:11px;color:var(--ink-dim);margin-top:2px;">${e.desc}</div></div>
+      <div style="font-size:14px;font-weight:600;color:var(--gold);flex-shrink:0;margin-left:12px;">${e.preco}</div>
+    </div>`).join('');
+
+  document.getElementById('catalogo-temas').innerHTML =
+    `<div style="display:flex;flex-wrap:wrap;gap:6px;">`+
+    TEMAS.map(t=>`<span style="background:var(--cream-mid);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--ink-soft);">${t}</span>`).join('')+
+    `</div>`;
+}
+
+// ════════════════════════════════════════════════
+// VOZ DA FERNANDA
+// ════════════════════════════════════════════════
+function renderVoz(){
+  const cats = [...new Set(VOZ.map(v=>v.cat))];
+  document.getElementById('voz-cards').innerHTML = cats.map(cat=>{
+    const items = VOZ.filter(v=>v.cat===cat);
+    return `<div style="margin-bottom:16px;">
+      <div class="sec-titulo">${cat}</div>
+      ${items.map((v,i)=>`
+        <div class="voz-card">
+          <div class="voz-head" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <span class="voz-titulo">${v.titulo}</span>
+            <span class="voz-label">▾</span>
+          </div>
+          <div class="voz-body" style="display:none;">
+            ${v.obs?`<p style="font-size:11px;color:var(--ink-dim);margin-bottom:8px;">ℹ️ ${v.obs}</p>`:''}
+            <div class="voz-template">${v.template}</div>
+            <button class="btn-copiar" onclick="copiar(\`${v.template.replace(/`/g,'\\`')}\`)">📋 Copiar</button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════
+function abrirModal(id){document.getElementById(id).classList.add('aberto');}
+function fecharModal(id){document.getElementById(id).classList.remove('aberto');}
+function toast(msg,tipo=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className='toast '+tipo+' show';
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+function copiar(txt){
+  navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado!','ok')).catch(()=>toast('Selecione e copie manualmente'));
+}
+
+// Fechar modais ao clicar fora
+document.querySelectorAll('.modal-overlay').forEach(ov=>{
+  ov.addEventListener('click',e=>{if(e.target===ov) ov.classList.remove('aberto');});
 });
 
-// Inicializar
-renderKitCards();
-updateClientCard();
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+carregar();
+renderDashboard();
+renderClientes();
+document.getElementById('badge-clientes').textContent = db.clientes.length;
 </script>
 </body>
 </html>
