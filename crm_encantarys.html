@@ -356,14 +356,14 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
         <input type="hidden" id="ev-entrega" value="false">
         <div class="toggle-box"><span class="toggle-tick">✓</span></div>
         <span class="toggle-label">Entrega + recolhimento</span>
-        <span class="toggle-badge" id="badge-frete-label">R$10+R$3/km</span>
+        <span class="toggle-badge" id="badge-frete-label">R$5/km · mín R$25</span>
       </div>
     </div>
 
     <div id="campo-frete" style="display:none;">
-      <div class="campo-row" style="margin-bottom:8px;">
+      <div class="campo-row" style="margin-bottom:4px;">
         <div class="campo">
-          <label class="campo-label">Distância (km)</label>
+          <label class="campo-label">Distância até o local (km)</label>
           <input class="campo-input" type="number" id="ev-km" placeholder="Ex: 5" oninput="calcFrete()">
         </div>
         <div class="campo">
@@ -371,12 +371,14 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
           <input class="campo-input" type="number" id="ev-frete" placeholder="Auto" oninput="calcTotal()">
         </div>
       </div>
-      <div id="frete-info" style="font-size:11px;color:var(--ink-dim);margin-bottom:6px;padding:6px 10px;background:var(--cream-mid);border-radius:6px;">Mínimo R$20 · R$10 base + R$3/km (ida e volta × 2)</div>
+      <div id="frete-info" style="font-size:11px;color:var(--ink-dim);margin-bottom:10px;padding:6px 10px;background:var(--cream-mid);border-radius:6px;">Informe só a distância de ida (base → local). A fórmula já considera os 4 trajetos.</div>
       <div class="campo">
         <label class="campo-label">Endereço de entrega</label>
-        <div style="display:flex;gap:6px;">
-          <input class="campo-input" type="text" id="ev-endereco" placeholder="Rua, número, bairro..." style="flex:1;">
-          <button type="button" onclick="copiarEndereco()" style="padding:8px 12px;background:var(--midnight);color:var(--gold);border:none;border-radius:var(--r-sm);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">📋 Copiar</button>
+        <input class="campo-input" type="text" id="ev-endereco" placeholder="Rua, número, bairro, cidade..." oninput="atualizarMaps()" style="margin-bottom:8px;">
+        <div id="maps-actions" style="display:none;gap:6px;flex-wrap:wrap;">
+          <a id="maps-link" href="#" target="_blank" style="padding:7px 12px;background:var(--midnight);color:var(--gold);border-radius:var(--r-sm);font-size:12px;text-decoration:none;display:inline-block;">🗺️ Abrir no Maps</a>
+          <button type="button" onclick="copiarLinkMaps()" style="padding:7px 12px;background:transparent;border:1px solid var(--border);color:var(--ink-soft);border-radius:var(--r-sm);font-size:12px;cursor:pointer;">🔗 Copiar link</button>
+          <button type="button" onclick="copiarEndereco()" style="padding:7px 12px;background:transparent;border:1px solid var(--border);color:var(--ink-soft);border-radius:var(--r-sm);font-size:12px;cursor:pointer;">📋 Copiar endereço</button>
         </div>
       </div>
     </div>
@@ -481,7 +483,7 @@ const KITS = [
 
 const EXTRAS = [
   {nome:'Personalização de tema', preco:'+R$30',desc:'Capa ou painel com nome/tema específico'},
-  {nome:'Entrega + recolhimento', preco:'R$10+R$3/km',desc:'Mínimo R$20 · ida+volta × 2 trajetos'},
+  {nome:'Entrega + recolhimento', preco:'R$5/km',desc:'Mínimo R$25 · R$1,25/km × 4 trajetos (ida com kit, volta, busca, retorno)'},
   {nome:'Mini arco de balões', preco:'Consultar',desc:'Apenas para Mini festas'},
 ];
 
@@ -1003,6 +1005,7 @@ function abrirModalEvento(clienteId, eventoId){
   document.getElementById('ev-km').value = ev?.km||'';
   document.getElementById('ev-endereco').value = ev?.endereco||'';
   document.getElementById('total-breakdown').style.display='none';
+  setTimeout(atualizarMaps, 50);
 
   kitEvModal = ev?.kit||'';
   renderKitOpts();
@@ -1044,9 +1047,9 @@ function selecionarKit(id){
 function calcFrete(){
   const km = parseFloat(document.getElementById('ev-km').value)||0;
   if(km>0){
-    const frete = Math.max(20, 10 + km*3);
+    const frete = Math.max(25, km*5);
     document.getElementById('ev-frete').value = frete;
-    document.getElementById('frete-info').textContent = `${km}km × R$3 + R$10 base = R$${frete} (mín. R$20)`;
+    document.getElementById('frete-info').textContent = `${km}km × R$5 = R$${frete} (R$1,25/km × 4 trajetos · mín. R$25)`;
   }
   calcTotal();
 }
@@ -1099,6 +1102,22 @@ function toggleFrete(){
   document.getElementById('campo-frete').style.display = on?'block':'none';
   if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Mínimo R$20 · R$10 base + R$3/km (ida e volta × 2)'; }
   calcTotal();
+}
+
+function atualizarMaps(){
+  const end = document.getElementById('ev-endereco').value.trim();
+  const el = document.getElementById('maps-actions');
+  if(!end){ el.style.display='none'; return; }
+  const url = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(end + ', Nova Friburgo, RJ');
+  document.getElementById('maps-link').href = url;
+  document.getElementById('maps-link').dataset.url = url;
+  el.style.display = 'flex';
+}
+
+function copiarLinkMaps(){
+  const url = document.getElementById('maps-link')?.dataset.url||'';
+  if(!url){toast('Digite o endereço primeiro','err');return;}
+  navigator.clipboard.writeText(url).then(()=>toast('✓ Link do Maps copiado!','ok')).catch(()=>toast('Selecione e copie manualmente'));
 }
 
 function copiarEndereco(){
