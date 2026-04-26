@@ -72,6 +72,11 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 .badge-status-prospect{background:var(--warn-bg);color:var(--warn);}
 .badge-status-arquivado{background:var(--cream-mid);color:var(--ink-dim);}
 .badge-status-cancelado{background:var(--err-bg);color:var(--err);}
+.badge-status-retorno{background:#e8d5ff;color:#6b21a8;}
+.badge-cliente{background:var(--ok-bg);color:var(--ok);}
+.ev-card.futuro{border-left:3px solid var(--gold);box-shadow:0 2px 8px rgba(201,168,76,.1);}
+.ev-card.passado{opacity:.72;}
+.status-opts{display:grid;gap:6px;}
 .badge-kit{background:rgba(201,168,76,.12);color:var(--warn);border:1px solid rgba(201,168,76,.25);}
 .badge-vip{background:linear-gradient(135deg,#ffd700,#ffa500);color:#fff;font-weight:600;}
 .badge-repeat{background:var(--violet);color:rgba(255,255,255,.85);}
@@ -336,12 +341,12 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
     </div>
 
     <div class="campo">
-      <label class="campo-label">Personalização de tema (+R$20)</label>
+      <label class="campo-label">Personalização de tema (+R$30)</label>
       <div class="toggle-row" id="toggle-custom" onclick="toggleCampo('toggle-custom','ev-custom')">
         <input type="hidden" id="ev-custom" value="false">
         <div class="toggle-box"><span class="toggle-tick">✓</span></div>
         <span class="toggle-label">Tema personalizado</span>
-        <span class="toggle-badge">+R$20</span>
+        <span class="toggle-badge">+R$30</span>
       </div>
     </div>
 
@@ -351,14 +356,32 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
         <input type="hidden" id="ev-entrega" value="false">
         <div class="toggle-box"><span class="toggle-tick">✓</span></div>
         <span class="toggle-label">Entrega + recolhimento</span>
-        <span class="toggle-badge" id="badge-frete-label">R$2/km</span>
+        <span class="toggle-badge" id="badge-frete-label">R$10+R$3/km</span>
       </div>
     </div>
 
-    <div class="campo" id="campo-frete" style="display:none;">
-      <label class="campo-label">Valor do frete (R$)</label>
-      <input class="campo-input" type="number" id="ev-frete" placeholder="Ex: 30" oninput="calcTotal()">
+    <div id="campo-frete" style="display:none;">
+      <div class="campo-row" style="margin-bottom:8px;">
+        <div class="campo">
+          <label class="campo-label">Distância (km)</label>
+          <input class="campo-input" type="number" id="ev-km" placeholder="Ex: 5" oninput="calcFrete()">
+        </div>
+        <div class="campo">
+          <label class="campo-label">Frete calculado (R$)</label>
+          <input class="campo-input" type="number" id="ev-frete" placeholder="Auto" oninput="calcTotal()">
+        </div>
+      </div>
+      <div id="frete-info" style="font-size:11px;color:var(--ink-dim);margin-bottom:6px;padding:6px 10px;background:var(--cream-mid);border-radius:6px;">Mínimo R$20 · R$10 base + R$3/km (ida e volta × 2)</div>
+      <div class="campo">
+        <label class="campo-label">Endereço de entrega</label>
+        <div style="display:flex;gap:6px;">
+          <input class="campo-input" type="text" id="ev-endereco" placeholder="Rua, número, bairro..." style="flex:1;">
+          <button type="button" onclick="copiarEndereco()" style="padding:8px 12px;background:var(--midnight);color:var(--gold);border:none;border-radius:var(--r-sm);font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;">📋 Copiar</button>
+        </div>
+      </div>
     </div>
+
+    <div style="background:var(--cream-mid);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:14px;font-size:12px;" id="total-breakdown"></div>
 
     <div class="campo-row">
       <div class="campo">
@@ -374,17 +397,19 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 
     <div class="campo">
       <label class="campo-label">Status</label>
-      <div class="status-opts" id="status-opts-ev">
+      <div class="status-opts" id="status-opts-ev" style="grid-template-columns:1fr 1fr 1fr;">
         <div class="status-opt" onclick="setStatusEv('Prospect',this)">🔍 Prospect</div>
+        <div class="status-opt" onclick="setStatusEv('Retorno',this)">🔁 Retorno</div>
         <div class="status-opt" onclick="setStatusEv('Fechado',this)">📋 Fechado</div>
         <div class="status-opt" onclick="setStatusEv('Realizado',this)">✅ Realizado</div>
         <div class="status-opt" onclick="setStatusEv('Arquivado',this)">📁 Arquivado</div>
+        <div class="status-opt" onclick="setStatusEv('Cancelado',this)">❌ Cancelado</div>
       </div>
     </div>
 
     <div class="campo">
       <label class="campo-label">Notas internas</label>
-      <textarea class="campo-textarea" id="ev-notas" rows="2" placeholder="Observações, endereço de entrega..."></textarea>
+      <textarea class="campo-textarea" id="ev-notas" rows="2" placeholder="Observações..."></textarea>
     </div>
 
     <button class="btn-salvar" onclick="salvarEvento()">Salvar evento</button>
@@ -416,12 +441,8 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
           <div class="toggle-box" id="tag-vip-box"><span class="toggle-tick">✓</span></div>
           <span class="toggle-label" style="font-size:12px;">👑 VIP</span>
         </div>
-        <div class="toggle-row" id="tag-repeat-toggle" onclick="toggleTag('Repeat')" style="flex:1;min-width:120px;padding:7px 10px;">
-          <input type="hidden" id="tag-repeat" value="false">
-          <div class="toggle-box" id="tag-repeat-box"><span class="toggle-tick">✓</span></div>
-          <span class="toggle-label" style="font-size:12px;">🔄 Repeat</span>
-        </div>
       </div>
+      <div style="font-size:10px;color:var(--ink-dim);margin-top:6px;">🔄 Repeat é aplicado automaticamente quando a cliente faz um 2º evento.</div>
     </div>
     <div class="campo">
       <label class="campo-label">Notas sobre a cliente</label>
@@ -459,8 +480,8 @@ const KITS = [
 ];
 
 const EXTRAS = [
-  {nome:'Personalização de tema', preco:'+R$20',desc:'Capa ou painel com nome/tema específico'},
-  {nome:'Entrega + recolhimento', preco:'R$2/km',desc:'A partir do Prado, Nova Friburgo'},
+  {nome:'Personalização de tema', preco:'+R$30',desc:'Capa ou painel com nome/tema específico'},
+  {nome:'Entrega + recolhimento', preco:'R$10+R$3/km',desc:'Mínimo R$20 · ida+volta × 2 trajetos'},
   {nome:'Mini arco de balões', preco:'Consultar',desc:'Apenas para Mini festas'},
 ];
 
@@ -497,8 +518,8 @@ Vou verificar a disponibilidade e te ajudo a escolher o melhor combo!`},
 ✨ 2 Painéis (Completo) — R$85
 ✨ Elegante — R$85
 
-Personalização de tema: +R$20 em qualquer combo.
-Entrega: R$2/km a partir do Prado, Nova Friburgo.`},
+Personalização de tema: +R$30 em qualquer combo.
+Entrega: a partir de R$20 (R$10 base + R$3/km), a partir do Prado, Nova Friburgo.`},
   {cat:'Qualificação', titulo:'Temas disponíveis (/tema)',
    obs:'Quando a cliente pergunta quais temas têm.',
    template:`Trabalhamos com qualquer tema!
@@ -562,7 +583,7 @@ Regras de atendimento:
 5. Horário: seg a sáb 8h–20h
 
 Preços: Mini R$50 | 1 Painel R$75 | 2 Painéis R$85 | Elegante R$85
-Extra: +R$20 tema personalizado | R$2/km entrega`},
+Extra: +R$30 tema personalizado | R$10+R$3/km entrega (mín. R$20)`},
 ];
 
 // ════════════════════════════════════════════════
@@ -888,7 +909,15 @@ function abrirPerfil(id){
   document.getElementById('perfil-fone-h').textContent = c.fone?'📱 '+c.fone:'Sem telefone cadastrado';
 
   const tagsEl = document.getElementById('perfil-tags-row');
-  tagsEl.innerHTML = (c.tags||[]).map(t=>t==='VIP'?`<span class="badge badge-vip">👑 VIP</span>`:t==='Repeat'?`<span class="badge badge-repeat">🔄 ${c.eventos.length} evento${c.eventos.length!==1?'s':''}</span>`:'').join('');
+  const temRealizado = c.eventos.some(e=>e.status==='Realizado');
+  const evValidos = c.eventos.filter(e=>!['Arquivado','Cancelado'].includes(e.status));
+  const isRepeat = evValidos.length > 1;
+  const badges = [];
+  if(temRealizado) badges.push(`<span class="badge badge-cliente">✓ Cliente</span>`);
+  if(c.tags?.includes('VIP')) badges.push(`<span class="badge badge-vip">👑 VIP</span>`);
+  if(isRepeat) badges.push(`<span class="badge badge-repeat">🔄 ${evValidos.length} eventos</span>`);
+  badges.push(`<span style="font-size:10px;color:var(--ink-dim);">${c.eventos.length} evento${c.eventos.length!==1?'s':''} total</span>`);
+  tagsEl.innerHTML = badges.join('');
 
   const notasEl = document.getElementById('perfil-notas-h');
   if(c.notas){notasEl.textContent=c.notas;notasEl.style.display='block';}
@@ -915,23 +944,27 @@ function renderTimeline(c){
     const kitObj = KITS.find(k=>k.id===ev.kit);
     const statusCls = 'badge-status-'+(ev.status||'prospect').toLowerCase().replace(/\s/,'-');
     const pend = (parseFloat(ev.total)||0)-(parseFloat(ev.pago)||0);
+    const d = diasAte(ev.data);
+    const isFuturo = d!==null && d>=0 && !['Realizado','Arquivado','Cancelado'].includes(ev.status);
+    const dotColor = ev.status==='Realizado'?'var(--ok)':ev.status==='Fechado'||ev.status==='Retorno'?'var(--info)':ev.status==='Arquivado'||ev.status==='Cancelado'?'var(--ink-dim)':'var(--warn)';
     return `<div class="timeline-item">
-      <div class="timeline-dot" style="${ev.status==='Realizado'?'background:var(--ok)':ev.status==='Fechado'?'background:var(--info)':ev.status==='Arquivado'?'background:var(--ink-dim)':'background:var(--warn)'}"></div>
+      <div class="timeline-dot" style="background:${dotColor};${isFuturo?'width:13px;height:13px;left:2px;':''}"></div>
       ${i<evs.length-1?'<div class="timeline-line"></div>':''}
-      <div class="ev-card" style="margin-bottom:0;" onclick="editarEvento('${c.id}','${ev.id}')">
+      <div class="ev-card ${isFuturo?'futuro':'passado'}" style="margin-bottom:0;" onclick="editarEvento('${c.id}','${ev.id}')">
         <div class="ev-card-topo">
-          <div><div class="ev-data">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
+          <div><div class="ev-data" style="${isFuturo?'font-size:26px;color:var(--ink);':'font-size:20px;'}">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
           <div class="ev-info">
-            <div class="ev-nome">${ev.tipo||'Evento'}${ev.crianca?' · '+ev.crianca:''}</div>
+            <div class="ev-nome" style="${isFuturo?'font-size:15px;':'font-size:13px;color:var(--ink-soft);'}">${ev.tipo||'Evento'}${ev.crianca?' · '+ev.crianca:''}</div>
             <div class="ev-tema">${ev.tema||'—'}</div>
           </div>
+          ${isFuturo&&d<=7?`<div style="font-size:11px;color:var(--gold);font-weight:600;flex-shrink:0;">${d===0?'HOJE':d===1?'AMANHÃ':d+'d'}</div>`:''}
         </div>
         <div class="ev-rodape">
           <span class="badge ${statusCls}">${ev.status}</span>
           ${kitObj?`<span class="badge badge-kit">${kitObj.nome}</span>`:''}
           ${ev.total?`<span style="font-size:11px;color:var(--ink-dim);">R$${ev.pago||0}/${ev.total}</span>`:''}
           ${pend>0&&ev.total?`<span class="badge" style="background:var(--err-bg);color:var(--err);">-R$${pend.toFixed(0)}</span>`:''}
-          ${ev.entrega?`<span class="badge" style="background:rgba(26,23,20,.06);color:var(--ink-soft);">🚗 Entrega</span>`:''}
+          ${ev.entrega?`<span class="badge" style="background:rgba(26,23,20,.06);color:var(--ink-soft);">🚗 ${ev.endereco||'Entrega'}</span>`:''}
         </div>
       </div>
     </div>`;
@@ -940,6 +973,9 @@ function renderTimeline(c){
 
 function novoEventoClienteAtual(){
   if(!clienteAtivoId) return;
+  const c = db.clientes.find(x=>x.id===clienteAtivoId);
+  const temRealizado = c?.eventos.some(e=>e.status==='Realizado');
+  if(temRealizado) statusEvModal = 'Retorno'; else statusEvModal = 'Prospect';
   abrirModalEvento(clienteAtivoId, null);
 }
 
@@ -964,6 +1000,9 @@ function abrirModalEvento(clienteId, eventoId){
   document.getElementById('ev-pago').value = ev?.pago||'';
   document.getElementById('ev-notas').value = ev?.notas||'';
   document.getElementById('ev-frete').value = ev?.frete||'';
+  document.getElementById('ev-km').value = ev?.km||'';
+  document.getElementById('ev-endereco').value = ev?.endereco||'';
+  document.getElementById('total-breakdown').style.display='none';
 
   kitEvModal = ev?.kit||'';
   renderKitOpts();
@@ -999,21 +1038,36 @@ function renderKitOpts(){
 function selecionarKit(id){
   kitEvModal = kitEvModal===id?'':id;
   renderKitOpts();
-  const k = KITS.find(x=>x.id===id);
-  if(k&&k.preco){
-    const custom = document.getElementById('ev-custom').value==='true';
-    const frete = parseFloat(document.getElementById('ev-frete').value)||0;
-    document.getElementById('ev-total').value = k.preco + (custom?20:0) + frete;
-    calcPendente();
+  calcTotal();
+}
+
+function calcFrete(){
+  const km = parseFloat(document.getElementById('ev-km').value)||0;
+  if(km>0){
+    const frete = Math.max(20, 10 + km*3);
+    document.getElementById('ev-frete').value = frete;
+    document.getElementById('frete-info').textContent = `${km}km × R$3 + R$10 base = R$${frete} (mín. R$20)`;
   }
+  calcTotal();
 }
 
 function calcTotal(){
   const k = KITS.find(x=>x.id===kitEvModal);
-  const base = k?.preco||parseFloat(document.getElementById('ev-total').value)||0;
+  const base = k?.preco||0;
   const custom = document.getElementById('ev-custom').value==='true';
   const frete = parseFloat(document.getElementById('ev-frete').value)||0;
-  document.getElementById('ev-total').value = (k?k.preco:base) + (custom?20:0) + frete;
+  const total = (k?k.preco:parseFloat(document.getElementById('ev-total').value)||0) + (custom?30:0) + frete;
+  if(k) document.getElementById('ev-total').value = total;
+  // breakdown
+  const bd = document.getElementById('total-breakdown');
+  if(k||frete){
+    const parts = [];
+    if(k) parts.push(`Kit: R$${k.preco}`);
+    if(custom) parts.push(`Personalização: +R$30`);
+    if(frete) parts.push(`Frete: +R$${frete}`);
+    bd.innerHTML = parts.join(' &nbsp;+&nbsp; ') + ` &nbsp;=&nbsp; <strong>R$${k?total:(parseFloat(document.getElementById('ev-total').value)||0)}</strong>`;
+    bd.style.display='block';
+  } else { bd.style.display='none'; }
   calcPendente();
 }
 
@@ -1027,9 +1081,11 @@ function calcPendente(){
 }
 
 function renderStatusOpts(){
+  const map = {'Prospect':'prospect','Retorno':'retorno','Fechado':'fechado','Realizado':'realizado','Arquivado':'arquivado','Cancelado':'cancelado'};
   document.querySelectorAll('#status-opts-ev .status-opt').forEach(el=>{
-    const s = el.textContent.trim().split(' ').pop();
-    el.className = 'status-opt' + (s===statusEvModal?' ativo-'+statusEvModal.toLowerCase():'');
+    const txt = el.textContent.trim();
+    const s = Object.keys(map).find(k=>txt.includes(k))||'';
+    el.className = 'status-opt' + (s===statusEvModal?' ativo-'+map[s]:'');
   });
 }
 
@@ -1041,7 +1097,14 @@ function setStatusEv(s, el){
 function toggleFrete(){
   const on = document.getElementById('ev-entrega').value==='true';
   document.getElementById('campo-frete').style.display = on?'block':'none';
+  if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Mínimo R$20 · R$10 base + R$3/km (ida e volta × 2)'; }
   calcTotal();
+}
+
+function copiarEndereco(){
+  const end = document.getElementById('ev-endereco').value.trim();
+  if(!end){toast('Endereço vazio','err');return;}
+  navigator.clipboard.writeText(end).then(()=>toast('✓ Endereço copiado!','ok')).catch(()=>toast('Selecione e copie manualmente'));
 }
 
 function toggleCampo(toggleId, inputId){
@@ -1067,7 +1130,9 @@ function salvarEvento(){
     kit: kitEvModal,
     custom: document.getElementById('ev-custom').value==='true',
     entrega: document.getElementById('ev-entrega').value==='true',
+    km: parseFloat(document.getElementById('ev-km').value)||0,
     frete: parseFloat(document.getElementById('ev-frete').value)||0,
+    endereco: document.getElementById('ev-endereco').value.trim(),
     total: parseFloat(document.getElementById('ev-total').value)||0,
     pago: parseFloat(document.getElementById('ev-pago').value)||0,
     status: statusEvModal,
@@ -1079,7 +1144,9 @@ function salvarEvento(){
     if(idx>=0) c.eventos[idx]=ev; else c.eventos.push(ev);
   } else {
     c.eventos.push(ev);
-    if(c.eventos.length>1&&!c.tags.includes('Repeat')) c.tags.push('Repeat');
+    // Repeat auto-tag: ativado quando há 2+ eventos (qualquer status exceto Arquivado/Cancelado)
+    const evValidos = c.eventos.filter(e=>!['Arquivado','Cancelado'].includes(e.status));
+    if(evValidos.length>1&&!c.tags.includes('Repeat')) c.tags.push('Repeat');
   }
 
   salvarDb();
