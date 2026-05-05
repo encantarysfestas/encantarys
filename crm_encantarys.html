@@ -188,6 +188,20 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 .toast.ok{border-color:rgba(45,106,79,.4);}
 .toast.err{border-color:rgba(193,18,31,.35);}
 
+/* ── QUICK ACTIONS ── */
+.qa-row{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.qa-btn{border:none;border-radius:var(--r-sm);padding:7px 10px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .12s;flex:1;}
+.qa-ok{background:var(--ok-bg);color:var(--ok);}
+.qa-ok:hover{background:#b7e4c7;}
+.qa-pag{background:var(--info-bg);color:var(--info);}
+.qa-pag:hover{background:#bfdbfe;}
+.qa-edit{background:var(--cream-mid);color:var(--ink-soft);flex:0;padding:7px 12px;}
+.qa-edit:hover{background:var(--border);}
+
+/* modal mini pagamento */
+.modal-mini{background:white;border-radius:var(--r) var(--r) 0 0;width:100%;max-height:60vh;overflow-y:auto;padding:20px 18px 32px;}
+@media(min-width:640px){.modal-mini{border-radius:var(--r);max-width:360px;}}
+
 /* ── EMPTY STATE ── */
 .empty{text-align:center;padding:40px 20px;color:var(--ink-dim);}
 .empty-icon{font-size:36px;margin-bottom:10px;opacity:.4;}
@@ -458,6 +472,24 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- MODAL MINI PAGAMENTO -->
+<div class="modal-overlay" id="modal-pag">
+  <div class="modal-mini">
+    <div class="modal-handle"></div>
+    <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:300;margin-bottom:4px;" id="modal-pag-titulo">Registrar pagamento</div>
+    <div style="font-size:12px;color:var(--ink-dim);margin-bottom:16px;" id="modal-pag-sub"></div>
+    <input type="hidden" id="pag-cliente-id">
+    <input type="hidden" id="pag-ev-id">
+    <div class="campo">
+      <label class="campo-label">Valor recebido agora (R$)</label>
+      <input class="campo-input" type="number" id="pag-valor" placeholder="Ex: 45" style="font-size:18px;">
+    </div>
+    <div id="pag-info" style="font-size:12px;color:var(--ink-dim);margin-bottom:12px;"></div>
+    <button class="btn-salvar" onclick="confirmarPagamento()">✓ Confirmar pagamento</button>
+    <button style="width:100%;padding:11px;background:transparent;border:none;color:var(--ink-dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-top:4px;" onclick="fecharModal('modal-pag')">Cancelar</button>
+  </div>
+</div>
 
 <script>
 // ════════════════════════════════════════════════
@@ -812,8 +844,10 @@ function evCardHtml(ev, nomeCliente, clienteId){
   const diasTxt = d===0?'hoje':d===1?'amanhã':`${d}d`;
   const kitObj = KITS.find(k=>k.id===ev.kit);
   const statusCls = 'badge-status-'+(ev.status||'prospect').toLowerCase().replace(' ','-');
-  return `<div class="ev-card ${d<=3?'urgente':''}" onclick="abrirPerfil('${clienteId}')">
-    <div class="ev-card-topo">
+  const pend = (parseFloat(ev.total)||0)-(parseFloat(ev.pago)||0);
+  const jaRealizado = ev.status==='Realizado';
+  return `<div class="ev-card ${d<=3?'urgente':''}" style="cursor:default;">
+    <div class="ev-card-topo" onclick="abrirPerfil('${clienteId}')" style="cursor:pointer;">
       <div><div class="ev-data">${ev.data?ev.data.split('-')[2]:'—'}</div><div class="ev-mes">${ev.data?['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'][parseInt(ev.data.split('-')[1])-1]:'—'}</div></div>
       <div class="ev-info">
         <div class="ev-nome">${nomeCliente}${ev.crianca?' · '+ev.crianca:''}</div>
@@ -821,14 +855,19 @@ function evCardHtml(ev, nomeCliente, clienteId){
       </div>
       <div style="text-align:right;flex-shrink:0;">
         <div class="ev-dias">${ev.data?diasTxt:''}</div>
-        ${ev.total?`<div class="ev-valor ${ev.pago<ev.total?'pendente':''}">R$${ev.total}</div>`:''}
+        ${ev.total?`<div class="ev-valor ${pend>0?'pendente':''}">R$${ev.total}</div>`:''}
       </div>
     </div>
     <div class="ev-rodape">
       <span class="badge ${statusCls}">${ev.status||'Prospect'}</span>
       ${kitObj?`<span class="badge badge-kit">${kitObj.nome}</span>`:''}
-      ${ev.pago<ev.total&&ev.total?`<span class="badge" style="background:var(--err-bg);color:var(--err);">Pendente R$${((ev.total||0)-(ev.pago||0)).toFixed(0)}</span>`:''}
+      ${pend>0&&ev.total?`<span class="badge" style="background:var(--err-bg);color:var(--err);">Pendente R$${pend.toFixed(0)}</span>`:''}
     </div>
+    ${!jaRealizado?`<div class="qa-row" onclick="event.stopPropagation()">
+      <button class="qa-btn qa-ok" onclick="qaRealizado('${clienteId}','${ev.id}')">✅ Realizado</button>
+      <button class="qa-btn qa-pag" onclick="qaPagamento('${clienteId}','${ev.id}','${pend.toFixed(0)}')">💰 Registrar pagamento</button>
+      <button class="qa-btn qa-edit" onclick="abrirPerfil('${clienteId}')">✏️</button>
+    </div>`:''}
   </div>`;
 }
 
@@ -1199,9 +1238,7 @@ function abrirModalNovoCliente(){
   document.getElementById('modal-cl-titulo').textContent='Novo cliente';
   document.getElementById('btn-excluir-cl').style.display='none';
   document.getElementById('tag-vip').value='false';
-  document.getElementById('tag-repeat').value='false';
   document.getElementById('tag-vip-toggle').classList.remove('ativo');
-  document.getElementById('tag-repeat-toggle').classList.remove('ativo');
   abrirModal('modal-cl');
 }
 
@@ -1215,11 +1252,9 @@ function editarClienteAtual(){
   document.getElementById('cl-notas').value=c.notas||'';
   document.getElementById('modal-cl-titulo').textContent='Editar cliente';
   document.getElementById('btn-excluir-cl').style.display='block';
-  const vip=c.tags?.includes('VIP');const rep=c.tags?.includes('Repeat');
+  const vip=c.tags?.includes('VIP');
   document.getElementById('tag-vip').value=String(vip);
-  document.getElementById('tag-repeat').value=String(rep);
   document.getElementById('tag-vip-toggle').classList.toggle('ativo',vip);
-  document.getElementById('tag-repeat-toggle').classList.toggle('ativo',rep);
   abrirModal('modal-cl');
 }
 
@@ -1237,7 +1272,6 @@ function salvarCliente(){
   const id = document.getElementById('cl-id').value||uid();
   const tags=[];
   if(document.getElementById('tag-vip').value==='true') tags.push('VIP');
-  if(document.getElementById('tag-repeat').value==='true') tags.push('Repeat');
   const cl={id,nome,fone:document.getElementById('cl-fone').value.trim(),tags,notas:document.getElementById('cl-notas').value.trim(),criado:hoje(),eventos:[]};
   const idx = db.clientes.findIndex(c=>c.id===id);
   if(idx>=0){cl.eventos=db.clientes[idx].eventos;db.clientes[idx]=cl;}
@@ -1321,6 +1355,51 @@ function toast(msg,tipo=''){
 }
 function copiar(txt){
   navigator.clipboard.writeText(txt).then(()=>toast('✓ Copiado!','ok')).catch(()=>toast('Selecione e copie manualmente'));
+}
+
+// ════════════════════════════════════════════════
+// QUICK ACTIONS
+// ════════════════════════════════════════════════
+function qaRealizado(clienteId, evId){
+  const c = db.clientes.find(x=>x.id===clienteId);
+  const ev = c?.eventos.find(e=>e.id===evId);
+  if(!ev) return;
+  if(!confirm(`Marcar "${c.nome}" como Realizado?`)) return;
+  ev.status = 'Realizado';
+  salvarDb();
+  toast('✅ Evento marcado como realizado!','ok');
+  renderDashboard();
+}
+
+function qaPagamento(clienteId, evId, pendente){
+  const c = db.clientes.find(x=>x.id===clienteId);
+  const ev = c?.eventos.find(e=>e.id===evId);
+  if(!ev) return;
+  document.getElementById('pag-cliente-id').value = clienteId;
+  document.getElementById('pag-ev-id').value = evId;
+  document.getElementById('modal-pag-titulo').textContent = `Pagamento — ${c.nome}`;
+  document.getElementById('modal-pag-sub').textContent = `${ev.tema||ev.tipo||'Evento'} · Pendente: R$${pendente}`;
+  document.getElementById('pag-valor').value = pendente;
+  document.getElementById('pag-info').textContent = '';
+  abrirModal('modal-pag');
+  setTimeout(()=>document.getElementById('pag-valor').focus(),100);
+}
+
+function confirmarPagamento(){
+  const clienteId = document.getElementById('pag-cliente-id').value;
+  const evId = document.getElementById('pag-ev-id').value;
+  const valor = parseFloat(document.getElementById('pag-valor').value)||0;
+  if(!valor){toast('Informe o valor','err');return;}
+  const c = db.clientes.find(x=>x.id===clienteId);
+  const ev = c?.eventos.find(e=>e.id===evId);
+  if(!ev) return;
+  const novoPago = (parseFloat(ev.pago)||0) + valor;
+  ev.pago = novoPago;
+  if(novoPago >= (parseFloat(ev.total)||0) && ev.total > 0) ev.status = 'Realizado';
+  salvarDb();
+  fecharModal('modal-pag');
+  toast(`💰 R$${valor.toFixed(0)} registrado!`, 'ok');
+  renderDashboard();
 }
 
 // Fechar modais ao clicar fora
