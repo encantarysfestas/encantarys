@@ -472,6 +472,7 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 </div>
 
 <div class="toast" id="toast"></div>
+<div id="loading-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(13,10,26,.75);align-items:center;justify-content:center;flex-direction:column;gap:14px;"><div style="width:36px;height:36px;border:3px solid rgba(201,168,76,.25);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;"></div><div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:.2em;color:var(--gold-lt);text-transform:uppercase;">Carregando...</div></div><style>@keyframes spin{to{transform:rotate(360deg);}}</style>
 
 <!-- MODAL MINI PAGAMENTO -->
 <div class="modal-overlay" id="modal-pag">
@@ -725,18 +726,86 @@ let filtroAtivo = 'todos';
 let statusEvModal = 'Prospect';
 let kitEvModal = '';
 
+const API = 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec';
+
 function carregar(){
-  const raw = localStorage.getItem('enc_crm_v2');
-  if(raw){
-    try{ db = JSON.parse(raw); } catch(e){ db = {clientes:[]}; }
-  }
-  if(!db.clientes || db.clientes.length === 0){
-    db = JSON.parse(JSON.stringify(SEED));
-    salvarDb();
-  }
+  const el = document.getElementById('loading-overlay');
+  if(el) el.style.display = 'flex';
+  fetch(API + '?action=listarTodos')
+    .then(r => r.json())
+    .then(data => {
+      if(data.status === 'success' && data.clientes && data.clientes.length > 0){
+        db = { clientes: data.clientes };
+        // garante que cada cliente tem array de eventos
+        db.clientes.forEach(c => { if(!c.eventos) c.eventos = []; });
+      } else {
+        // planilha vazia: começa do zero, não carrega SEED
+        db = { clientes: [] };
+      }
+      _posCarregar();
+    })
+    .catch(() => {
+      // sem internet: tenta localStorage como fallback
+      const raw = localStorage.getItem('enc_crm_v2');
+      if(raw){ try{ db = JSON.parse(raw); } catch(e){ db = {clientes:[]}; } }
+      toast('⚠️ Offline — exibindo dados locais', 'err');
+      _posCarregar();
+    });
 }
+
+function _posCarregar(){
+  const el = document.getElementById('loading-overlay');
+  if(el) el.style.display = 'none';
+  localStorage.setItem('enc_crm_v2', JSON.stringify(db)); // cache local
+  renderDashboard();
+  renderClientes();
+  document.getElementById('badge-clientes').textContent = db.clientes.length;
+}
+
 function salvarDb(){
+  // 1. salva local imediatamente (UI não trava)
   localStorage.setItem('enc_crm_v2', JSON.stringify(db));
+  // 2. sincroniza com a planilha em background
+  db.clientes.forEach(c => {
+    // salva cliente
+    fetch(API, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'salvarCliente',
+        id: c.id,
+        nome: c.nome,
+        fone: c.fone || '',
+        tags: c.tags || [],
+        notas: c.notas || '',
+        criado: c.criado || ''
+      })
+    }).catch(() => {});
+    // salva cada evento
+    (c.eventos || []).forEach(ev => {
+      fetch(API, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'salvarEvento',
+          id: ev.id,
+          clienteId: c.id,
+          clienteNome: c.nome,
+          fone: c.fone || '',
+          data: ev.data || '',
+          tipo: ev.tipo || '',
+          crianca: ev.crianca || '',
+          tema: ev.tema || '',
+          kit: ev.kit || '',
+          custom: ev.custom || false,
+          entrega: ev.entrega || false,
+          frete: ev.frete || 0,
+          total: ev.total || 0,
+          pago: ev.pago || 0,
+          status: ev.status || 'Prospect',
+          notas: ev.notas || ''
+        })
+      }).catch(() => {});
+    });
+  });
 }
 function uid(){return 'id_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);}
 
@@ -1410,10 +1479,7 @@ document.querySelectorAll('.modal-overlay').forEach(ov=>{
 // ════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════
-carregar();
-renderDashboard();
-renderClientes();
-document.getElementById('badge-clientes').textContent = db.clientes.length;
+carregar(); // async — renderDashboard/renderClientes chamados dentro do .then
 </script>
 </body>
 </html>
