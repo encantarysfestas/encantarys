@@ -370,7 +370,7 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
         <input type="hidden" id="ev-entrega" value="false">
         <div class="toggle-box"><span class="toggle-tick">✓</span></div>
         <span class="toggle-label">Entrega + recolhimento</span>
-        <span class="toggle-badge" id="badge-frete-label">R$5/km · mín R$25</span>
+        <span class="toggle-badge" id="badge-frete-label">R$10/km · mín R$35</span>
       </div>
     </div>
 
@@ -497,9 +497,12 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 // CATÁLOGO DE KITS
 // ════════════════════════════════════════════════
 const KITS = [
-  {id:'kit_mini', nome:'Mini Festa', preco:50,
-   itens:['Tapete','2 cilindros c/ capas','1 painel redondo','Vasos mini','Bandejas (3)'],
-   desc:'Ideal para mini festas e decorações de mesa.'},
+  {id:'kit_mini', nome:'Mini Festa — Simples', preco:35,
+   itens:['1 painel','3 bandejas','1 vaso de flor','2 displays do tema','Mini arco de balões'],
+   desc:'Mini festa enxuta. Ideal para decoração de mesa.'},
+  {id:'kit_mini_completo', nome:'Mini Festa — Completo', preco:50,
+   itens:['Mesinha branca','Escadinha de chão','1 painel','3 bandejas','1 vaso de flor','2 displays do tema','Bolo fake','Mini arco de balões'],
+   desc:'Mini festa completa com mesinha, escadinha e bolo fake.'},
   {id:'kit_1p', nome:'1 Painel', preco:75,
    itens:['3 cilindros c/ capas','1 painel romano','Escadinha de mesa','Bandejas (5)','Vasos de flores'],
    desc:'Decoração com um painel central. Clássico e elegante.'},
@@ -516,7 +519,7 @@ const KITS = [
 
 const EXTRAS = [
   {nome:'Personalização de tema', preco:'+R$30',desc:'Capa ou painel com nome/tema específico'},
-  {nome:'Entrega + recolhimento', preco:'R$5/km',desc:'Mínimo R$25 · R$1,25/km × 4 trajetos (ida com kit, volta, busca, retorno)'},
+  {nome:'Entrega + recolhimento', preco:'R$10/km',desc:'Mínimo R$35 · R$2,50/km × 4 trajetos (ida com kit, volta, busca, retorno)'},
   {nome:'Mini arco de balões', preco:'Consultar',desc:'Apenas para Mini festas'},
 ];
 
@@ -1155,9 +1158,9 @@ function selecionarKit(id){
 function calcFrete(){
   const km = parseFloat(document.getElementById('ev-km').value)||0;
   if(km>0){
-    const frete = Math.max(25, km*5);
+    const frete = Math.max(35, km*10);
     document.getElementById('ev-frete').value = frete;
-    document.getElementById('frete-info').textContent = `${km}km × R$5 = R$${frete} (R$1,25/km × 4 trajetos · mín. R$25)`;
+    document.getElementById('frete-info').textContent = `${km}km × R$10 = R$${frete} (R$2,50/km × 4 trajetos · mín. R$35)`;
   }
   calcTotal();
 }
@@ -1208,7 +1211,7 @@ function setStatusEv(s, el){
 function toggleFrete(){
   const on = document.getElementById('ev-entrega').value==='true';
   document.getElementById('campo-frete').style.display = on?'block':'none';
-  if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Mínimo R$20 · R$10 base + R$3/km (ida e volta × 2)'; }
+  if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Informe só a distância de ida (base → local). A fórmula já considera os 4 trajetos.'; }
   calcTotal();
 }
 

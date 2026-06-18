@@ -325,7 +325,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
   <div class="hero-bg"></div><div class="hero-grid"></div>
   <div class="hero-particles" id="particles"></div>
   <div class="hero-content">
-    <div class="hero-badge">Nova Friburgo · RJ · Alugue e Monte</div>
+    <div class="hero-badge">Nova Friburgo · RJ · Pegue e Monte</div>
     <h1 class="hero-title">Sua festa,<br>do seu <em>jeito</em></h1>
     <p class="hero-sub">Alugue sua decoração completa, monte onde quiser e crie a festa que você sempre sonhou — com praticidade e preço justo.</p>
     <div class="hero-price">
@@ -525,7 +525,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 
   <div class="entrega-banner reveal">
     <span style="font-size:26px;flex-shrink:0;">🚗</span>
-    <p><strong>Entrega e retirada disponíveis</strong> · R$5 por km (já considerando ida e volta), mínimo R$25. Ou retire e devolva em Prado, Nova Friburgo.</p>
+    <p><strong>Entrega e retirada disponíveis</strong> · R$10 por km (já considerando os 4 trajetos), mínimo R$35. Ou retire e devolva em Prado, Nova Friburgo.</p>
   </div>
   <div class="frete-calc reveal">
     <div class="frete-calc-title">📍 Calcule o frete da sua entrega</div>
@@ -701,8 +701,8 @@ function calcFreteSite(){
     const el = response.rows[0].elements[0];
     if(el.status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
     const km = el.distance.value / 1000;
-    const frete = Math.max(25, Math.round(km*5));
-    result.innerHTML = `Distância: ${km.toFixed(1)}km · Frete: <strong>R$${frete}</strong> (mín. R$25, já com os 4 trajetos)`;
+    const frete = Math.max(35, Math.round(km*10));
+    result.innerHTML = `Distância: ${km.toFixed(1)}km · Frete: <strong>R$${frete}</strong> (mín. R$35, já com os 4 trajetos)`;
   });
 }
 function showCombo(id,btn){
