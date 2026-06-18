@@ -203,7 +203,7 @@ h1.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-
 .frete-field label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);}
 .frete-field input{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);color:#fff;padding:11px 14px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:300;}
 .frete-field input:focus{outline:none;border-color:var(--gold);}
-.frete-maps-link{font-size:11px;color:var(--gold-light);text-decoration:none;border:1px solid rgba(201,168,76,.28);padding:11px 18px;white-space:nowrap;transition:all .3s;}
+.frete-maps-link{font-size:11px;color:var(--gold-light);text-decoration:none;border:1px solid rgba(201,168,76,.28);padding:11px 18px;white-space:nowrap;transition:all .3s;background:none;font-family:'Outfit',sans-serif;letter-spacing:.05em;}
 .frete-maps-link:hover{background:var(--gold);color:var(--midnight);}
 .frete-result{margin-top:16px;font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;}
 .frete-result strong{color:var(--gold-light);font-size:16px;}
@@ -532,18 +532,12 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <div class="frete-calc-row">
       <div class="frete-field">
         <label>Seu endereço</label>
-        <input type="text" id="frete-endereco" placeholder="Rua, bairro, cidade..." oninput="atualizarFreteMaps()">
+        <input type="text" id="frete-endereco" placeholder="Rua, número, bairro, cidade..." onkeydown="if(event.key==='Enter')calcFreteSite()">
       </div>
-      <a href="#" target="_blank" id="frete-maps-link" class="frete-maps-link" style="display:none;">Ver distância no Maps →</a>
+      <button type="button" class="frete-maps-link" onclick="calcFreteSite()" style="cursor:pointer;">Calcular frete →</button>
     </div>
-    <div class="frete-calc-row" style="margin-top:12px;">
-      <div class="frete-field" style="max-width:200px;">
-        <label>Distância (km, só ida)</label>
-        <input type="number" id="frete-km" placeholder="Ex: 5" oninput="calcFreteSite()">
-      </div>
-    </div>
-    <div class="frete-result" id="frete-result">Informe a distância de ida — a conta já considera os 4 trajetos (entrega + busca).</div>
-    <div class="frete-calc-note">Valor estimado. A Fernanda confirma o total certinho no WhatsApp.</div>
+    <div class="frete-result" id="frete-result">Digite seu endereço e clique em calcular.</div>
+    <div class="frete-calc-note">Valor estimado por distância de carro até o Prado, Nova Friburgo. A Fernanda confirma o total certinho no WhatsApp.</div>
   </div>
 </section>
 
@@ -687,23 +681,29 @@ function toggleNav(){
   const open=ul.style.display==='flex';
   Object.assign(ul.style,{display:open?'none':'flex',flexDirection:'column',position:'fixed',top:'58px',left:'0',right:'0',background:'rgba(13,10,26,0.98)',padding:'22px 28px',gap:'18px',zIndex:'998',borderBottom:'1px solid rgba(201,168,76,.1)'});
 }
-function atualizarFreteMaps(){
-  const end = document.getElementById('frete-endereco').value.trim();
-  const link = document.getElementById('frete-maps-link');
-  if(!end){ link.style.display='none'; return; }
-  const url = 'https://www.google.com/maps/dir/?api=1&origin=Prado,+Nova+Friburgo,+RJ&destination=' + encodeURIComponent(end + ', Nova Friburgo, RJ');
-  link.href = url;
-  link.style.display = 'inline-block';
-}
 function calcFreteSite(){
-  const km = parseFloat(document.getElementById('frete-km').value)||0;
+  const end = document.getElementById('frete-endereco').value.trim();
   const result = document.getElementById('frete-result');
-  if(km>0){
-    const frete = Math.max(25, km*5);
-    result.innerHTML = `${km}km × R$5 = <strong>R$${frete}</strong> de frete (mín. R$25, já com os 4 trajetos)`;
-  } else {
-    result.textContent = 'Informe a distância de ida — a conta já considera os 4 trajetos (entrega + busca).';
+  if(!end){ result.textContent = 'Digite seu endereço e clique em calcular.'; return; }
+  if(typeof google === 'undefined' || !google.maps){
+    result.textContent = 'Não consegui calcular agora — chama no WhatsApp que a Fernanda calcula pra você. 😊';
+    return;
   }
+  result.textContent = 'Calculando...';
+  const service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix({
+    origins: ['Prado, Nova Friburgo, RJ'],
+    destinations: [end + ', Nova Friburgo, RJ'],
+    travelMode: 'DRIVING',
+    unitSystem: google.maps.UnitSystem.METRIC
+  }, (response, status) => {
+    if(status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
+    const el = response.rows[0].elements[0];
+    if(el.status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
+    const km = el.distance.value / 1000;
+    const frete = Math.max(25, Math.round(km*5));
+    result.innerHTML = `Distância: ${km.toFixed(1)}km · Frete: <strong>R$${frete}</strong> (mín. R$25, já com os 4 trajetos)`;
+  });
 }
 function showCombo(id,btn){
   document.querySelectorAll('.combo-panel').forEach(p=>p.classList.remove('active'));
@@ -737,6 +737,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 </script>
+
+<!-- Google Maps — Distance Matrix p/ calculadora de frete -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ0ujSlXB4jIOFizGNUZjS1za4lGQkZ7A"></script>
 
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHT1TZDD09"></script>
