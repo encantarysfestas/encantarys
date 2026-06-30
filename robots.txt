@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://encantarys.com.br/sitemap.xml
