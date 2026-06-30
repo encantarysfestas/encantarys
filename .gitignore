@@ -1,0 +1,11 @@
+# gerador de paginas (nao vai pro ar)
+_build/
+
+# segredos — NUNCA versionar
+.env
+.env.*
+*token*
+*Token*
+TK
+*secret*
+*.key
