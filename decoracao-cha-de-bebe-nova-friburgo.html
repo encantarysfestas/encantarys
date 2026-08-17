@@ -402,6 +402,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <li><a href="decoracao-festa-elegante-nova-friburgo.html">Festa Elegante</a></li>
     <li><a href="temas-festa-personagens-nova-friburgo.html">Temas</a></li>
     <li><a href="quanto-custa-festa-infantil-nova-friburgo.html">Guia de Preços</a></li>
+    <li><a href="entrega-decoracao-festa-nova-friburgo.html">Entrega e Retirada</a></li>
   </ul>
   <div class="foot-copy">© 2026 Encantarys Festas · Nova Friburgo, RJ</div>
 </footer>
@@ -456,7 +457,7 @@ function showGaleria(id,btn){
   btn.classList.add('active');
 }
 (function(){
-  const c=document.getElementById('particles');
+  const c=document.getElementById('particles'); if(!c)return;
   for(let i=0;i<24;i++){
     const p=document.createElement('div');p.className='particle';
     const s=Math.random()*3+1;

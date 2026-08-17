@@ -319,6 +319,19 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 .preco-tab th{font-family:'Outfit',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-light);font-weight:600;}
 .preco-tab td strong{color:var(--cream);}
 .preco-tab tr:last-child td{border-bottom:none;}
+/* passos dentro do artigo: 3 colunas na tela larga, 1 no celular.
+   Vai por CLASSE e nao por style inline — inline vence media query, e a
+   maioria das clientes le no celular. */
+.artigo .processo-steps{grid-template-columns:repeat(3,1fr);margin-top:34px;}
+.artigo .processo-steps::before{left:17%;right:17%;}
+@media(max-width:900px){
+  .artigo .processo-steps{grid-template-columns:1fr;gap:30px;}
+  .preco-tab,.preco-tab thead,.preco-tab tbody,.preco-tab tr,.preco-tab th,.preco-tab td{display:block;width:100%;}
+  .preco-tab thead{display:none;}
+  .preco-tab tr{border-bottom:1px solid rgba(255,255,255,.08);padding:6px 0 12px;}
+  .preco-tab tr:last-child{border-bottom:none;}
+  .preco-tab td{border-bottom:none;padding:5px 0;}
+}
 .callout{background:var(--midnight-soft);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:24px 26px;margin:30px 0;}
 .callout p{margin-bottom:10px;}
 .callout p:last-child{margin-bottom:0;}
@@ -453,6 +466,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     <li><a href="decoracao-festa-elegante-nova-friburgo.html">Festa Elegante</a></li>
     <li><a href="temas-festa-personagens-nova-friburgo.html">Temas</a></li>
     <li><a href="quanto-custa-festa-infantil-nova-friburgo.html">Guia de Preços</a></li>
+    <li><a href="entrega-decoracao-festa-nova-friburgo.html">Entrega e Retirada</a></li>
   </ul>
   <div class="foot-copy">© 2026 Encantarys Festas · Nova Friburgo, RJ</div>
 </footer>
@@ -507,7 +521,7 @@ function showGaleria(id,btn){
   btn.classList.add('active');
 }
 (function(){
-  const c=document.getElementById('particles');
+  const c=document.getElementById('particles'); if(!c)return;
   for(let i=0;i<24;i++){
     const p=document.createElement('div');p.className='particle';
     const s=Math.random()*3+1;
