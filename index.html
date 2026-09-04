@@ -671,7 +671,7 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
     cobrar convidado um por um.</p>
     <p class="fi-meta">Aniversário infantil, 15 anos, chá revelação, chá de casa nova,
     casamento e bodas &middot; fica pronto na hora.</p>
-    <a class="fi-cta" href="https://festino.com.br/modelos/aniversario-infantil" target="_blank" rel="noopener">Ver um convite de verdade &rarr;</a>
+    <a class="fi-cta" href="https://festino.com.br/modelos/aniversario-infantil?utm_source=encantarys&amp;utm_medium=referral&amp;utm_campaign=rodape_indicacao" target="_blank" rel="noopener">Ver um convite de verdade &rarr;</a>
   </div>
 </section>
 <style>
@@ -800,6 +800,14 @@ function trackEvent(name,params){
 // Rastreia cliques no WhatsApp
 document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
   a.addEventListener('click',()=>trackEvent('whatsapp_click',{location:a.closest('section')?.id||'nav'}));
+});
+
+// Rastreia cliques na indicacao do Festino (cross-sell do rodape).
+// Duas pontas de proposito: este evento conta quem SAIU daqui (so com consent aceito),
+// e a UTM no href faz o GA4 do Festino contar quem CHEGOU (imune ao banner de cookie).
+// A diferenca entre os dois numeros e a perda no meio.
+document.querySelectorAll('a[href*="festino"]').forEach(a=>{
+  a.addEventListener('click',()=>trackEvent('festino_click',{location:a.closest('section')?.id||'nav'}));
 });
 
 // Cookie consent
