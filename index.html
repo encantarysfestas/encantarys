@@ -847,10 +847,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   let consent=null;
   try{ consent=localStorage.getItem(COOKIE_KEY); }catch(e){}
   if(consent==='accepted'){loadGA();}
-  // Sai em todos os casos. Com consentimento vira visita identificada por cookie; sem
-  // ele, um ping anonimo que so alimenta a contagem agregada.
-  gtag('event','page_view');
   else if(!consent){setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'),1200);}
+  // Sai em todos os casos, e DEPOIS da cadeia if/else. Com consentimento vira visita
+  // identificada por cookie; sem ele, um ping anonimo que so alimenta a contagem agregada.
+  gtag('event','page_view');
 });
 </script>
 
