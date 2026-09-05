@@ -320,8 +320,11 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 
     <div class="campo-row">
       <div class="campo">
-        <label class="campo-label">Data do evento</label>
-        <input class="campo-input" type="date" id="ev-data">
+        <label class="campo-label">Data e hora da festa</label>
+        <div style="display:flex;gap:8px;">
+          <input class="campo-input" type="date" id="ev-data" style="flex:2;min-width:0;">
+          <input class="campo-input" type="time" id="ev-hora" style="flex:1;min-width:0;" title="Hora em que a festa comeca">
+        </div>
       </div>
       <div class="campo">
         <label class="campo-label">Tipo</label>
@@ -428,6 +431,7 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
       <textarea class="campo-textarea" id="ev-notas" rows="2" placeholder="Observações..."></textarea>
     </div>
 
+    <button type="button" onclick="copiarContrato()" style="width:100%;padding:12px;background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-bottom:8px;">📄 Copiar contrato pra colar no WhatsApp</button>
     <button class="btn-salvar" onclick="salvarEvento()">Salvar evento</button>
     <button class="btn-perigo" id="btn-excluir-ev" onclick="excluirEventoAtual()" style="display:none;">Excluir este evento</button>
     <button style="width:100%;padding:11px;background:transparent;border:none;color:var(--ink-dim);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;margin-top:4px;" onclick="fecharModal('modal-ev')">Cancelar</button>
@@ -794,6 +798,8 @@ function salvarDb(){
           clienteNome: c.nome,
           fone: c.fone || '',
           data: ev.data || '',
+          hora: ev.hora || '',
+          endereco: ev.endereco || '',
           tipo: ev.tipo || '',
           crianca: ev.crianca || '',
           tema: ev.tema || '',
@@ -1106,6 +1112,7 @@ function abrirModalEvento(clienteId, eventoId){
 
   // Reset
   document.getElementById('ev-data').value = ev?.data||hoje();
+  document.getElementById('ev-hora').value = ev?.hora||'';
   document.getElementById('ev-tipo').value = ev?.tipo||'Aniversário Infantil';
   document.getElementById('ev-crianca').value = ev?.crianca||'';
   document.getElementById('ev-tema').value = ev?.tema||'';
@@ -1231,6 +1238,120 @@ function copiarLinkMaps(){
   navigator.clipboard.writeText(url).then(()=>toast('✓ Link do Maps copiado!','ok')).catch(()=>toast('Selecione e copie manualmente'));
 }
 
+// ════════════════════════════════════════════════
+// CONTRATO — nasce do próprio cadastro
+// ────────────────────────────────────────────────
+// Por que existe: em 24/08/2026 a Fernanda disse que com algumas clientes
+// acabou não fazendo o contrato. Medido no corpus de 136 conversas: 55
+// contratos escritos à mão, e pelo menos 4 clientes com pagamento
+// confirmado sem contrato nenhum (Thamires, Vivi Coelho, onicolly3009 e a
+// Paulinha, que ouviu dela mesma "acho que eu ainda não te mandei o nosso
+// contratinho"). O que custa caro é digitar a lista de itens toda vez.
+// Aqui a lista sai do kit, e o contrato vira um clique DEPOIS do cadastro.
+//
+// ⛔ LISTA DE PERMISSÃO. Só entra no texto campo medido como seguro.
+//    NUNCA entram `notas` (é onde mora checklist interno e endereço de casa)
+//    nem `crianca` (vazio ou errado na maioria das fichas).
+// ════════════════════════════════════════════════
+const END_ENCANTARYS = 'Rua Waldemar Belém Porciano 223 - Prado/Nova Friburgo';
+
+function _dataBR(iso){
+  const p = String(iso||'').split('-');
+  return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : String(iso||'');
+}
+function _brl(v){ return 'R$ ' + (Number(v)||0).toFixed(2).replace('.',','); }
+function _maisDias(iso, n){
+  const d = new Date(String(iso)+'T12:00:00');
+  if(isNaN(d.getTime())) return '';
+  d.setDate(d.getDate()+n);
+  return _dataBR(d.toISOString().slice(0,10));
+}
+function _horaBR(h){
+  const p = String(h||'').split(':');
+  if(p.length<2) return '';
+  return p[1]==='00' ? p[0]+'h' : p[0]+'h'+p[1];
+}
+
+function montarContrato(){
+  const c = db.clientes.find(x=>x.id===document.getElementById('ev-cliente-id').value);
+  const data    = document.getElementById('ev-data').value;
+  const hora    = document.getElementById('ev-hora').value;
+  const tema    = document.getElementById('ev-tema').value.trim();
+  const end     = document.getElementById('ev-endereco').value.trim();
+  const entrega = document.getElementById('ev-entrega').value==='true';
+  const custom  = document.getElementById('ev-custom').value==='true';
+  const frete   = parseFloat(document.getElementById('ev-frete').value)||0;
+  const total   = parseFloat(document.getElementById('ev-total').value)||0;
+  const pago    = parseFloat(document.getElementById('ev-pago').value)||0;
+  const k       = KITS.find(x=>x.id===kitEvModal);
+
+  // Contrato pela metade é pior que contrato nenhum: some com o que falta.
+  const falta = [];
+  if(!c || !c.nome) falta.push('nome da cliente');
+  if(!c || !c.fone) falta.push('WhatsApp');
+  if(!data) falta.push('data da festa');
+  if(!k)    falta.push('kit');
+  if(!total) falta.push('total');
+  if(entrega && !end) falta.push('endereço de entrega');
+  if(falta.length) return {erro:'Falta preencher: ' + falta.join(', ')};
+
+  const L = [];
+  L.push('Esse trato abaixo é uma pequena formalidade pra gente se organizar e garantir a qualidade do serviço. 😊');
+  L.push('');
+  L.push('Contrato de Locação - Serviço de Pegue e Monte Encantarys - Fernanda/Guilherme - ' + END_ENCANTARYS);
+  L.push('');
+  L.push('Detalhes do Cliente');
+  L.push('Nome: ' + c.nome);
+  L.push('Telefone: ' + c.fone);
+  L.push('Endereço: ' + (end || '(retirada aqui na Encantarys)'));
+  L.push('');
+  L.push('Descrição do Serviço:');
+  L.push('Estamos alugando os seguintes itens para o serviço de "pegue e monte" Encantarys ' + k.nome + ':');
+  L.push('');
+  (k.itens||[]).forEach(i => L.push('[ ] ' + i));
+  if(custom) L.push('[ ] Personalização no tema' + (tema ? ' ' + tema : ''));
+  L.push('');
+  L.push('Data da festa: ' + _dataBR(data));
+  if(hora) L.push('Horário da festa: ' + _horaBR(hora));
+  L.push(entrega ? 'Entrega e recolhimento por nossa conta, no endereço acima.'
+                 : 'Retirada e devolução aqui na Encantarys.');
+  L.push('Data de Devolução: até dia ' + _maisDias(data, 2));
+  L.push('');
+  L.push('Valores:');
+  const soma = (Number(k.preco)||0) + (custom?30:0) + frete;
+  if(total >= soma && soma > 0){
+    L.push(_brl(k.preco) + ' - ' + k.nome);
+    if(custom) L.push(_brl(30) + ' - Personalização de tema');
+    if(frete)  L.push(_brl(frete) + ' - Frete ida e volta');
+    if(total > soma) L.push(_brl(total - soma) + ' - Outros itens combinados');
+  }
+  L.push('Total: ' + _brl(total));
+  const saldo = total - pago;
+  if(pago <= 0){
+    L.push('Entrada pra reservar a data (30%): ' + _brl(total*0.3));
+    L.push('O restante fica pra ' + (entrega?'entrega':'retirada') + '.');
+  } else if(saldo > 0){
+    L.push('Entrada já paga: ' + _brl(pago));
+    L.push('Saldo: ' + _brl(saldo) + ', até a ' + (entrega?'entrega':'retirada') + '.');
+  } else {
+    L.push('Pagamento quitado. Obrigada! 🩷');
+  }
+  L.push('');
+  L.push('Sobre as fotos: eu gosto muito de publicar as decorações prontas nas redes da Encantarys.');
+  L.push('Se aparecer alguém na foto, eu só publico com a sua autorização. E se preferir que eu não publique nada, é só me avisar. 🩷');
+  L.push('');
+  L.push('É só me confirmar por aqui que está tudo certo. 😊');
+  return {texto: L.join('\n')};
+}
+
+function copiarContrato(){
+  const r = montarContrato();
+  if(r.erro){ toast(r.erro,'err'); return; }
+  navigator.clipboard.writeText(r.texto)
+    .then(()=>toast('✓ Contrato copiado! Cola no WhatsApp dela.','ok'))
+    .catch(()=>toast('Não consegui copiar. Tenta de novo.','err'));
+}
+
 function copiarEndereco(){
   const end = document.getElementById('ev-endereco').value.trim();
   if(!end){toast('Endereço vazio','err');return;}
@@ -1254,6 +1375,7 @@ function salvarEvento(){
   const ev = {
     id: eventoId||uid(),
     data: document.getElementById('ev-data').value,
+    hora: document.getElementById('ev-hora').value,
     tipo: document.getElementById('ev-tipo').value,
     crianca: document.getElementById('ev-crianca').value.trim(),
     tema: document.getElementById('ev-tema').value.trim(),
