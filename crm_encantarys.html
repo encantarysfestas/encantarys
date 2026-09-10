@@ -479,6 +479,20 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
 <div class="toast" id="toast"></div>
 <div id="loading-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(13,10,26,.75);align-items:center;justify-content:center;flex-direction:column;gap:14px;"><div style="width:36px;height:36px;border:3px solid rgba(201,168,76,.25);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;"></div><div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:.2em;color:var(--gold-lt);text-transform:uppercase;">Carregando...</div></div><style>@keyframes spin{to{transform:rotate(360deg);}}</style>
 
+<!-- DESTRAVA — 10/09/2026. A chave NAO fica escrita nesta pagina: e digitada uma vez
+     por aparelho e guardada no proprio navegador. Se ela morasse no HTML, qualquer um
+     que abrisse o codigo-fonte teria a chave, e o portao no Apps Script nao valeria nada. -->
+<div id="destrava-overlay" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(13,10,26,.94);align-items:center;justify-content:center;padding:24px;">
+  <div style="max-width:340px;width:100%;text-align:center;">
+    <div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:.22em;color:var(--gold-lt);text-transform:uppercase;margin-bottom:10px;">Encantarys</div>
+    <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:#fff;margin-bottom:6px;">Chave de acesso</div>
+    <p id="destrava-msg" style="font-size:13px;line-height:1.5;color:rgba(255,255,255,.6);margin:0 0 18px;">Digite a chave uma vez. Este aparelho lembra dela.</p>
+    <input id="destrava-input" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="chave"
+           style="width:100%;padding:13px 14px;font-size:16px;border-radius:10px;border:1px solid rgba(201,168,76,.35);background:rgba(255,255,255,.06);color:#fff;text-align:center;margin-bottom:12px;">
+    <button id="destrava-btn" style="width:100%;padding:13px;font-size:15px;border:0;border-radius:10px;background:var(--gold);color:#1b1330;font-weight:600;cursor:pointer;">Entrar</button>
+  </div>
+</div>
+
 <!-- MODAL MINI PAGAMENTO -->
 <div class="modal-overlay" id="modal-pag">
   <div class="modal-mini">
@@ -736,12 +750,61 @@ let kitEvModal = '';
 
 const API = 'https://script.google.com/macros/s/AKfycbwUeHNvsk459zzgkiXCPsdDlv3nANWIqbPItB1q5zStEMHKGd8P3sb-AmQaeLiJLXt1DQ/exec';
 
+// ════════════════════════════════════════════════
+// CHAVE DE ACESSO — 10/09/2026
+// Até hoje esta URL devolvia a base inteira de clientes para qualquer requisição,
+// e o endereço dela está no código-fonte desta página. Agora toda chamada leva ?k=.
+// A chave vive só no navegador de quem já entrou; ela NUNCA é escrita neste arquivo.
+// ════════════════════════════════════════════════
+const CHAVE_STORE = 'enc_crm_k';
+function chave(){ try { return localStorage.getItem(CHAVE_STORE) || ''; } catch(e){ return ''; } }
+function comChave(qs){
+  // sempre query string, inclusive no POST: o Apps Script lê e.parameter nos dois métodos
+  return API + '?' + (qs ? qs + '&' : '') + 'k=' + encodeURIComponent(chave());
+}
+function semChave(data){
+  // o portão responde 200 com este corpo. Sem esta checagem o fluxo cairia no ramo
+  // "planilha vazia" e gravaria um db vazio por cima do cache local.
+  return !!data && data.status === 'error' && String(data.message||'').indexOf('Not found') === 0;
+}
+function pedirChave(motivo){
+  const ov = document.getElementById('destrava-overlay');
+  const msg = document.getElementById('destrava-msg');
+  const inp = document.getElementById('destrava-input');
+  const car = document.getElementById('loading-overlay');
+  if(car) car.style.display = 'none';
+  if(msg && motivo) msg.textContent = motivo;
+  if(ov) ov.style.display = 'flex';
+  if(inp){ inp.value = ''; setTimeout(()=>inp.focus(), 60); }
+}
+function destravar(){
+  const inp = document.getElementById('destrava-input');
+  const v = (inp && inp.value || '').trim();
+  if(!v){ pedirChave('Digite a chave para continuar.'); return; }
+  try { localStorage.setItem(CHAVE_STORE, v); } catch(e){}
+  const ov = document.getElementById('destrava-overlay');
+  if(ov) ov.style.display = 'none';
+  carregar();
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const b = document.getElementById('destrava-btn');
+  const i = document.getElementById('destrava-input');
+  if(b) b.addEventListener('click', destravar);
+  if(i) i.addEventListener('keydown', ev => { if(ev.key === 'Enter') destravar(); });
+});
+
 function carregar(){
+  if(!chave()){ pedirChave(); return; }
   const el = document.getElementById('loading-overlay');
   if(el) el.style.display = 'flex';
-  fetch(API + '?action=listarTodos')
+  fetch(comChave('action=listarTodos'))
     .then(r => r.json())
     .then(data => {
+      if(semChave(data)){
+        try { localStorage.removeItem(CHAVE_STORE); } catch(e){}
+        pedirChave('Chave não aceita. Confira e digite de novo.');
+        return;                       // ⛔ não passa por _posCarregar: o cache local fica intacto
+      }
       if(data.status === 'success' && data.clientes && data.clientes.length > 0){
         db = { clientes: data.clientes };
         // garante que cada cliente tem array de eventos
@@ -776,7 +839,7 @@ function salvarDb(){
   // 2. sincroniza com a planilha em background
   db.clientes.forEach(c => {
     // salva cliente
-    fetch(API, {
+    fetch(comChave(), {
       method: 'POST',
       body: JSON.stringify({
         action: 'salvarCliente',
@@ -790,7 +853,7 @@ function salvarDb(){
     }).catch(() => {});
     // salva cada evento
     (c.eventos || []).forEach(ev => {
-      fetch(API, {
+      fetch(comChave(), {
         method: 'POST',
         body: JSON.stringify({
           action: 'salvarEvento',
