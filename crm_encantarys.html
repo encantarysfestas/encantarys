@@ -374,7 +374,7 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
         <input type="hidden" id="ev-entrega" value="false">
         <div class="toggle-box"><span class="toggle-tick">✓</span></div>
         <span class="toggle-label">Entrega + recolhimento</span>
-        <span class="toggle-badge" id="badge-frete-label">R$10/km · mín R$35</span>
+        <span class="toggle-badge" id="badge-frete-label">R$5/km · mín R$30</span>
       </div>
     </div>
 
@@ -389,7 +389,7 @@ body{font-family:'Outfit',sans-serif;font-weight:300;background:var(--cream);col
           <input class="campo-input" type="number" id="ev-frete" placeholder="Auto" oninput="calcTotal()">
         </div>
       </div>
-      <div id="frete-info" style="font-size:11px;color:var(--ink-dim);margin-bottom:10px;padding:6px 10px;background:var(--cream-mid);border-radius:6px;">Informe só a distância de ida (base → local). A fórmula já considera os 4 trajetos.</div>
+      <div id="frete-info" style="font-size:11px;color:var(--ink-dim);margin-bottom:10px;padding:6px 10px;background:var(--cream-mid);border-radius:6px;">Informe só a distância de ida (Prado → local). O valor já cobre levar e buscar.</div>
       <div class="campo">
         <label class="campo-label">Endereço de entrega</label>
         <input class="campo-input" type="text" id="ev-endereco" placeholder="Rua, número, bairro, cidade..." oninput="atualizarMaps()" style="margin-bottom:8px;">
@@ -538,7 +538,7 @@ const KITS = [
 
 const EXTRAS = [
   {nome:'Personalização de tema', preco:'+R$30',desc:'Capa ou painel com nome/tema específico'},
-  {nome:'Entrega + recolhimento', preco:'R$10/km',desc:'Mínimo R$35 · R$2,50/km × 4 trajetos (ida com kit, volta, busca, retorno)'},
+  {nome:'Entrega + recolhimento', preco:'R$5/km',desc:'Mínimo R$30 · R$2,50/km × ida e volta, já com levar e buscar · só em Nova Friburgo · valor por bairro no site'},
   {nome:'Mini arco de balões', preco:'Consultar',desc:'Apenas para Mini festas'},
 ];
 
@@ -576,7 +576,7 @@ Vou verificar a disponibilidade e te ajudo a escolher o melhor combo!`},
 ✨ Elegante — R$95
 
 Personalização de tema: +R$30 em qualquer combo.
-Entrega: a partir de R$20 (R$10 base + R$3/km), a partir do Prado, Nova Friburgo.`},
+Entrega (só em Nova Friburgo): R$5 por km do Prado até o seu bairro, mínimo R$30, já com levar e buscar.`},
   {cat:'Qualificação', titulo:'Temas disponíveis (/tema)',
    obs:'Quando a cliente pergunta quais temas têm.',
    template:`Temos vários temas no acervo!
@@ -640,7 +640,7 @@ Regras de atendimento:
 5. Horário: seg a sáb 8h–20h
 
 Preços: Mini R$60 | 1 Painel R$85 | 2 Painéis R$95 | Elegante R$95
-Extra: +R$30 tema personalizado | R$10+R$3/km entrega (mín. R$20)`},
+Extra: +R$30 tema personalizado | entrega R$5/km do Prado, mín. R$30, levar e buscar, só em Nova Friburgo`},
 ];
 
 // ════════════════════════════════════════════════
@@ -1229,9 +1229,12 @@ function selecionarKit(id){
 function calcFrete(){
   const km = parseFloat(document.getElementById('ev-km').value)||0;
   if(km>0){
-    const frete = Math.max(35, km*10);
+    // 18/10/2026: R$5 por km do Prado (R$2,50 × ida e volta), levar e buscar, mínimo R$30 — mesma regra do site
+    const bruto = Math.round(km*5), frete = Math.max(30, bruto);
     document.getElementById('ev-frete').value = frete;
-    document.getElementById('frete-info').textContent = `${km}km × R$10 = R$${frete} (R$2,50/km × 4 trajetos · mín. R$35)`;
+    document.getElementById('frete-info').textContent = bruto < 30
+      ? `${km}km × R$5 = R$${bruto} → mínimo R$30 (levar e buscar)`
+      : `${km}km × R$5 = R$${frete} (levar e buscar)`;
   }
   calcTotal();
 }
@@ -1282,7 +1285,7 @@ function setStatusEv(s, el){
 function toggleFrete(){
   const on = document.getElementById('ev-entrega').value==='true';
   document.getElementById('campo-frete').style.display = on?'block':'none';
-  if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Informe só a distância de ida (base → local). A fórmula já considera os 4 trajetos.'; }
+  if(!on){ document.getElementById('ev-frete').value=''; document.getElementById('ev-km').value=''; document.getElementById('frete-info').textContent='Informe só a distância de ida (Prado → local). O valor já cobre levar e buscar.'; }
   calcTotal();
 }
 

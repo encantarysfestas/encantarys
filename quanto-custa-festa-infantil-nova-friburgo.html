@@ -484,30 +484,6 @@ function toggleNav(){
   const open=ul.style.display==='flex';
   Object.assign(ul.style,{display:open?'none':'flex',flexDirection:'column',position:'fixed',top:'58px',left:'0',right:'0',background:'rgba(13,10,26,0.98)',padding:'22px 28px',gap:'18px',zIndex:'998',borderBottom:'1px solid rgba(201,168,76,.1)'});
 }
-function calcFreteSite(){
-  const end = document.getElementById('frete-endereco').value.trim();
-  const result = document.getElementById('frete-result');
-  if(!end){ result.textContent = 'Digite seu endereço e clique em calcular.'; return; }
-  if(typeof google === 'undefined' || !google.maps){
-    result.textContent = 'Não consegui calcular agora — chama no WhatsApp que a Fernanda calcula pra você. 😊';
-    return;
-  }
-  result.textContent = 'Calculando...';
-  const service = new google.maps.DistanceMatrixService();
-  service.getDistanceMatrix({
-    origins: ['Prado, Nova Friburgo, RJ'],
-    destinations: [end + ', Nova Friburgo, RJ'],
-    travelMode: 'DRIVING',
-    unitSystem: google.maps.UnitSystem.METRIC
-  }, (response, status) => {
-    if(status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
-    const el = response.rows[0].elements[0];
-    if(el.status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
-    const km = el.distance.value / 1000;
-    const frete = Math.max(35, Math.round(km*10));
-    result.innerHTML = `Distância: ${km.toFixed(1)}km · Frete: <strong>R$${frete}</strong> (mín. R$35, já com os 4 trajetos)`;
-  });
-}
 function showCombo(id,btn){
   document.querySelectorAll('.combo-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.combo-tab').forEach(t=>t.classList.remove('active'));
@@ -541,8 +517,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 </script>
 
-<!-- Google Maps — Distance Matrix p/ calculadora de frete -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ0ujSlXB4jIOFizGNUZjS1za4lGQkZ7A"></script>
+<!-- Calculadora de frete por bairro (18/10/2026): a tabela é gerada por _build/bairros_frete.py, sem chave no ar -->
+<script src="frete_bairros.js"></script>
+<script src="frete.js"></script>
 
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHT1TZDD09"></script>
@@ -552,11 +529,14 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
 gtag('config','G-SHT1TZDD09',{send_page_view:false});
 
-// Eventos GA4
+// Eventos GA4 — 04/09/2026: o portao de localStorage saiu daqui.
+// Ele nao separava "recusou" de "nao respondeu", e media zero nos dois casos. Medido no
+// dia: o consent voltava null, ou seja, ninguem recusava — as pessoas so nao respondiam,
+// e a visita sumia inteira. Quem decide o que pode ser gravado agora e o Consent Mode:
+// com analytics_storage negado o gtag manda um ping sem cookie e sem identificador,
+// e com aceite ele passa a gravar normalmente.
 function trackEvent(name,params){
-  if(localStorage.getItem('cookie_consent')==='accepted'){
-    gtag('event',name,params||{});
-  }
+  gtag('event',name,params||{});
 }
 
 // Rastreia cliques no WhatsApp
@@ -564,11 +544,24 @@ document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
   a.addEventListener('click',()=>trackEvent('whatsapp_click',{location:a.closest('section')?.id||'nav'}));
 });
 
+// Rastreia cliques na indicacao do Festino (cross-sell do rodape).
+// Duas pontas de proposito: este evento conta quem SAIU daqui (so com consent aceito),
+// e a UTM no href faz o GA4 do Festino contar quem CHEGOU (imune ao banner de cookie).
+// A diferenca entre os dois numeros e a perda no meio.
+document.querySelectorAll('a[href*="festino"]').forEach(a=>{
+  a.addEventListener('click',()=>trackEvent('festino_click',{location:a.closest('section')?.id||'nav'}));
+});
+
 // Cookie consent
 const COOKIE_KEY='cookie_consent';
+// Promove o consentimento. O page_view NAO mora mais aqui: ele sai sempre, no load.
 function loadGA(){
-  gtag('consent','update',{'analytics_storage':'granted'});
-  gtag('event','page_view');
+  gtag('consent','update',{
+    'analytics_storage':'granted',
+    'ad_storage':'granted',
+    'ad_user_data':'granted',
+    'ad_personalization':'granted'
+  });
 }
 function acceptCookies(){
   localStorage.setItem(COOKIE_KEY,'accepted');
@@ -583,15 +576,19 @@ function hideBanner(){
   document.getElementById('cookie-banner').classList.remove('show');
 }
 window.addEventListener('DOMContentLoaded',()=>{
-  const consent=localStorage.getItem(COOKIE_KEY);
+  let consent=null;
+  try{ consent=localStorage.getItem(COOKIE_KEY); }catch(e){}
   if(consent==='accepted'){loadGA();}
   else if(!consent){setTimeout(()=>document.getElementById('cookie-banner').classList.add('show'),1200);}
+  // Sai em todos os casos, e DEPOIS da cadeia if/else. Com consentimento vira visita
+  // identificada por cookie; sem ele, um ping anonimo que so alimenta a contagem agregada.
+  gtag('event','page_view');
 });
 </script>
 
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
-  <p class="cookie-txt">🍪 Usamos cookies para entender como você navega e melhorar sua experiência. Seus dados não são compartilhados com terceiros.</p>
+  <p class="cookie-txt">🍪 Usamos cookies para entender como você navega e melhorar sua experiência. Se você recusar, seguimos contando apenas o número de visitas, de forma anônima e sem cookie. Não vendemos nem cedemos seus dados.</p>
   <div class="cookie-actions">
     <button class="btn-cookie-reject" onclick="rejectCookies()">Recusar</button>
     <button class="btn-cookie-accept" onclick="acceptCookies()">Aceitar</button>

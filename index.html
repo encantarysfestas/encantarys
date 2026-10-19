@@ -532,19 +532,19 @@ footer{background:var(--midnight);padding:36px 60px;display:flex;justify-content
 
   <div class="entrega-banner reveal">
     <span style="font-size:26px;flex-shrink:0;">🚗</span>
-    <p><strong>Entrega e retirada disponíveis</strong> · R$10 por km (já considerando os 4 trajetos), mínimo R$35. Ou retire e devolva em Prado, Nova Friburgo.</p>
+    <p><strong>Entrega e retirada disponíveis</strong> · R$5 por km até o seu bairro (já com levar e buscar), mínimo R$30. Ou retire e devolva em Prado, Nova Friburgo.</p>
   </div>
   <div class="frete-calc reveal">
     <div class="frete-calc-title">📍 Calcule o frete da sua entrega</div>
     <div class="frete-calc-row">
       <div class="frete-field">
-        <label>Seu endereço</label>
-        <input type="text" id="frete-endereco" placeholder="Rua, número, bairro, cidade..." onkeydown="if(event.key==='Enter')calcFreteSite()">
+        <label for="frete-bairro">Bairro da festa</label>
+        <input type="text" id="frete-bairro" placeholder="Digite o bairro: Centro, Olaria, Cordoeira..." autocomplete="off">
       </div>
-      <button type="button" class="frete-maps-link" onclick="calcFreteSite()" style="cursor:pointer;">Calcular frete →</button>
+      <button type="button" class="frete-maps-link" onclick="calcFrete()" style="cursor:pointer;">Calcular frete →</button>
     </div>
-    <div class="frete-result" id="frete-result">Digite seu endereço e clique em calcular.</div>
-    <div class="frete-calc-note">Valor estimado por distância de carro até o Prado, Nova Friburgo. A Fernanda confirma o total certinho no WhatsApp. <a href="entrega-decoracao-festa-nova-friburgo.html" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">Ver como funciona a entrega e a retirada →</a></div>
+    <div class="frete-result" id="frete-result">Escreva o bairro da festa e escolha na lista.</div>
+    <div class="frete-calc-note">Valor pela distância de carro do Prado até o bairro. A entrega é só em Nova Friburgo, e a Fernanda confirma o total certinho no WhatsApp. <a href="entrega-decoracao-festa-nova-friburgo.html" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">Ver como funciona a entrega e a retirada →</a></div>
   </div>
 </section>
 
@@ -739,30 +739,6 @@ function toggleNav(){
   const open=ul.style.display==='flex';
   Object.assign(ul.style,{display:open?'none':'flex',flexDirection:'column',position:'fixed',top:'58px',left:'0',right:'0',background:'rgba(13,10,26,0.98)',padding:'22px 28px',gap:'18px',zIndex:'998',borderBottom:'1px solid rgba(201,168,76,.1)'});
 }
-function calcFreteSite(){
-  const end = document.getElementById('frete-endereco').value.trim();
-  const result = document.getElementById('frete-result');
-  if(!end){ result.textContent = 'Digite seu endereço e clique em calcular.'; return; }
-  if(typeof google === 'undefined' || !google.maps){
-    result.textContent = 'Não consegui calcular agora — chama no WhatsApp que a Fernanda calcula pra você. 😊';
-    return;
-  }
-  result.textContent = 'Calculando...';
-  const service = new google.maps.DistanceMatrixService();
-  service.getDistanceMatrix({
-    origins: ['Prado, Nova Friburgo, RJ'],
-    destinations: [end + ', Nova Friburgo, RJ'],
-    travelMode: 'DRIVING',
-    unitSystem: google.maps.UnitSystem.METRIC
-  }, (response, status) => {
-    if(status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
-    const el = response.rows[0].elements[0];
-    if(el.status !== 'OK'){ result.textContent = 'Não encontrei esse endereço — confere se digitou certo, ou chama no WhatsApp.'; return; }
-    const km = el.distance.value / 1000;
-    const frete = Math.max(35, Math.round(km*10));
-    result.innerHTML = `Distância: ${km.toFixed(1)}km · Frete: <strong>R$${frete}</strong> (mín. R$35, já com os 4 trajetos)`;
-  });
-}
 function showCombo(id,btn){
   document.querySelectorAll('.combo-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.combo-tab').forEach(t=>t.classList.remove('active'));
@@ -796,8 +772,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 </script>
 
-<!-- Google Maps — Distance Matrix p/ calculadora de frete -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ0ujSlXB4jIOFizGNUZjS1za4lGQkZ7A"></script>
+<!-- Calculadora de frete por bairro (18/10/2026): a tabela é gerada por _build/bairros_frete.py, sem chave no ar -->
+<script src="frete_bairros.js"></script>
+<script src="frete.js"></script>
 
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHT1TZDD09"></script>
